@@ -1,0 +1,314 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     12408,        305]
+NotebookOptionsPosition[     11709,        277]
+NotebookOutlinePosition[     12052,        292]
+CellTagsIndexPosition[     12009,        289]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "relation", " ", "of", " ", "EER", " ", "as", " ", "a", " ", "function", 
+    " ", "of", " ", "the", "  ", "number", " ", "of", " ", "features", 
+    "\[IndentingNewLine]", 
+    RowBox[{"PCA", ".", "nb"}]}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ee", "=", 
+    RowBox[{"Import", "[", "\"\<Cache_edat.mx\>\"", "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.5089033383125*^9, 3.508903359078125*^9}, {
+  3.5097748054375*^9, 3.509774807953125*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{
+   RowBox[{"100", "*", "ee"}], ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"5", ",", "20"}], "}"}]}], ",", 
+   RowBox[{"Mesh", "\[Rule]", "Full"}], ",", 
+   RowBox[{"Frame", "->", "True"}], ",", 
+   RowBox[{"FrameLabel", "->", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Number of PCA features\>\"", ",", 
+      "\"\<Classification Error Rate (%)\>\""}], "}"}]}], ",", 
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.508903432078125*^9, 3.50890345365625*^9}, {
+  3.508903489109375*^9, 3.508903548203125*^9}, {3.50890360625*^9, 
+  3.50890365171875*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[GraphicsComplexBox[CompressedData["
+1:eJzt1blKA1EYxfGjIIiNFilEBDUEFQnucddcjftu4pJaCdgJ9sIFBStrH8HG
+h7hVaitrG/s0NlZmuReZ/zPcgeHjN2fODMMU39D1XbHSLqlaPxuzddTyuc/n
+6u9H1vgLfmb87DSPr6XafVdwD/KUebh97375GfHu9XPUz3540LQ1Z3hfGs6Y
+p+b7goeRh+dM+jkGZ+FxmHMKnoZn4FlTuGl8cXAOnoPn4QV40XRMvH19p4KX
+4GV4xdR/VnmgL3gV+Rqcx/0maQtrPdm3sDaQwyogh7WJHNYWcljbyGHtIIe1
+ixzWHnJY+8hhHSCHdYgc1hFyWMfIYZ0gh3WatIEt7GCdoQ9b2MEqog9b2MEq
+oQ9b2ME6Rx+2sIN1gT5sYQfrEn3Ywg7WFfqwhR2sMvqwhR0c9wUc90XcF3Ff
+xH0R90Wr/+8/P5m0Hg==
+   "], {{{}, {}, 
+     {Hue[0.67, 0.6, 0.6], 
+      LineBox[{100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 
+       112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 
+       126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 
+       140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 
+       154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 
+       168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 
+       182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 
+       196, 197, 198}]}}, {
+     {Hue[0.67, 0.6, 0.6], 
+      PointBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
+       36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
+        54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 
+       71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88,
+        89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99}]}, {}, {}}}],
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 6.},
+  Frame->True,
+  FrameLabel->{
+    FormBox["\"Number of PCA features\"", TraditionalForm], 
+    FormBox["\"Classification Error Rate (%)\"", TraditionalForm]},
+  GridLines->Automatic,
+  ImageSize->{413.3333333333335, Automatic},
+  PlotRange->{{0, 99.}, {5, 20}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], Automatic}]], "Output",
+ CellChangeTimes->{3.50890349603125*^9, {3.50890364025*^9, 3.508903659125*^9}}
+  ]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"after", " ", "MDA", " ", "ordering"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ee", "=", 
+    RowBox[{"Import", "[", "\"\<Cache_ePcamda.mx\>\"", "]"}]}], 
+   ";"}]}]], "Input",
+ CellChangeTimes->{{3.508903822484375*^9, 3.50890383078125*^9}, {
+  3.50890389796875*^9, 3.508903908125*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{
+   RowBox[{"100", "*", "ee"}], ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "25"}], "}"}]}], ",", 
+   RowBox[{"Mesh", "\[Rule]", "Full"}], ",", 
+   RowBox[{"Frame", "->", "True"}], ",", 
+   RowBox[{"FrameLabel", "->", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Number of PCA features\>\"", ",", 
+      "\"\<Classification Error Rate (%)\>\""}], "}"}]}], ",", 
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.508903850859375*^9, 3.508903893953125*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[GraphicsComplexBox[CompressedData["
+1:eJzt1blKQ0EUh/E/ghBstEiRwkJFVCS4x10zcde4Jm61INgJ9sIBCytrH8HG
+hzhVaqvUNvZpbKw0eFPM9wxz4TL88s25VeAM3tzXbrskNf7e9vn/tMql5nPj
+56MYsh+yczg7c+Hptd566Om4D87jfgHux/0BeAjmOQKP4RyHi/AEPAVPh8e7
+996X79HMM+iz8BxcgufxvQV4EfeX4GV4BV6F1+B1uAyH2Aargg5rAx3WJjqs
+LXRY2+iwdtBh7aLD2kOHtY8O6wAdVhW9Gron3z6/8p3/3WFsg3WEDusYHdYJ
+OqzT2AE22GGdYR422GHVMA8b7LDqmIcNdljnmIcNdlgXmIcNdliXmIcNdlhX
+mIcNdljXmIcNdjjti7Qvop72RdzTvkj7Iu2Ltn8Bb9USVA==
+   "], {{{}, {}, 
+     {Hue[0.67, 0.6, 0.6], 
+      LineBox[{100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 
+       112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 
+       126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 
+       140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 
+       154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 
+       168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 
+       182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 
+       196, 197, 198}]}}, {
+     {Hue[0.67, 0.6, 0.6], 
+      PointBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
+       36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
+        54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 
+       71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88,
+        89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99}]}, {}, {}}}],
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  Frame->True,
+  FrameLabel->{
+    FormBox["\"Number of PCA features\"", TraditionalForm], 
+    FormBox["\"Classification Error Rate (%)\"", TraditionalForm]},
+  GridLines->Automatic,
+  ImageSize->{394.9999999999998, Automatic},
+  PlotRange->{{0, 99.}, {0, 25}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], Automatic}]], "Output",
+ CellChangeTimes->{{3.50890385678125*^9, 3.50890389475*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{"PCA", ".", "nb"}], " ", "J1", " ", "relation"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.50890570678125*^9, 3.50890573215625*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pc", "=", 
+   RowBox[{"PrincipalComponents", " ", "[", "sample", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Dimensions", "[", "pc", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"tpc", "=", 
+   RowBox[{"pc", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", 
+      RowBox[{";;", "99"}]}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.508906778078125*^9, 3.508906778671875*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"sj1", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"Mesh", "\[Rule]", "Full"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "25"}], "}"}]}], ",", 
+   RowBox[{"Frame", "->", "True"}], ",", 
+   RowBox[{"FrameLabel", "->", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<No. of PCA feature\>\"", ",", 
+      "\"\<\!\(\*SubscriptBox[\(J\), \(1\)]\)\>\""}], "}"}]}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.50890575771875*^9, 3.508905760578125*^9}, 
+   3.508905852796875*^9, {3.508905914765625*^9, 3.508905938484375*^9}, 
+   3.508905968953125*^9, 3.508906062140625*^9}],
+
+Cell[BoxData[
+ GraphicsBox[GraphicsComplexBox[CompressedData["
+1:eJztlftT1GUUxlekAGkCFYSUEnJBIpCLgIDgPqzCwiLLsuzCEkghZdhEIBdF
+zWkD5CaVgVTTGGCSg44oBkYkjAsIFPeLcStwuQUIGCUYEmPZcN4f+w92Z76z
+8/k+53nf97zn7B6zg7GStzQ4HE7j0+e/79XPPC87PSty7nVn0AsEHUN0Ur8Z
+sTZuKrn200YbifUxmWEe7VW8htgAfV9bx+SnzfNW2Riq4vkP85ruE5vA4tLc
++gnrMWJTbK2O6wodHiR+GZbfi+tuVGrSelzoXiq/rnFxgXQLdEeffLaHN05s
+iRWPX4X105PEVsj8UTywPW2F2BpTRWMb4wKmiXdA5XTCMnuJxdshdlv1CYfR
+KWJ79Od4Rql2M90Bh6URb7+xY4Z4JxLcLZKlx38ndoT5+IJ+VPoosRNiHxul
+TX6xSOyMNXFaX3nHsPV2Qa9RFjlQx/JxwR4t3aPJZxm7ouGfSNnmFBbvhsbC
++Z/K+Gz93RjLFL5SFPGA2B3yjGMPs1pniT1Q3XurmafH9t+D3FhDt4PPdRPz
+EOouqqvuHCAGntnWUVkgGlplBTBxpmdOR95HuieMz94tsfWg/RWe6DWc/6hp
+5DfS+Sgz4JrYGt0jnQ/deO3LL33LzrsXOtrmPgmazL8XVg4GXNl6iufsg2NL
+vNbza1Wk74OPdlWBUeoI6V64X29jN2NK51d4oa3OZUQ000O6Nw4kCVVv2lC8
+whuXxyXZxT/0ki7A5rGyi5/YKUkXYAP3r1r/SdZvPvCUCtaGDrP8fXCu7uq5
+CsO7pPvC9ANB3OFupvsiYvqKUJrLdCH4hvKctIZfSBeC57qYHnGT3bcfOpSz
+o4O2LaT7wTFX1HYyj+n74ffxsnPiNaqHYj+S7uVGtLnSfXD8UaN9xi7vVdpP
+4Y9w+VjpbTfmF+FBfGVa4mnmFyFu1HvnqVJ2PwE4bvBemJkm8weAcyHq760F
+E6SL8bOTUbNVLtUbYkSZFPtWlLB4Mdysa1rydZpXWSnGSOqphc4XWX0Dkf/Y
+0rxnE/0eEYilwpXXBOOt5A+E1rK9ys6W8lE+5Vu90w09rP8k4Kdygq99R/0A
+CW4Uljl85sn6QQLd/hcsEmvpfEoJHrY2WZjwmT8Io+KMA9w8qj+C0F2eobPO
+gOIVQTiUqJq6U0LxyiA8CWuqkZWy/pLC/0jL+T4vlr8UKdn8xS2PusgvxTuf
+fh7u4kT/V0ophrNEzn/Ws/rLELUs1z+qy/wyvM+9vSlikPWjDBM+V85/k0z5
+KWWwzBMXPslh/mAMRmpkh01RvRCM7a4VHlW8dvIHY1d2iH76eAf5g+HAGWpd
+t6WW/CFwNO5KeHeM8kMIirsN0mO+pPUUIeirmmz341M9lCF4VCSxnr1aR345
+/riTueFCJ9UXcugNHKoeCmgkvxw24cPXjyTRfSjlaE9Zmha4lZNfPS/U80I9
+L9TzQj0vVv3qefF/8+Jfo3mumw==
+   "], {{{}, {}, 
+     {Hue[0.67, 0.6, 0.6], 
+      LineBox[{100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 
+       112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 
+       126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 
+       140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 
+       154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 
+       168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 
+       182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 
+       196, 197, 198}]}}, {
+     {Hue[0.67, 0.6, 0.6], 
+      PointBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
+       36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
+        54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 
+       71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88,
+        89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99}]}, {}, {}}}],
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  Frame->True,
+  FrameLabel->{
+    FormBox["\"No. of PCA feature\"", TraditionalForm], 
+    FormBox[
+    "\"\\!\\(\\*SubscriptBox[\\(J\\), \\(1\\)]\\)\"", TraditionalForm]},
+  ImageSize->{409.16666666666697`, Automatic},
+  PlotRange->{{0, 99.}, {0, 25}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], Automatic}]], "Output",
+ CellChangeTimes->{
+  3.50890576128125*^9, {3.50890596465625*^9, 3.508905970625*^9}, {
+   3.50890606734375*^9, 3.50890606959375*^9}}]
+}, Open  ]]
+},
+WindowSize->{708, 719},
+WindowMargins->{{79, Automatic}, {Automatic, 4}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 525, 12, 121, "Input"],
+Cell[CellGroupData[{
+Cell[1107, 36, 724, 18, 148, "Input"],
+Cell[1834, 56, 2150, 41, 347, "Output"]
+}, Open  ]],
+Cell[3999, 100, 362, 10, 67, "Input"],
+Cell[CellGroupData[{
+Cell[4386, 114, 632, 16, 148, "Input"],
+Cell[5021, 132, 2094, 39, 333, "Output"]
+}, Open  ]],
+Cell[7130, 174, 183, 4, 39, "Input"],
+Cell[7316, 180, 438, 12, 94, "Input"],
+Cell[CellGroupData[{
+Cell[7779, 196, 674, 17, 94, "Input"],
+Cell[8456, 215, 3237, 59, 343, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

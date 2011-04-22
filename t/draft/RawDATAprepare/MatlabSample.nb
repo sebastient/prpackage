@@ -1,0 +1,250 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      8479,        241]
+NotebookOptionsPosition[      7618,        208]
+NotebookOutlinePosition[      7965,        223]
+CellTagsIndexPosition[      7922,        220]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Clear", "[", "\"\<@\>\"", "]"}], ";"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "SetDirectory", "[", 
+     "\"\<E:\\\\work\\\\thesis\\\\\:8bba\:6587\\\\codes\\\\data\\\\\>\"", 
+     "]"}], ";"}], "*)"}]}]], "Input",
+ CellChangeTimes->{{3.504675813109375*^9, 3.504675813984375*^9}, {
+  3.50676507709375*^9, 3.5067650843125*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "::", "\<\"wrsym\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Symbol \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\[FormalA]\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is Protected.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/wrsym\\\", ButtonNote -> \
+\\\"Clear::wrsym\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.50467603465625*^9, 3.504927422*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "::", "\<\"wrsym\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Symbol \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\[FormalB]\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is Protected.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/wrsym\\\", ButtonNote -> \
+\\\"Clear::wrsym\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.50467603465625*^9, 3.504927422*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "::", "\<\"wrsym\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Symbol \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\[FormalC]\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is Protected.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/wrsym\\\", ButtonNote -> \
+\\\"Clear::wrsym\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.50467603465625*^9, 3.504927422*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"General", "::", "\<\"stop\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Further output of \\\\\\\"\\\
+\", \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Clear :: \
+\\\"wrsym\\\"\\), \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" will \
+be suppressed during this calculation.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.50467603465625*^9, 3.504927422015625*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ff", "=", 
+    RowBox[{"FileNames", "[", "\"\<C*.mat\>\"", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "pick", " ", "one", " ", "measurement", " ", "from", " ", "each", " ", 
+    "person", " ", "to", " ", "form", " ", "a", " ", "sample"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dd", "=", 
+   RowBox[{"Reap", "[", 
+    RowBox[{"For", "[", 
+     RowBox[{
+      RowBox[{"i", "=", "1"}], ",", 
+      RowBox[{"i", "\[LessEqual]", 
+       RowBox[{"Length", "[", "ff", "]"}]}], ",", 
+      RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Sow", "[", 
+        RowBox[{"Import", "[", 
+         RowBox[{
+          RowBox[{"ff", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], ",", "\"\<Mat\>\""}], "]"}], "]"}],
+        ";"}]}], "\[IndentingNewLine]", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data", "=", 
+   RowBox[{"dd", "[", 
+    RowBox[{"[", 
+     RowBox[{"2", ",", "1"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.504675843828125*^9, 3.50467585040625*^9}, {
+   3.504675887171875*^9, 3.504675893515625*^9}, {3.50467603278125*^9, 
+   3.50467607278125*^9}, {3.504676129078125*^9, 3.5046761614375*^9}, {
+   3.504927446546875*^9, 3.504927447734375*^9}, {3.5067650919375*^9, 
+   3.50676511265625*^9}, 3.50690447159375*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"cc_50.mat\"\>", ",", "\<\"cc_51.mat\"\>", 
+   ",", "\<\"cc_52.mat\"\>", ",", "\<\"cc_53.mat\"\>", 
+   ",", "\<\"cc_54.mat\"\>", ",", "\<\"cc_55.mat\"\>", 
+   ",", "\<\"cc_56.mat\"\>", ",", "\<\"cc_57.mat\"\>", 
+   ",", "\<\"cc_58.mat\"\>", ",", "\<\"cc_59.mat\"\>", 
+   ",", "\<\"cc_60.mat\"\>", ",", "\<\"cc_61.mat\"\>", 
+   ",", "\<\"cc_62.mat\"\>", ",", "\<\"cc_63.mat\"\>", 
+   ",", "\<\"cc_64.mat\"\>", ",", "\<\"cc_65.mat\"\>", 
+   ",", "\<\"cc_66.mat\"\>", ",", "\<\"cc_67.mat\"\>", 
+   ",", "\<\"cc_68.mat\"\>", ",", "\<\"cc_69.mat\"\>", 
+   ",", "\<\"cc_70.mat\"\>", ",", "\<\"cc_71.mat\"\>", 
+   ",", "\<\"cc_72.mat\"\>", ",", "\<\"cc_73.mat\"\>", 
+   ",", "\<\"cc_74.mat\"\>", ",", "\<\"cc_75.mat\"\>", 
+   ",", "\<\"cc_76.mat\"\>", ",", "\<\"cc_77.mat\"\>", 
+   ",", "\<\"cc_78.mat\"\>", ",", "\<\"cc_79.mat\"\>", 
+   ",", "\<\"cc_80.mat\"\>", ",", "\<\"cc_81.mat\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.5067650928125*^9, 3.506765096921875*^9}, 
+   3.506904444828125*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Dimensions", "[", "data", "]"}]], "Input",
+ CellChangeTimes->{{3.504676080546875*^9, 3.504676084625*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "8", ",", "32"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.504676085296875*^9, {3.504927430859375*^9, 3.50492745325*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "generate", " ", "template", " ", "from", " ", "the", " ", "average", " ", 
+    "of", " ", "the", " ", "data"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"templ", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Mean", "[", "#", "]"}], "&"}], ",", "data"}], "]"}]}], ";"}],
+    "\[IndentingNewLine]", 
+   RowBox[{"Dimensions", "[", "templ", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.50492745896875*^9, 3.504927599484375*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "32"}], "}"}]], "Output",
+ CellChangeTimes->{{3.5049275910625*^9, 3.50492760090625*^9}, 
+   3.504927639296875*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Export", "[", 
+    RowBox[{
+     RowBox[{"\"\<template_1-25\>\"", "<>", "\"\<.mat\>\""}], ",", "templ", 
+     ",", "\"\<Mat\>\""}], "]"}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.504676004109375*^9, 3.50467600803125*^9}, 
+   3.504676077671875*^9, {3.504676109828125*^9, 3.504676110265625*^9}, {
+   3.504927607140625*^9, 3.504927637015625*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.506762393234375*^9, 3.506762394109375*^9}, {
+   3.50676246425*^9, 3.506762464703125*^9}, {3.506903379953125*^9, 
+   3.50690338425*^9}, 3.506904467515625*^9}]
+},
+WindowSize->{1024, 719},
+WindowMargins->{{36, Automatic}, {-11, Automatic}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 434, 13, 69, "Input"],
+Cell[1004, 37, 589, 11, 25, "Message"],
+Cell[1596, 50, 589, 11, 28, "Message"],
+Cell[2188, 63, 589, 11, 25, "Message"],
+Cell[2780, 76, 649, 11, 22, "Message"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3466, 92, 1388, 37, 175, "Input"],
+Cell[4857, 131, 1035, 19, 139, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5929, 155, 129, 2, 39, "Input"],
+Cell[6061, 159, 172, 4, 38, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6270, 168, 539, 15, 94, "Input"],
+Cell[6812, 185, 164, 4, 38, "Output"]
+}, Open  ]],
+Cell[6991, 192, 414, 9, 67, "Input"],
+Cell[7408, 203, 206, 3, 39, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)

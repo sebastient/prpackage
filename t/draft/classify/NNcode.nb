@@ -1,0 +1,3707 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    107409,       3697]
+NotebookOptionsPosition[     92561,       3322]
+NotebookOutlinePosition[    100987,       3522]
+CellTagsIndexPosition[    100819,       3515]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Nearest Neighbours Using k-d Trees", "Title",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+This program calculates the set of nearest neighbours for each point in the \
+input data set using the algorithm descibed in[1]. A k-d tree is built from \
+the data set in O(n log n) time which allows the computation of the nearest \
+neighbours for a particular query point in O(log n) time.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[CellGroupData[{
+
+Cell["Reading In The Data", "Section",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+First the preliminaries - reading the data file. The following assumes a file \
+format of
+ \"<input 1> <input 2> ... <input n>, <output 1> ... <output n>,\", which \
+allows multiple inputs and outputs:\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["filename = \"Math/Gamma/hen100.asc\";", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+filedata = Partition[ReadList[filename, Word, 
+            RecordLists -> True,
+            WordSeparators -> {\" \"},
+            RecordSeparators -> {\",\", \"\\n\"}], 2];
+(* WARNING USING THIS SYNTAX IS CONVENIENT BUT THE RESULTS
+ * ARE STRINGS NOT NUMBERS. TO FIX THIS WE DO THE FOLLOWING
+ *)
+data = Map[ToExpression, filedata];\
+\>", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+This package usefully provides all the statistical tools needed\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "IssueTag"],
+   ImageSizeCache->{109., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityTextTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell["", "CompatibilityText",
+ CellFrameMargins->0,
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[TextData[{
+ "Automatic translation rules are not available for this case. See the \
+Compatibility Guide for updating information. ",
+ StyleBox[ButtonBox["\[RightSkeleton]",
+  BaseStyle->"Link",
+  ButtonData->
+   "paclet:Compatibility/tutorial/Statistics/DescriptiveStatistics/"], "SR"]
+}], "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell["", "CompatibilityText",
+ CellFrameMargins->0,
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[BoxData[
+ ButtonBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "DiscardAdvisory"],
+   ImageSizeCache->{228., {2., 12.}}],
+  ButtonData->{
+   "compatibilitytag-nosugg-package-cg-Statistics`DescriptiveStatistics`", 
+    "Discard"}]], "CompatibilityControls", "CompatibilityControls",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell["Needs[\"Statistics`DescriptiveStatistics`\"]", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+Now the data is ready to use. It can be seen that the data consists of a list \
+of input-output pairs. The nearest neighbours calculation is only to be \
+performed on the input set, so the output set can be removed to simplify \
+future processing. The following does this:\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["data = Table[data[[i]][[1]], {i, 1, Length[data]}];", "Input",
+ AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Constructing the kd-Tree", "Section",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The next step is to build the k-d tree. This is done recursively using two \
+basic steps at each stage. First the dimension (or key) with the largest \
+spread of values over the records in this branch is found, and the median of \
+the record values for this dimension is found. Second, the data is \
+partitioned into two sets about the median previously found; the tree \
+building then continues with each of the smaller sets. The recursion halts \
+when the number of records to be processed falls below some preset value; the \
+records become a terminal or leaf node in the tree.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+In order to do this,  the representation of the tree structure in Mathematica \
+must be decided. At each non-terminal node, the dimension split on and the \
+associated median value are recorded, together with the left and right branch \
+of the recursively created subtrees. This leads to the following:
+
+        Tree = Terminal Node |
+                {Dimension Number, Partition Value, Left Tree, Right Tree}\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+This is complicted somewhat by the need to return a list of {record index, \
+distance} pairs as the nearest neighbours for each node. As the tree-building \
+mechanism destroys the ordering of the nodes, the simplest way to retain each \
+node's index in the original list is to tag it with it. Each data point then \
+becomes a pair {value vector, index number}. \
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+In order to manipulate these without cluttering the code to much, a few data \
+access functions have been defined. Given a list of index-tagged data points, \
+\"getValueFor\" returns the value for dimension (d) at position (i) in the \
+list, \"getIndex\" returns the index for the record at position (i) and \
+\"getPoint\" returns the data vector (without index) for the record at \
+position (i).\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+getValueFor[in_, i_, d_] := in[[i]][[1]][[d]];
+getIndex[in_, i_] := in[[i]][[2]];
+getPoint[in_, i_] := in[[i]][[1]];\
+\>", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+The following function is used to tag each point in the data set with its \
+index number. This is called before the tree is to be built:\
+\>", "Text",
+ Evaluatable->False,
+ PageBreakAbove->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+addIndex[data_] := Table[{data[[i]], i}, {i,1,Length[data]}];\
+\>", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+The following module is used to create the k-d tree. It needs to be passed \
+the data set and the dimensionality of the data (the variable \"k\"). The \
+local variable \"b\" controls the number of records in each terminal node  - \
+the default is 1, but the paper by Bentley[1] mentions that: \"... increasing \
+the bucket size from one record per bucket considerably improves the \
+performance of the search...\". The paper by White and Jain[2] mentions that \
+spliting the data on the dimension with the highest variance gives better \
+query performance, and this should also be faster to compute. It might be \
+interesting to compares these approaches.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[GraphicsData["PostScript", "\<\
+As the data set is approximately halved at each stage, the time required to \
+build the k-d tree is O(n log n).\
+\>"], "Text",
+ Evaluatable->False,
+ PageBreakAbove->False,
+ PageBreakBelow->False,
+ AspectRatioFixed->True,
+ ImageSize->{350., 216.31189999999998`},
+ ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzzTSzJSM1NLMlMTlRwL0osyMhMLlZwyy8CCjEzMjAwxjEwMNxQYACx/wOZ
+UOI/w4EDB+JBBEhklD3KHmWPskfZo+xR9ih7lD3S2QyMAP9JAjE=\
+\>"],
+ ImageCacheContents->"Empty"],
+
+Cell["\<\
+buildTree[k_, inData_]  := 
+        Module[
+        (* \"b\" is the number of records per bucket *)
+        {bucketsize = 1,  maxspread = 0, i, dimension,
+         hi, low, thisHi, thisLow, medianval, pair, temp},
+         
+        If[Length[inData] <= bucketsize,
+                (* This is a terminal node, so simply return the
+                 * list as it was passed *)
+                Return[inData],
+                (* Find the dimension with the largest spread *)
+                For[i = 1, i <= k, i++,
+                        hi = -Infinity; low = Infinity;
+                        For [j = 1, j <= Length[inData], j++,
+                                temp = getValueFor[inData, j, i];
+                                If[hi < temp, hi = temp, ];
+                                If[low > temp, low = temp, ]
+                        ];
+                        If[hi - low >= maxspread,
+                                maxspread = hi - low;
+                                thisHi = hi; thisLow = low;
+                                dimension = i, ]
+                ];
+                
+                (* Extract values at [dimension] and take median *)
+                medianval = Median[Map[Part[Part[#,1],dimension]&,
+                                                        inData]];
+                                                        
+                (* If the median is the same as the hi or low values
+                 * for the dimension, then repeated values must exist
+                 * in the data set. Return the set without splitting
+                 *)
+                If[thisLow == medianval || thisHi == medianval,
+                        Return[inData], 
+                (* Else return the node in the tree with the correct
+                 * subtrees *)
+                        pair = split[dimension, medianval, inData];
+                        Return[{dimension, medianval,
+                                buildTree[k, First[pair]],
+                                buildTree[k, Last[pair]]}]
+                ]
+        ]
+];\
+\>", "Input",
+ PageBreakAbove->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The final conditional is necessary to deal correctly with data sets where  \
+one or vectors are equal. If a particular vecotr is repeated enough, it is \
+possible that the median can be
+skewed to the maximum or minium of the range for the dimension. If this \
+occurs, then the entire dataset is returned as a terminal node - no \
+partitioning is possible as one branch will become empty, leading to an \
+infinite loop.\
+\>", "Text",
+ Evaluatable->False,
+ PageBreakBelow->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The following is used during the creation of the tree to split the records \
+around a particular value (v) for a particular dimension (d). It may be \
+quicker to do this \"in place\" in a programming language such as C.\
+\>", "Text",
+ Evaluatable->False,
+ PageBreakAbove->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+split[d_, v_, list_] := 
+        Module[
+        {i, hi = {}, low = {}},
+        For[i = 1, i <= Length[list], i++,
+                If [getValueFor[list, i, d] >= v,
+                        hi = Append[hi, list[[i]]],
+                        low = Append[low, list[[i]]]
+                        ]
+        ];
+        Return[{low, hi}]
+];\
+\>", "Input",
+ AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Finding the Nearest Neighbours", "Section",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+Once the tree has been built, the task is then to search through it for the \
+nearest neighbours of each point. The module takes parameters for the query \
+vector to look for (query), the dimensionality of the data (k) and the \
+previously constructed k-d tree (tree). Several \"global\" variables are \
+used:
+        nearest:This is best set of nearest neighbours found at any one point \
+in the 
+                search. I\.05t is a pair of lists, one for the record \
+indexes, the other for the
+                distances to the query record - both lists are maintained in
+                increasing distance from the query node.
+        lowerBounds:    This is the set of lower bounds currently in use to \
+define the 
+                region being searched. There is one for each dimension.
+        upperBounds:    These are the equivilent set for the upper bounds on \
+the
+                search region\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The nearest neighbours are found by only searching those parts of the tree \
+which contain data points \"close\" to the query point. The distance to the \
+furthest nearest neighbour found so far and the size of the geometrical \
+region defined by the tree branches traversed previously are compared to \
+determine whether or not a branch should be examined. The comparison is \
+carried out in the \"boundsOverlapBall\" procedure.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The search can terminate whenever the \"ballWithinBounds\" test returns True. \
+Note that this test is not strictly required for the algorithm to work \
+correctly - it is only used to indicate that the solution has been found.\
+\>", "Text",
+ Evaluatable->False,
+ PageBreakBelow->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+searchTree[query_, k_, tree_] :=
+        Module[
+        {medianval, dimension, temp, i, distance, maxloc, maxdist},
+        
+        Print[\"upper = \", upperBounds, \" lower = \", lowerBounds,
+                \" tree = \", tree];
+        If[Not[NumberQ[tree[[1]]]], 
+                (* Node is terminal - update nearest neighbours *)
+                For[i = 1, i <= Length[tree], i++,
+                        (* Add points in bucket if closer than furthest
+                         * found so far, so long as this is not the query
+                         * record *)
+                        maxdist = Max[nearest[[2]]];
+                        distance = norm[query - tree[[i]][[1]]];
+                        If [(distance < maxdist) &&
+                                (query != getPoint[tree, i]),
+                                maxloc = Flatten[Position[nearest[[2]], \
+maxdist]][[1]];
+                                nearest[[1, maxloc]] = getIndex[tree, i];
+                                nearest[[2, maxloc]] = distance, ]
+                ];
+                (* Sort nearest neighbours list *)
+                nearest = Transpose[Sort[Transpose[nearest],
+                                        (Part[#1, 2] < Part[#2, 2])&]];
+                
+                (* Check for termination and return *)
+                If[ballWithinBounds[query, k],
+                        Print[\"**done**\"]; Return[ ],
+                        Return[ ]],
+        ];
+        
+        (* Node not terminal - call searchTree recursively *)   
+        dimension = tree[[1]];
+        medianval = tree[[2]];
+        (* Recursive call on closer son *)
+        If[query[[dimension]] <= medianval,
+                temp = upperBounds[[dimension]];
+                upperBounds[[dimension]] =  medianval;
+                searchTree[query, k, tree[[3]]];
+                upperBounds[[dimension]] = temp, 
+        (* else *)
+                temp = lowerBounds[[dimension]];
+                lowerBounds[[dimension]] = medianval;
+                searchTree[query, k, tree[[4]]];
+                lowerBounds[[dimension]] = temp
+        ];
+        
+        (* Recursive call on further son if necessary *)
+        If[query[[dimension]] <= medianval,
+                temp = lowerBounds[[dimension]];
+                lowerBounds[[dimension]] = medianval;
+                If[boundsOverlapBall[query, k],
+                        searchTree[query, k, tree[[4]]],
+                ];
+                lowerBounds[[dimension]] = temp,
+        (* else *)
+                temp = upperBounds[[dimension]];
+                upperBounds[[dimension]] = medianval;
+                If[boundsOverlapBall[query, k],
+                        searchTree[query, k, tree[[3]]],
+                ];
+                upperBounds[[dimension]] = temp
+        ];
+        
+        (* See if we should terminate *)
+        If[ballWithinBounds[query, k],
+                Print[\"**done**\"]; Return[ ],
+                Return[ ]]      
+];
+norm[x_] :=     N[Sqrt[x.x]];\
+\>", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+The following two procedures are used to guide the search process. \
+\"ballWithinBounds\" tests to see if the coordinate distance from the query \
+record to the closer boundary along each dimension is less than the radius of \
+the furthest nearest neighbour found so far. The test succeeds if all the \
+coordinate distances are greater than the radius.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+ballWithinBounds[query_, k_] := 
+        Module[
+        {d},
+        For [d = 1, d <= k, d++,
+                (* \"Last[nearest[[2]]]\" is the furthest
+                 * nearest neighbour *)
+                If [((query[[d]] - lowerBounds[[d]])^2 <=
+                                Last[nearest[[2]]]) ||
+                        ((query[[d]] - upperBounds[[d]])^2 <=
+                                Last[nearest[[2]]]),
+                        Return[False],
+                ]
+        ];
+        Return[True]
+];\
+\>", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+The \"boundsOverlapBall\" procedure is used on backtracking to decide if it \
+is necessary to search down the opposite branch of the tree to the one \
+previously searched. It determines whether the geometric boundaries of the \
+subfile under consideration overlap a ball of radius equal to the distance of \
+the furthest nearest neighbour found so far. The smallest distance between \
+the query record and the bounded region is found - if this is less than the \
+radius, then the branch of the subtree can be eliminated, as there is no \
+overlap between the domain to be searched and the nearest neighbours.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+boundsOverlapBall[query_, k_] :=
+        Module[
+        {total = 0, d},
+        (* \"Last[nearest[[2]]]\" is the furthest
+         * nearest neighbour *)
+        For[d = 1, d <= k, d++,
+                If[query[[d]] < lowerBounds[[d]],
+                        total = total + (query[[d]] - lowerBounds[[d]])^2;
+                                If[total > (Last[nearest[[2]]])^2,
+                                Return[False],
+                                (* else nothing *)
+                        ],
+                (* else *)
+                        If[query[[d]] > upperBounds[[d]],
+                                total = total + (query[[d]] - \
+upperBounds[[d]])^2;
+                                If[total > (Last[nearest[[2]]])^2,
+                                        Return[False],
+                                        (* else nothing *)
+                                ],
+                        (* else nothing *)
+                        ]
+                ]
+        ];
+        Return[True]    
+];\
+\>", "Input",
+ AspectRatioFixed->True],
+
+Cell["\<\
+The following module initialises the global variables to be used in the \
+search. The number of nearest neighbours to be found is needed (numNearest), \
+as is the query record (query), so that the dimensionality of the data cen be \
+found. This initialisation must be repeated for each query point.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+(* Initialisations for globals *)
+initialise[query_, numNearest_] :=
+        Module[
+        {},
+        nearest = {Table[-1, {numNearest}],Table[Infinity, {numNearest}]};
+        upperBounds = Table[Infinity, {Length[query]}];
+        lowerBounds = Table[-Infinity, {Length[query]}]
+];\
+\>", "Input",
+ PageBreakAbove->False,
+ PageBreakBelow->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The following calculates the (numNearest) nearest neighbours of the input \
+data entered (data). As an example, the 30 nearest neighbours of the points \
+in \"data\" can be found by entering \"NNarray = nearestNeighbours[data, 30]\"\
+\>", "Text",
+ Evaluatable->False,
+ PageBreakAbove->False,
+ PageBreakBelow->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+nearestNeighbours[inData_, numNearest_] :=
+        Module[
+        {tree, query, indexedData, currentList = {}, i},
+        indexedData = addIndex[inData];
+        Print[\"Building Search Tree...\"];
+        tree = buildTree[Length[inData[[1]]], indexedData];
+        Print[\"Starting Nearest Neighbour Search...\"];
+        For[i = 1, i <= Length[inData], i++,
+                Print[\"Processing \", i];
+                query = indexedData[[i]][[1]];
+                initialise[query, numNearest];
+                searchTree[query, Length[query], tree];
+                currentList = Append[currentList, nearest]
+        ];
+        Return[currentList]
+];\
+\>", "Input",
+ AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Experimental Results", "Section",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The algorithm above has been implemented in C, using long double arthimetic, \
+togther with an naive O(n^2) algorithm to provide a comparison. Both were run \
+initially on datafiles of sizes 100, 200, 400, 800, 1600 and 3200 \
+3-dimensional points. Further runs were carried out using bucket-sizes of 4 \
+and 8 on the same set of points. The results are presented below (in a fixed \
+height cell):\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "IssueTag"],
+   ImageSizeCache->{109., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityTextTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[TextData[{
+ "As of Version 6, PlotJoined has been superseded by Joined. ",
+ StyleBox[ButtonBox["\[RightSkeleton]",
+  BaseStyle->"Link",
+  ButtonData->"paclet:ref/PlotJoined"], "SR"]
+}], "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "SuggestionTag"],
+   ImageSizeCache->{104., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityInputTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"n2", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"8", ",", "8", ",", "8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"27", ",", "27", ",", "27"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"101", ",", "102", ",", "103"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"387", ",", "387", ",", "386"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1490", ",", "1490", ",", "1490"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5887", ",", "5888", ",", "5884"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"nlogn1", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"8", ",", "8", ",", "8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "16", ",", "16"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"34", ",", "34", ",", "34"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"67", ",", "67", ",", "67"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"145", ",", "145", ",", "146"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"290", ",", "289", ",", "290"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"nlogn4", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"6", ",", "6", ",", "6"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"12", ",", "12", ",", "12"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"27", ",", "27", ",", "27"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"55", ",", "55", ",", "55"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"120", ",", "120", ",", "121"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"241", ",", "241", ",", "241"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"nlogn8", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"6", ",", "6", ",", "6"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"12", ",", "12", ",", "12"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"26", ",", "26", ",", "26"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"53", ",", "53", ",", "53"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"116", ",", "116", ",", "117"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"234", ",", "233", ",", "233"}], "}"}]}], "}"}]}], ";", 
+  RowBox[{"xs", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "100", ",", "200", ",", "400", ",", "800", ",", "1600", ",", "3200"}], 
+    "}"}]}], ";", 
+  RowBox[{"n2bar", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{"xs", ",", 
+      RowBox[{"Mean", "/@", "n2"}]}], "}"}], "]"}]}], ";", 
+  RowBox[{"nlogn1bar", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{"xs", ",", 
+      RowBox[{"Mean", "/@", "nlogn1"}]}], "}"}], "]"}]}], ";", 
+  RowBox[{"nlogn4bar", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{"xs", ",", 
+      RowBox[{"Mean", "/@", "nlogn4"}]}], "}"}], "]"}]}], ";", 
+  RowBox[{"nlogn8bar", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{"xs", ",", 
+      RowBox[{"Mean", "/@", "nlogn8"}]}], "}"}], "]"}]}], ";", 
+  RowBox[{"p1", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"n2bar", ",", 
+     RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+     RowBox[{"DisplayFunction", "\[Rule]", "Identity"}], ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<(n)\>\"", ",", "\"\<Time\>\""}], "}"}]}]}], "]"}]}], ";", 
+  
+  RowBox[{"p2", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"nlogn1bar", ",", 
+     RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+     RowBox[{"DisplayFunction", "\[Rule]", "Identity"}], ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<(n)\>\"", ",", "\"\<Time\>\""}], "}"}]}]}], "]"}]}], ";", 
+  
+  RowBox[{"p3", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"nlogn4bar", ",", 
+     RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+     RowBox[{"DisplayFunction", "\[Rule]", "Identity"}], ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<(n)\>\"", ",", "\"\<Time\>\""}], "}"}]}]}], "]"}]}], ";", 
+  
+  RowBox[{"p4", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{"nlogn8bar", ",", 
+     RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+     RowBox[{"DisplayFunction", "\[Rule]", "Identity"}], ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<(n)\>\"", ",", "\"\<Time\>\""}], "}"}]}]}], "]"}]}], 
+  ";"}]], "CompatibilityInput",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-no"],
+
+Cell[BoxData[
+ RowBox[{
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "ReplaceSuggestion"],
+    ImageSizeCache->{228., {2., 12.}}],
+   ButtonData->{"compatibilitytag-plotjoined", "Replace"}], 
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "DiscardSuggestion"],
+    ImageSizeCache->{192., {2., 12.}}],
+   ButtonData->{
+    "compatibilitytag-plotjoined", "Discard"}]}]], "CompatibilityControls", \
+"CompatibilityControls",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell["\<\
+n2 = {{8,8,8}, {27,27,27}, {101,102,103}, {387,387,386}, 
+        {1490, 1490, 1490}, {5887, 5888, 5884}};
+nlogn1 = {{8,8,8}, {16,16,16}, {34,34,34}, {67,67,67},
+        {145,145,146}, {290,289,290}};
+nlogn4 = {{6,6,6}, {12,12,12}, {27,27,27}, {55,55,55},
+        {120,120,121}, {241,241,241}};
+nlogn8 = {{6,6,6}, {12,12,12}, {26,26,26}, {53,53,53},
+        {116,116,117}, {234,233,233}};
+xs = {100, 200, 400, 800, 1600, 3200};
+n2bar = Transpose[{xs, Map[Mean, n2]}];
+nlogn1bar = Transpose[{xs, Map[Mean, nlogn1]}];
+nlogn4bar = Transpose[{xs, Map[Mean, nlogn4]}];
+nlogn8bar = Transpose[{xs, Map[Mean, nlogn8]}];
+p1 = ListPlot[n2bar, PlotJoined->True,
+        DisplayFunction->Identity,
+        AxesLabel->{\"(n)\", \"Time\"}];
+p2 = ListPlot[nlogn1bar, PlotJoined->True,
+        DisplayFunction->Identity,
+        AxesLabel->{\"(n)\", \"Time\"}];
+p3 = ListPlot[nlogn4bar, PlotJoined->True,
+        DisplayFunction->Identity,
+        AxesLabel->{\"(n)\", \"Time\"}];
+p4 = ListPlot[nlogn8bar, PlotJoined->True,
+        DisplayFunction->Identity,
+        AxesLabel->{\"(n)\", \"Time\"}];\
+\>", "Input",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-yes"],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "IssueTag"],
+   ImageSizeCache->{109., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityTextTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell["\<\
+Show is terminated by a semicolon. Graphics output will be suppressed if it \
+is not removed.\
+\>", "CompatibilityText",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "SuggestionTag"],
+   ImageSizeCache->{104., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityInputTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell[BoxData[
+ RowBox[{"a1", "=", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"p1", ",", "p2"}], "}"}], ",", 
+    RowBox[{"DisplayFunction", "\[Rule]", "$DisplayFunction"}], ",", 
+    RowBox[{"PlotLabel", "\[Rule]", "\"\<kd-Tree compared to n^2\>\""}], ",", 
+    
+    RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+    RowBox[{"Epilog", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<n^2\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"2500", ",", "5000"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<kd-tree\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"3000", ",", "600"}], "}"}]}], "]"}]}], "}"}]}]}], 
+   "]"}]}]], "CompatibilityInput",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-no"],
+
+Cell[BoxData[{
+ RowBox[{
+  CheckboxBox[False], 
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "ApplyAllInstances"],
+   ImageSizeCache->{356., {2., 12.}}]}], "\n", 
+ RowBox[{
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "ReplaceSuggestion"],
+    ImageSizeCache->{228., {2., 12.}}],
+   ButtonData->{"compatibilitytag-semicolon-Show", "Replace"}], 
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "DiscardSuggestion"],
+    ImageSizeCache->{192., {2., 12.}}],
+   ButtonData->{
+    "compatibilitytag-semicolon-Show", 
+     "Discard"}]}]}], "CompatibilityControls", "CompatibilityControls",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell["\<\
+a1 = Show[{p1, p2}, DisplayFunction->$DisplayFunction,
+        PlotLabel->\"kd-Tree compared to n^2\",
+        PlotRange->All,
+        Epilog->{Text[\"n^2\", {2500, 5000}],
+                Text[\"kd-tree\", {3000, 600}]}];\
+\>", "Input",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-yes"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+%% Graphics
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+-0.00691244 0.00030722 0.013914 0.000100131 [
+[(500)] .1467 .01391 0 2 Msboxa
+[(1000)] .30031 .01391 0 2 Msboxa
+[(1500)] .45392 .01391 0 2 Msboxa
+[(2000)] .60753 .01391 0 2 Msboxa
+[(2500)] .76114 .01391 0 2 Msboxa
+[(3000)] .91475 .01391 0 2 Msboxa
+[(\\(n\\))] 1.025 .01391 -1 0 Msboxa
+[(kd-Tree compared to n^2)] .5 .61803 0 -2 0 0 1 Mouter Mrotsboxa
+[(1000)] -0.01941 .11405 1 0 Msboxa
+[(2000)] -0.01941 .21418 1 0 Msboxa
+[(3000)] -0.01941 .31431 1 0 Msboxa
+[(4000)] -0.01941 .41444 1 0 Msboxa
+[(5000)] -0.01941 .51457 1 0 Msboxa
+[(6000)] -0.01941 .6147 1 0 Msboxa
+[(Time)] -0.00691 .61803 0 -4 Msboxa
+[(n^2)] .76114 .51457 0 0 Msboxa
+[(kd-tree)] .91475 .07399 0 0 Msboxa
+[ -0.00791 -0.001 0 0 ]
+[ 1.001 .61903 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+[ ] 0 setdash
+0 g
+p
+p
+.002 w
+.1467 .01391 m
+.1467 .02016 L
+s
+P
+[(500)] .1467 .01391 0 2 Mshowa
+p
+.002 w
+.30031 .01391 m
+.30031 .02016 L
+s
+P
+[(1000)] .30031 .01391 0 2 Mshowa
+p
+.002 w
+.45392 .01391 m
+.45392 .02016 L
+s
+P
+[(1500)] .45392 .01391 0 2 Mshowa
+p
+.002 w
+.60753 .01391 m
+.60753 .02016 L
+s
+P
+[(2000)] .60753 .01391 0 2 Mshowa
+p
+.002 w
+.76114 .01391 m
+.76114 .02016 L
+s
+P
+[(2500)] .76114 .01391 0 2 Mshowa
+p
+.002 w
+.91475 .01391 m
+.91475 .02016 L
+s
+P
+[(3000)] .91475 .01391 0 2 Mshowa
+p
+.001 w
+.02381 .01391 m
+.02381 .01766 L
+s
+P
+p
+.001 w
+.05453 .01391 m
+.05453 .01766 L
+s
+P
+p
+.001 w
+.08525 .01391 m
+.08525 .01766 L
+s
+P
+p
+.001 w
+.11598 .01391 m
+.11598 .01766 L
+s
+P
+p
+.001 w
+.17742 .01391 m
+.17742 .01766 L
+s
+P
+p
+.001 w
+.20814 .01391 m
+.20814 .01766 L
+s
+P
+p
+.001 w
+.23886 .01391 m
+.23886 .01766 L
+s
+P
+p
+.001 w
+.26959 .01391 m
+.26959 .01766 L
+s
+P
+p
+.001 w
+.33103 .01391 m
+.33103 .01766 L
+s
+P
+p
+.001 w
+.36175 .01391 m
+.36175 .01766 L
+s
+P
+p
+.001 w
+.39247 .01391 m
+.39247 .01766 L
+s
+P
+p
+.001 w
+.4232 .01391 m
+.4232 .01766 L
+s
+P
+p
+.001 w
+.48464 .01391 m
+.48464 .01766 L
+s
+P
+p
+.001 w
+.51536 .01391 m
+.51536 .01766 L
+s
+P
+p
+.001 w
+.54608 .01391 m
+.54608 .01766 L
+s
+P
+p
+.001 w
+.5768 .01391 m
+.5768 .01766 L
+s
+P
+p
+.001 w
+.63825 .01391 m
+.63825 .01766 L
+s
+P
+p
+.001 w
+.66897 .01391 m
+.66897 .01766 L
+s
+P
+p
+.001 w
+.69969 .01391 m
+.69969 .01766 L
+s
+P
+p
+.001 w
+.73041 .01391 m
+.73041 .01766 L
+s
+P
+p
+.001 w
+.79186 .01391 m
+.79186 .01766 L
+s
+P
+p
+.001 w
+.82258 .01391 m
+.82258 .01766 L
+s
+P
+p
+.001 w
+.8533 .01391 m
+.8533 .01766 L
+s
+P
+p
+.001 w
+.88402 .01391 m
+.88402 .01766 L
+s
+P
+p
+.001 w
+.94547 .01391 m
+.94547 .01766 L
+s
+P
+p
+.001 w
+.97619 .01391 m
+.97619 .01766 L
+s
+P
+[(\\(n\\))] 1.025 .01391 -1 0 Mshowa
+p
+.002 w
+0 .01391 m
+1 .01391 L
+s
+P
+[(kd-Tree compared to n^2)] .5 .61803 0 -2 0 0 1 Mouter Mrotshowa
+p
+.002 w
+-0.00691 .11405 m
+-0.00066 .11405 L
+s
+P
+[(1000)] -0.01941 .11405 1 0 Mshowa
+p
+.002 w
+-0.00691 .21418 m
+-0.00066 .21418 L
+s
+P
+[(2000)] -0.01941 .21418 1 0 Mshowa
+p
+.002 w
+-0.00691 .31431 m
+-0.00066 .31431 L
+s
+P
+[(3000)] -0.01941 .31431 1 0 Mshowa
+p
+.002 w
+-0.00691 .41444 m
+-0.00066 .41444 L
+s
+P
+[(4000)] -0.01941 .41444 1 0 Mshowa
+p
+.002 w
+-0.00691 .51457 m
+-0.00066 .51457 L
+s
+P
+[(5000)] -0.01941 .51457 1 0 Mshowa
+p
+.002 w
+-0.00691 .6147 m
+-0.00066 .6147 L
+s
+P
+[(6000)] -0.01941 .6147 1 0 Mshowa
+p
+.001 w
+-0.00691 .03394 m
+-0.00316 .03394 L
+s
+P
+p
+.001 w
+-0.00691 .05397 m
+-0.00316 .05397 L
+s
+P
+p
+.001 w
+-0.00691 .07399 m
+-0.00316 .07399 L
+s
+P
+p
+.001 w
+-0.00691 .09402 m
+-0.00316 .09402 L
+s
+P
+p
+.001 w
+-0.00691 .13407 m
+-0.00316 .13407 L
+s
+P
+p
+.001 w
+-0.00691 .1541 m
+-0.00316 .1541 L
+s
+P
+p
+.001 w
+-0.00691 .17412 m
+-0.00316 .17412 L
+s
+P
+p
+.001 w
+-0.00691 .19415 m
+-0.00316 .19415 L
+s
+P
+p
+.001 w
+-0.00691 .2342 m
+-0.00316 .2342 L
+s
+P
+p
+.001 w
+-0.00691 .25423 m
+-0.00316 .25423 L
+s
+P
+p
+.001 w
+-0.00691 .27425 m
+-0.00316 .27425 L
+s
+P
+p
+.001 w
+-0.00691 .29428 m
+-0.00316 .29428 L
+s
+P
+p
+.001 w
+-0.00691 .33433 m
+-0.00316 .33433 L
+s
+P
+p
+.001 w
+-0.00691 .35436 m
+-0.00316 .35436 L
+s
+P
+p
+.001 w
+-0.00691 .37439 m
+-0.00316 .37439 L
+s
+P
+p
+.001 w
+-0.00691 .39441 m
+-0.00316 .39441 L
+s
+P
+p
+.001 w
+-0.00691 .43446 m
+-0.00316 .43446 L
+s
+P
+p
+.001 w
+-0.00691 .45449 m
+-0.00316 .45449 L
+s
+P
+p
+.001 w
+-0.00691 .47452 m
+-0.00316 .47452 L
+s
+P
+p
+.001 w
+-0.00691 .49454 m
+-0.00316 .49454 L
+s
+P
+p
+.001 w
+-0.00691 .5346 m
+-0.00316 .5346 L
+s
+P
+p
+.001 w
+-0.00691 .55462 m
+-0.00316 .55462 L
+s
+P
+p
+.001 w
+-0.00691 .57465 m
+-0.00316 .57465 L
+s
+P
+p
+.001 w
+-0.00691 .59467 m
+-0.00316 .59467 L
+s
+P
+[(Time)] -0.00691 .61803 0 -4 Mshowa
+p
+.002 w
+-0.00691 0 m
+-0.00691 .61803 L
+s
+P
+P
+p
+.004 w
+.02381 .01472 m
+.05453 .01662 L
+.11598 .02413 L
+.23886 .05263 L
+.48464 .16311 L
+.97619 .60332 L
+s
+.02381 .01472 m
+.05453 .01552 L
+.11598 .01732 L
+.23886 .02062 L
+.48464 .02847 L
+.97619 .04292 L
+s
+P
+[(n^2)] .76114 .51457 0 0 Mshowa
+[(kd-tree)] .91475 .07399 0 0 Mshowa
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+ Evaluatable->False,
+ AspectRatioFixed->True,
+ ImageSize->{325, 200},
+ ImageMargins->{{34, Inherited}, {Inherited, Inherited}},
+ ImageCache->GraphicsData["CompressedBitmap", "\<\
+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
+\
+\>"],
+ ImageRangeCache->{{{0, 324}, {199, 0}} -> {-381.537, -569.255, 12.3675, \
+37.9456}}],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "IssueTag"],
+   ImageSizeCache->{109., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityTextTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell["\<\
+Show is terminated by a semicolon. Graphics output will be suppressed if it \
+is not removed.\
+\>", "CompatibilityText",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "SuggestionTag"],
+   ImageSizeCache->{104., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityInputTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell[BoxData[
+ RowBox[{"a2", "=", 
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"p2", ",", "p3", ",", "p4"}], "}"}], ",", 
+    RowBox[{
+    "PlotLabel", "\[Rule]", "\"\<kd-tree bucket size comparison\>\""}], ",", 
+    RowBox[{"DisplayFunction", "\[Rule]", "$DisplayFunction"}], ",", 
+    RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+    RowBox[{"Epilog", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<1\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"3300", ",", "280"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<4\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"3300", ",", "250"}], "}"}]}], "]"}], ",", 
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<8\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{"3300", ",", "230"}], "}"}]}], "]"}]}], "}"}]}]}], 
+   "]"}]}]], "CompatibilityInput",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-no"],
+
+Cell[BoxData[{
+ RowBox[{
+  CheckboxBox[False], 
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "ApplyAllInstances"],
+   ImageSizeCache->{356., {2., 12.}}]}], "\n", 
+ RowBox[{
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "ReplaceSuggestion"],
+    ImageSizeCache->{228., {2., 12.}}],
+   ButtonData->{"compatibilitytag-semicolon-Show", "Replace"}], 
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "DiscardSuggestion"],
+    ImageSizeCache->{192., {2., 12.}}],
+   ButtonData->{
+    "compatibilitytag-semicolon-Show", 
+     "Discard"}]}]}], "CompatibilityControls", "CompatibilityControls",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+
+Cell["\<\
+a2 = Show[{p2, p3, p4},
+        PlotLabel->\"kd-tree bucket size comparison\",
+        DisplayFunction->$DisplayFunction,
+        PlotRange->All,
+        Epilog->{Text[\"1\", {3300, 280}],
+                        Text[\"4\", {3300, 250}],
+                        Text[\"8\", {3300, 230}]}];\
+\>", "Input",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-yes"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .61803 
+MathPictureStart
+%% Graphics
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+-0.00691244 0.00030722 0.00226519 0.00207498 [
+[(500)] .1467 .00227 0 2 Msboxa
+[(1000)] .30031 .00227 0 2 Msboxa
+[(1500)] .45392 .00227 0 2 Msboxa
+[(2000)] .60753 .00227 0 2 Msboxa
+[(2500)] .76114 .00227 0 2 Msboxa
+[(3000)] .91475 .00227 0 2 Msboxa
+[(\\(n\\))] 1.025 .00227 -1 0 Msboxa
+[(kd-tree bucket size comparison)] .5 .61803 0 -2 0 0 1 Mouter Mrotsboxa
+[(50)] -0.01941 .10601 1 0 Msboxa
+[(100)] -0.01941 .20976 1 0 Msboxa
+[(150)] -0.01941 .31351 1 0 Msboxa
+[(200)] -0.01941 .41726 1 0 Msboxa
+[(250)] -0.01941 .52101 1 0 Msboxa
+[(Time)] -0.00691 .61803 0 -4 Msboxa
+[(1)] 1.00691 .58326 0 0 Msboxa
+[(4)] 1.00691 .52101 0 0 Msboxa
+[(8)] 1.00691 .47951 0 0 Msboxa
+[ -0.00791 -0.001 0 0 ]
+[ 1.001 .61903 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+[ ] 0 setdash
+0 g
+p
+p
+.002 w
+.1467 .00227 m
+.1467 .00852 L
+s
+P
+[(500)] .1467 .00227 0 2 Mshowa
+p
+.002 w
+.30031 .00227 m
+.30031 .00852 L
+s
+P
+[(1000)] .30031 .00227 0 2 Mshowa
+p
+.002 w
+.45392 .00227 m
+.45392 .00852 L
+s
+P
+[(1500)] .45392 .00227 0 2 Mshowa
+p
+.002 w
+.60753 .00227 m
+.60753 .00852 L
+s
+P
+[(2000)] .60753 .00227 0 2 Mshowa
+p
+.002 w
+.76114 .00227 m
+.76114 .00852 L
+s
+P
+[(2500)] .76114 .00227 0 2 Mshowa
+p
+.002 w
+.91475 .00227 m
+.91475 .00852 L
+s
+P
+[(3000)] .91475 .00227 0 2 Mshowa
+p
+.001 w
+.02381 .00227 m
+.02381 .00602 L
+s
+P
+p
+.001 w
+.05453 .00227 m
+.05453 .00602 L
+s
+P
+p
+.001 w
+.08525 .00227 m
+.08525 .00602 L
+s
+P
+p
+.001 w
+.11598 .00227 m
+.11598 .00602 L
+s
+P
+p
+.001 w
+.17742 .00227 m
+.17742 .00602 L
+s
+P
+p
+.001 w
+.20814 .00227 m
+.20814 .00602 L
+s
+P
+p
+.001 w
+.23886 .00227 m
+.23886 .00602 L
+s
+P
+p
+.001 w
+.26959 .00227 m
+.26959 .00602 L
+s
+P
+p
+.001 w
+.33103 .00227 m
+.33103 .00602 L
+s
+P
+p
+.001 w
+.36175 .00227 m
+.36175 .00602 L
+s
+P
+p
+.001 w
+.39247 .00227 m
+.39247 .00602 L
+s
+P
+p
+.001 w
+.4232 .00227 m
+.4232 .00602 L
+s
+P
+p
+.001 w
+.48464 .00227 m
+.48464 .00602 L
+s
+P
+p
+.001 w
+.51536 .00227 m
+.51536 .00602 L
+s
+P
+p
+.001 w
+.54608 .00227 m
+.54608 .00602 L
+s
+P
+p
+.001 w
+.5768 .00227 m
+.5768 .00602 L
+s
+P
+p
+.001 w
+.63825 .00227 m
+.63825 .00602 L
+s
+P
+p
+.001 w
+.66897 .00227 m
+.66897 .00602 L
+s
+P
+p
+.001 w
+.69969 .00227 m
+.69969 .00602 L
+s
+P
+p
+.001 w
+.73041 .00227 m
+.73041 .00602 L
+s
+P
+p
+.001 w
+.79186 .00227 m
+.79186 .00602 L
+s
+P
+p
+.001 w
+.82258 .00227 m
+.82258 .00602 L
+s
+P
+p
+.001 w
+.8533 .00227 m
+.8533 .00602 L
+s
+P
+p
+.001 w
+.88402 .00227 m
+.88402 .00602 L
+s
+P
+p
+.001 w
+.94547 .00227 m
+.94547 .00602 L
+s
+P
+p
+.001 w
+.97619 .00227 m
+.97619 .00602 L
+s
+P
+[(\\(n\\))] 1.025 .00227 -1 0 Mshowa
+p
+.002 w
+0 .00227 m
+1 .00227 L
+s
+P
+[(kd-tree bucket size comparison)] .5 .61803 0 -2 0 0 1 Mouter Mrotshowa
+p
+.002 w
+-0.00691 .10601 m
+-0.00066 .10601 L
+s
+P
+[(50)] -0.01941 .10601 1 0 Mshowa
+p
+.002 w
+-0.00691 .20976 m
+-0.00066 .20976 L
+s
+P
+[(100)] -0.01941 .20976 1 0 Mshowa
+p
+.002 w
+-0.00691 .31351 m
+-0.00066 .31351 L
+s
+P
+[(150)] -0.01941 .31351 1 0 Mshowa
+p
+.002 w
+-0.00691 .41726 m
+-0.00066 .41726 L
+s
+P
+[(200)] -0.01941 .41726 1 0 Mshowa
+p
+.002 w
+-0.00691 .52101 m
+-0.00066 .52101 L
+s
+P
+[(250)] -0.01941 .52101 1 0 Mshowa
+p
+.001 w
+-0.00691 .02302 m
+-0.00316 .02302 L
+s
+P
+p
+.001 w
+-0.00691 .04376 m
+-0.00316 .04376 L
+s
+P
+p
+.001 w
+-0.00691 .06451 m
+-0.00316 .06451 L
+s
+P
+p
+.001 w
+-0.00691 .08526 m
+-0.00316 .08526 L
+s
+P
+p
+.001 w
+-0.00691 .12676 m
+-0.00316 .12676 L
+s
+P
+p
+.001 w
+-0.00691 .14751 m
+-0.00316 .14751 L
+s
+P
+p
+.001 w
+-0.00691 .16826 m
+-0.00316 .16826 L
+s
+P
+p
+.001 w
+-0.00691 .18901 m
+-0.00316 .18901 L
+s
+P
+p
+.001 w
+-0.00691 .23051 m
+-0.00316 .23051 L
+s
+P
+p
+.001 w
+-0.00691 .25126 m
+-0.00316 .25126 L
+s
+P
+p
+.001 w
+-0.00691 .27201 m
+-0.00316 .27201 L
+s
+P
+p
+.001 w
+-0.00691 .29276 m
+-0.00316 .29276 L
+s
+P
+p
+.001 w
+-0.00691 .33426 m
+-0.00316 .33426 L
+s
+P
+p
+.001 w
+-0.00691 .35501 m
+-0.00316 .35501 L
+s
+P
+p
+.001 w
+-0.00691 .37576 m
+-0.00316 .37576 L
+s
+P
+p
+.001 w
+-0.00691 .39651 m
+-0.00316 .39651 L
+s
+P
+p
+.001 w
+-0.00691 .43801 m
+-0.00316 .43801 L
+s
+P
+p
+.001 w
+-0.00691 .45876 m
+-0.00316 .45876 L
+s
+P
+p
+.001 w
+-0.00691 .47951 m
+-0.00316 .47951 L
+s
+P
+p
+.001 w
+-0.00691 .50026 m
+-0.00316 .50026 L
+s
+P
+p
+.001 w
+-0.00691 .54176 m
+-0.00316 .54176 L
+s
+P
+p
+.001 w
+-0.00691 .56251 m
+-0.00316 .56251 L
+s
+P
+p
+.001 w
+-0.00691 .58326 m
+-0.00316 .58326 L
+s
+P
+p
+.001 w
+-0.00691 .60401 m
+-0.00316 .60401 L
+s
+P
+[(Time)] -0.00691 .61803 0 -4 Mshowa
+p
+.002 w
+-0.00691 0 m
+-0.00691 .61803 L
+s
+P
+P
+p
+.004 w
+.02381 .01887 m
+.05453 .03546 L
+.11598 .07281 L
+.23886 .14129 L
+.48464 .30383 L
+.97619 .60332 L
+s
+.02381 .01472 m
+.05453 .02716 L
+.11598 .05829 L
+.23886 .11639 L
+.48464 .25195 L
+.97619 .50234 L
+s
+.02381 .01472 m
+.05453 .02716 L
+.11598 .05621 L
+.23886 .11224 L
+.48464 .24365 L
+.97619 .48643 L
+s
+P
+[(1)] 1.00691 .58326 0 0 Mshowa
+[(4)] 1.00691 .52101 0 0 Mshowa
+[(8)] 1.00691 .47951 0 0 Mshowa
+0 0 m
+1 0 L
+1 .61803 L
+0 .61803 L
+closepath
+clip
+newpath
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+ Evaluatable->False,
+ AspectRatioFixed->True,
+ ImageSize->{335, 206},
+ ImageMargins->{{34, Inherited}, {Inherited, Inherited}},
+ ImageCache->GraphicsData["CompressedBitmap", "\<\
+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
+0/s/V8+d1FUtqb2pyl1qbS61cYucTwB3w2P+\
+\>"],
+ ImageRangeCache->{{{0, 334}, {205, 0}} -> {-369.515, -26.9771, 12.1474, \
+1.79853}}],
+
+Cell["\<\
+The first graph compares the performance of the O(n^2) algorithm and the \
+kd-tree method. It can be seen that the kd-tree algorithm does indeed have \
+O(n log n) performance. At 3200 points, the O(n^2) algorithm took on average \
+1 hour 38 minutes to complete, whereas the kd-tree took just under 5 minutes.\
+\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The second graph compares different setting for the bucket size on the same \
+set of points. The top line is bucket size = 1, the middle is bucket size = \
+4, the lowest line if bucket size  = 8. It can be seen that increasing the \
+size does give a performance increase, particularly noticable in the jump \
+from 1 to 4. The increase from 4 to 8 is less marked.\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+In order to determine how the algorithm scales  with increasing dimension, a \
+series of tests were performed where the dimension ranged from 2 to 40 and \
+the number of points ranged from 100 to 2000 (ie. 100 tests in all). All \
+tests were perfomed on an
+Alpha workstation. The raw results are in the following fixed height cell:\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+rawdata = {{2, 200, 0}, {2, 400, 0}, {2, 600, 0}, {2, 800, 0}, {2, 1000, 0}, \
+{2, 1200, 0},
+ {2, 1400, 0}, {2, 1600, 0}, {2, 1800,  1}, {2, 2000, 1}, {4, 200,  0},{4,  \
+400,
+ 0}, {4, 600, 0}, {4, 800, 0}, {4,  1000,  1}, {4, 1200, 1}, {4,  1400,  2}, \
+{4,
+ 1600,  2}, {4,  1800,  3}, {4, 2000, 3}, {6, 200, 0}, {6, 400, 0}, {6, 600, \
+1},
+ {6, 800, 2}, {6, 1000, 3}, {6, 1200, 5}, {6, 1400, 6}, {6, 1600, 7}, {6,  \
+1800,
+ 9}, {6,  2000,  10}, {8, 200, 0}, {8, 400, 0}, {8, 600,  2}, {8,  800,  5}, \
+{8,
+ 1000, 7}, {8, 1200, 11}, {8, 1400, 14}, {8, 1600, 18}, {8, 1800, 21}, {8, \
+2000,
+ 25}, {10, 200, 0}, {10, 400, 1}, {10,  600, 4}, {10, 800, 7}, {10,  1000,  \
+11},
+ {10, 1200, 18}, {10, 1400, 23}, {10, 1600, 29}, {10, 1800, 36}, {10, 2000, \
+43},
+ {12, 200, 0}, {12, 400, 1}, {12, 600, 4}, {12, 800, 9}, {12,  1000,  13},  \
+{12,
+ 1200, 22}, {12, 1400, 29}, {12, 1600, 39}, {12, 1800, 44}, {12, 2000, 56}, \
+{14,
+ 200, 0}, {14, 400, 1}, {14, 600, 5}, {14, 800, 9}, {14, 1000,  15}, {14,  \
+1200,
+ 24}, {14, 1400, 32}, {14, 1600, 45}, {14,  1800, 51}, {14, 2000, 62}, {16, \
+200,
+ 1}, {16, 400, 2}, {16, 600, 6}, {16, 800, 11}, {16, 1000, 17}, {16, 1200,  \
+27},
+ {16,  1400, 42}, {16, 1600, 47}, {16,  1800, 62}, {16, 2000, 71}, {18, 200, \
+1},
+ {18, 400, 2}, {18, 600, 6}, {18, 800, 12}, {18, 1000, 18}, {18, 1200, 29}, \
+{18,
+ 1400,  42}, {18, 1600, 52}, {18, 1800,  62}, {18, 2000, 77}, {20, 200, 0}, \
+{20,
+ 400, 2}, {20, 600, 9}, {20, 800, 13}, {20,  1000,  20}, {20,  1200,  32},  \
+{20,
+ 1400,  44}, {20, 1600, 56}, {20, 1800,  71}, {20, 2000, 82}, {22, 200, 0}, \
+{22,
+ 400, 3}, {22, 600, 8}, {22, 800, 15}, {22,  1000,  22}, {22,  1200,  35},  \
+{22,
+ 1400,  49}, {22, 1600, 61}, {22, 1800,  74}, {22, 2000, 89}, {24, 200, 1}, \
+{24,
+ 400, 3}, {24, 600, 9}, {24, 800, 17}, {24,  1000,  24}, {24,  1200,  39},  \
+{24,
+ 1400,  52}, {24, 1600, 70}, {24, 1800,  79}, {24, 2000, 96}, {26, 200, 0}, \
+{26,
+ 400, 3}, {26, 600, 10}, {26, 800, 17}, {26,  1000,  25}, {26,  1200,  40}, \
+{26,
+ 1400, 55}, {26, 1600, 75}, {26, 1800, 87}, {26, 2000,  104}, {28, 200, 0}, \
+{28,
+ 400, 4}, {28, 600, 11}, {28, 800, 18}, {28,  1000,  27}, {28,  1200,  43}, \
+{28,
+ 1400, 61}, {28, 1600, 80}, {28, 1800, 91}, {28, 2000,  119}, {30, 200, 1}, \
+{30,
+ 400, 4}, {30, 600, 11}, {30, 800, 19}, {30,  1000,  28}, {30,  1200,  47}, \
+{30,
+ 1400, 69}, {30, 1600, 83}, {30, 1800, 100}, {30, 2000, 119}, {32, 200, 0}, \
+{32,
+ 400, 4}, {32, 600, 12}, {32, 800, 22}, {32,  1000,  33}, {32,  1200,  50}, \
+{32,
+ 1400, 67}, {32, 1600, 88}, {32, 1800, 116}, {32, 2000, 138}, {34, 200, 0}, \
+{34,
+ 400, 5}, {34, 600, 12}, {34, 800, 22}, {34,  1000,  32}, {34,  1200,  52}, \
+{34,
+ 1400, 71}, {34, 1600, 87}, {34, 1800, 114}, {34, 2000, 134}, {36, 200, 0}, \
+{36,
+ 400, 5}, {36, 600, 13}, {36, 800, 23}, {36,  1000,  33}, {36,  1200,  53}, \
+{36,
+ 1400, 89}, {36, 1600,  105}, {36, 1800,  159}, {36, 2000,  135},  {38, 200, \
+0},
+ {38, 400, 6}, {38, 600, 14}, {38, 800, 24}, {38,  1000,  36}, {38,  1200,  \
+66},
+ {38, 1400, 94}, {38, 1600,  130}, {38, 1800,  162}, {38, 2000,  180}, {40, \
+200,
+ 1}, {40, 400, 10}, {40, 600, 27}, {40, 800, 49}, {40,  1000,  67},  {40,  \
+1200,
+ 105}, {40, 1400, 115}, {40, 1600, 156}, {40, 1800, 168}, {40, 2000, 154}};\
+\>", "Input",
+ PageWidth->PaperWidth,
+ AspectRatioFixed->True],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "IssueTag"],
+   ImageSizeCache->{109., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityTextTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[TextData[{
+ "Automatic translation rules are not available for this case. See the \
+Compatibility Guide for updating information. ",
+ StyleBox[ButtonBox["\[RightSkeleton]",
+  BaseStyle->"Link",
+  ButtonData->"paclet:Compatibility/tutorial/Histograms/"], "SR"],
+ "\n",
+ "Automatic translation rules are not available for this case. See the \
+Compatibility Guide for updating information. ",
+ StyleBox[ButtonBox["\[RightSkeleton]",
+  BaseStyle->"Link",
+  ButtonData->"paclet:Compatibility/tutorial/BarCharts/"], "SR"],
+ "\n",
+ "Graphics`Graphics3D` is now obsolete. The legacy version being loaded may \
+conflict with current Mathematica functionality. See the Compatibility Guide \
+for updating information.",
+ StyleBox[ButtonBox["\[RightSkeleton]",
+  BaseStyle->"Link",
+  ButtonData->"paclet:Compatibility/tutorial/Graphics/Graphics3D/"], "SR"]
+}], "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[BoxData[
+ StyleBox[
+  DynamicBox[FEPrivate`FrontEndResource[
+   "CompatibilityToolbarText", "SuggestionTag"],
+   ImageSizeCache->{104., {1., 7.}}],
+  FontFamily->"Times"]], "CompatibilityInputTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Needs", "[", "\"\<BarCharts`\>\"", "]"}], ";", 
+    RowBox[{"Needs", "[", "\"\<Histograms`\>\"", "]"}]}], ")"}], ";", 
+  RowBox[{"plotdata", "=", 
+   RowBox[{"Partition", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"rawdata", "\[LeftDoubleBracket]", 
+        RowBox[{"i", ",", "3"}], "\[RightDoubleBracket]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "1", ",", 
+         RowBox[{"Length", "[", "rawdata", "]"}]}], "}"}]}], "]"}], ",", 
+     "10"}], "]"}]}], ";", 
+  RowBox[{"a3", "=", 
+   RowBox[{"ListPlot3D", "[", 
+    RowBox[{"plotdata", ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+       "\"\<Dimension\>\"", ",", "\"\<Num Vectors\>\"", ",", "Runtime"}], 
+       "}"}]}], ",", 
+     RowBox[{"Ticks", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i", ",", 
+            RowBox[{"4", " ", "i"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "0", ",", "10"}], "}"}]}], "]"}], ",", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"2", " ", "j"}], ",", 
+            RowBox[{"200", " ", "j"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"j", ",", "1", ",", "10"}], "}"}]}], "]"}], ",", 
+        "Automatic"}], "}"}]}], ",", 
+     RowBox[{
+     "PlotLabel", "\[Rule]", 
+      "\"\<Surface Plot of the Runtime in Seconds\>\""}]}], 
+    "]"}]}]}]], "CompatibilityInput",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-no"],
+
+Cell[BoxData[
+ RowBox[{
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "ReplaceSuggestion"],
+    ImageSizeCache->{228., {2., 12.}}],
+   ButtonData->{"", "Replace"}], 
+  ButtonBox[
+   DynamicBox[FEPrivate`FrontEndResource[
+    "CompatibilityToolbarText", "DiscardSuggestion"],
+    ImageSizeCache->{192., {2., 12.}}],
+   ButtonData->{"", "Discard"}]}]], "CompatibilityControls", \
+"CompatibilityControls",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+
+Cell["\<\
+Needs[\"Graphics`Graphics3D`\"];
+plotdata = Partition[
+                Table[rawdata[[i,3]], {i,1,Length[rawdata]}],
+                10];
+a3 = ListPlot3D[plotdata,
+        AxesLabel->{\"Dimension\", \"Num Vectors\", Runtime},
+        Ticks->{Table[{i,4*i},{i,0,10}],
+                        Table[{2j,200*j},{j,1,10}],
+                        Automatic},
+        PlotLabel->\"Surface Plot of the Runtime in Seconds\"]\
+\>", "Input",
+ AspectRatioFixed->True,
+ CellTags->"compatibility-yes"],
+
+Cell[GraphicsData["PostScript", "\<\
+%!
+%%Creator: Mathematica
+%%AspectRatio: .82055 
+MathPictureStart
+%% SurfaceGraphics
+/Courier findfont 10  scalefont  setfont
+% Scaling calculations
+0.0249355 0.99742 -0.0396341 0.99742 [
+[(Surface Plot of the Runtime in Seconds)] .5 .82055 0 -1.5 Msboxa
+[(4)] .05113 .25884 1 .93395 Msboxa
+[(8)] .11298 .23449 1 .97619 Msboxa
+[(12)] .17647 .20951 .97806 1 Msboxa
+[(16)] .24165 .18387 .93173 1 Msboxa
+[(20)] .30859 .15753 .8854 1 Msboxa
+[(24)] .37738 .13048 .83907 1 Msboxa
+[(28)] .44808 .10268 .79274 1 Msboxa
+[(32)] .52077 .07411 .7464 1 Msboxa
+[(36)] .59555 .04472 .70007 1 Msboxa
+[(40)] .6725 .0145 .65374 1 Msboxa
+[(Dimension)] .30204 .09689 .86223 1 Msboxa
+[(200)] .70814 .04674 -1 .38545 Msboxa
+[(400)] .7413 .0975 -1 .37378 Msboxa
+[(600)] .77288 .14586 -1 .36279 Msboxa
+[(800)] .80299 .19197 -1 .35243 Msboxa
+[(1000)] .83174 .23599 -1 .34264 Msboxa
+[(1200)] .8592 .27805 -1 .33339 Msboxa
+[(1400)] .88548 .31829 -1 .32462 Msboxa
+[(1600)] .91064 .35682 -1 .3163 Msboxa
+[(1800)] .93475 .39375 -1 .30839 Msboxa
+[(2000)] .95788 .42917 -1 .30087 Msboxa
+[(Num Vectors)] .89773 .2266 -1 .34028 Msboxa
+[(0)] .04785 .27682 1 -0.3906 Msboxa
+[(50)] .03893 .33271 1 -0.37954 Msboxa
+[(100)] .02966 .39078 1 -0.36801 Msboxa
+[(150)] .02003 .45116 1 -0.35598 Msboxa
+[(Runtime)] -0.02691 .40064 1 -0.37036 Msboxa
+[ 0 0 0 0 ]
+[ 1 .82055 0 0 ]
+] MathScale
+% Start of Graphics
+1 setlinecap
+1 setlinejoin
+newpath
+[ ] 0 setdash
+0 g
+[(Surface Plot of the Runtime in Seconds)] .5 .82055 0 -1.5 Mshowa
+p
+p
+.002 w
+.06024 .26735 m
+.67932 .02494 L
+s
+P
+p
+.002 w
+.06024 .26735 m
+.0648 .2716 L
+s
+P
+[(4)] .05113 .25884 1 .93395 Mshowa
+p
+.002 w
+.1219 .2432 m
+.12636 .24756 L
+s
+P
+[(8)] .11298 .23449 1 .97619 Mshowa
+p
+.002 w
+.18518 .21843 m
+.18954 .22288 L
+s
+P
+[(12)] .17647 .20951 .97806 1 Mshowa
+p
+.002 w
+.25014 .19299 m
+.25439 .19755 L
+s
+P
+[(16)] .24165 .18387 .93173 1 Mshowa
+p
+.002 w
+.31686 .16687 m
+.32099 .17153 L
+s
+P
+[(20)] .30859 .15753 .8854 1 Mshowa
+p
+.002 w
+.38539 .14003 m
+.3894 .14481 L
+s
+P
+[(24)] .37738 .13048 .83907 1 Mshowa
+p
+.002 w
+.45582 .11245 m
+.45969 .11734 L
+s
+P
+[(28)] .44808 .10268 .79274 1 Mshowa
+p
+.002 w
+.52823 .0841 m
+.53196 .08909 L
+s
+P
+[(32)] .52077 .07411 .7464 1 Mshowa
+p
+.002 w
+.6027 .05494 m
+.60628 .06005 L
+s
+P
+[(36)] .59555 .04472 .70007 1 Mshowa
+p
+.002 w
+.67932 .02494 m
+.68274 .03015 L
+s
+P
+[(40)] .6725 .0145 .65374 1 Mshowa
+[(Dimension)] .30204 .09689 .86223 1 Mshowa
+P
+p
+p
+.002 w
+.67932 .02494 m
+.94594 .43277 L
+s
+P
+p
+.002 w
+.69651 .05122 m
+.69069 .05346 L
+s
+P
+[(200)] .70814 .04674 -1 .38545 Mshowa
+p
+.002 w
+.72962 .10187 m
+.72378 .10405 L
+s
+P
+[(400)] .7413 .0975 -1 .37378 Mshowa
+p
+.002 w
+.76116 .15011 m
+.7553 .15224 L
+s
+P
+[(600)] .77288 .14586 -1 .36279 Mshowa
+p
+.002 w
+.79123 .19611 m
+.78535 .19819 L
+s
+P
+[(800)] .80299 .19197 -1 .35243 Mshowa
+p
+.002 w
+.81994 .24003 m
+.81404 .24205 L
+s
+P
+[(1000)] .83174 .23599 -1 .34264 Mshowa
+p
+.002 w
+.84738 .282 m
+.84146 .28397 L
+s
+P
+[(1200)] .8592 .27805 -1 .33339 Mshowa
+p
+.002 w
+.87362 .32214 m
+.86769 .32407 L
+s
+P
+[(1400)] .88548 .31829 -1 .32462 Mshowa
+p
+.002 w
+.89875 .36058 m
+.89281 .36246 L
+s
+P
+[(1600)] .91064 .35682 -1 .3163 Mshowa
+p
+.002 w
+.92284 .39743 m
+.91688 .39926 L
+s
+P
+[(1800)] .93475 .39375 -1 .30839 Mshowa
+p
+.002 w
+.94594 .43277 m
+.93997 .43456 L
+s
+P
+[(2000)] .95788 .42917 -1 .30087 Mshowa
+[(Num Vectors)] .89773 .2266 -1 .34028 Mshowa
+P
+p
+p
+.002 w
+.06024 .26735 m
+.02494 .49015 L
+s
+P
+p
+.002 w
+.05946 .27229 m
+.06527 .27002 L
+s
+P
+[(0)] .04785 .27682 1 -0.3906 Mshowa
+p
+.002 w
+.05058 .32829 m
+.05641 .32608 L
+s
+P
+[(50)] .03893 .33271 1 -0.37954 Mshowa
+p
+.002 w
+.04136 .38648 m
+.04721 .38432 L
+s
+P
+[(100)] .02966 .39078 1 -0.36801 Mshowa
+p
+.002 w
+.03178 .44698 m
+.03765 .44489 L
+s
+P
+[(150)] .02003 .45116 1 -0.35598 Mshowa
+p
+.001 w
+.05771 .28332 m
+.0612 .28196 L
+s
+P
+p
+.001 w
+.05595 .29443 m
+.05944 .29309 L
+s
+P
+p
+.001 w
+.05418 .30563 m
+.05767 .30429 L
+s
+P
+p
+.001 w
+.05239 .31692 m
+.05588 .31558 L
+s
+P
+p
+.001 w
+.04877 .33975 m
+.05227 .33843 L
+s
+P
+p
+.001 w
+.04694 .3513 m
+.05044 .34998 L
+s
+P
+p
+.001 w
+.0451 .36293 m
+.0486 .36163 L
+s
+P
+p
+.001 w
+.04324 .37466 m
+.04674 .37336 L
+s
+P
+p
+.001 w
+.03948 .39839 m
+.04299 .3971 L
+s
+P
+p
+.001 w
+.03757 .41039 m
+.04109 .40912 L
+s
+P
+p
+.001 w
+.03566 .42249 m
+.03918 .42122 L
+s
+P
+p
+.001 w
+.03372 .43469 m
+.03725 .43342 L
+s
+P
+p
+.001 w
+.02981 .45937 m
+.03334 .45812 L
+s
+P
+p
+.001 w
+.02783 .47186 m
+.03136 .47062 L
+s
+P
+p
+.001 w
+.02584 .48445 m
+.02937 .48322 L
+s
+P
+[(Runtime)] -0.02691 .40064 1 -0.37036 Mshowa
+P
+0 0 m
+1 0 L
+1 .82055 L
+0 .82055 L
+closepath
+clip
+newpath
+p
+.002 w
+.06024 .26735 m
+.02494 .49015 L
+s
+.02494 .49015 m
+.40296 .79562 L
+s
+.40296 .79562 m
+.41001 .59401 L
+s
+.41001 .59401 m
+.06024 .26735 L
+s
+.67932 .02494 m
+.94594 .43277 L
+s
+.94594 .43277 m
+.97506 .64585 L
+s
+.97506 .64585 m
+.69286 .25814 L
+s
+.69286 .25814 m
+.67932 .02494 L
+s
+.06024 .26735 m
+.02494 .49015 L
+s
+.02494 .49015 m
+.69286 .25814 L
+s
+.69286 .25814 m
+.67932 .02494 L
+s
+.67932 .02494 m
+.06024 .26735 L
+s
+.41001 .59401 m
+.94594 .43277 L
+s
+.94594 .43277 m
+.97506 .64585 L
+s
+.97506 .64585 m
+.40296 .79562 L
+s
+.40296 .79562 m
+.41001 .59401 L
+s
+P
+p
+.62 .716 .914 r
+.0015 w
+.39451 .58425 .40982 .59955 .46421 .59234 .44926 .5737 Metetra
+.611 .675 .887 r
+.44926 .5737 .46421 .59234 .52009 .5932 .50541 .56493 Metetra
+.605 .593 .813 r
+.50541 .56493 .52009 .5932 .57791 .59936 .56312 .55802 Metetra
+.596 .529 .75 r
+.56312 .55802 .57791 .59936 .63772 .60144 .62258 .55303 Metetra
+.534 .473 .734 r
+.62258 .55303 .63772 .60144 .70082 .62565 .68485 .56733 Metetra
+.548 .461 .709 r
+.68485 .56733 .70082 .62565 .76474 .61927 .74971 .58003 Metetra
+.487 .483 .778 r
+.74971 .58003 .76474 .61927 .83397 .64842 .81824 .60246 Metetra
+.518 .48 .754 r
+.81824 .60246 .83397 .64842 .90299 .64449 .88972 .62129 Metetra
+.534 .624 .887 r
+.88972 .62129 .90299 .64449 .9701 .60949 .96243 .62404 Metetra
+.626 .731 .923 r
+.37887 .56969 .39451 .58425 .44926 .5737 .43397 .55782 Metetra
+.604 .71 .919 r
+.43397 .55782 .44926 .5737 .50541 .56493 .49044 .54876 Metetra
+.587 .704 .924 r
+.49044 .54876 .50541 .56493 .56312 .55802 .54848 .54155 Metetra
+.587 .704 .924 r
+.54848 .54155 .56312 .55802 .62258 .55303 .60823 .53413 Metetra
+.508 .643 .916 r
+.60823 .53413 .62258 .55303 .68485 .56733 .67025 .53728 Metetra
+.446 .508 .829 r
+.67025 .53728 .68485 .56733 .74971 .58003 .73577 .55832 Metetra
+.551 .64 .892 r
+.73577 .55832 .74971 .58003 .81824 .60246 .80257 .55752 Metetra
+.413 .419 .757 r
+.80257 .55752 .81824 .60246 .88972 .62129 .87661 .60125 Metetra
+.773 .762 .844 r
+.87661 .60125 .88972 .62129 .96243 .62404 .94323 .55348 Metetra
+.626 .731 .923 r
+.36293 .55485 .37887 .56969 .43397 .55782 .41837 .54269 Metetra
+.609 .726 .928 r
+.41837 .54269 .43397 .55782 .49044 .54876 .47518 .53229 Metetra
+.587 .704 .924 r
+.47518 .53229 .49044 .54876 .54848 .54155 .53356 .52477 Metetra
+.587 .704 .924 r
+.53356 .52477 .54848 .54155 .60823 .53413 .59366 .51702 Metetra
+.49 .662 .938 r
+.59366 .51702 .60823 .53413 .67025 .53728 .65603 .51989 Metetra
+.5 .667 .937 r
+.65603 .51989 .67025 .53728 .73577 .55832 .72069 .52175 Metetra
+.576 .549 .788 r
+.72069 .52175 .73577 .55832 .80257 .55752 .7875 .5203 Metetra
+.524 .52 .793 r
+.7875 .5203 .80257 .55752 .87661 .60125 .85807 .53147 Metetra
+.569 .462 .693 r
+.85807 .53147 .87661 .60125 .94323 .55348 .93078 .53485 Metetra
+.634 .734 .92 r
+.34669 .53973 .36293 .55485 .41837 .54269 .4025 .52622 Metetra
+.604 .711 .919 r
+.4025 .52622 .41837 .54269 .47518 .53229 .45962 .51654 Metetra
+.582 .717 .935 r
+.45962 .51654 .47518 .53229 .53356 .52477 .51835 .50872 Metetra
+.573 .713 .937 r
+.51835 .50872 .53356 .52477 .59366 .51702 .57885 .50173 Metetra
+.502 .698 .957 r
+.57885 .50173 .59366 .51702 .65603 .51989 .64149 .50105 Metetra
+.529 .666 .924 r
+.64149 .50105 .65603 .51989 .72069 .52175 .70637 .50036 Metetra
+.506 .629 .906 r
+.70637 .50036 .72069 .52175 .7875 .5203 .774 .50417 Metetra
+.369 .628 .953 r
+.774 .50417 .7875 .5203 .85807 .53147 .84518 .51627 Metetra
+.425 .677 .968 r
+.84518 .51627 .85807 .53147 .93078 .53485 .91879 .52177 Metetra
+.64 .749 .928 r
+.33008 .52535 .34669 .53973 .4025 .52622 .38628 .51048 Metetra
+.609 .726 .928 r
+.38628 .51048 .4025 .52622 .45962 .51654 .44377 .49944 Metetra
+.604 .711 .919 r
+.44377 .49944 .45962 .51654 .51835 .50872 .50285 .48915 Metetra
+.601 .684 .9 r
+.50285 .48915 .51835 .50872 .57885 .50173 .56364 .47964 Metetra
+.528 .629 .894 r
+.56364 .47964 .57885 .50173 .64149 .50105 .62662 .48076 Metetra
+.488 .633 .918 r
+.62662 .48076 .64149 .50105 .70637 .50036 .69216 .48527 Metetra
+.525 .725 .965 r
+.69216 .48527 .70637 .50036 .774 .50417 .75968 .48085 Metetra
+.544 .637 .893 r
+.75968 .48085 .774 .50417 .84518 .51627 .82994 .47974 Metetra
+.557 .551 .803 r
+.82994 .47974 .84518 .51627 .91879 .52177 .90318 .48095 Metetra
+.635 .721 .909 r
+.31326 .5086 .33008 .52535 .38628 .51048 .36975 .49443 Metetra
+.609 .726 .928 r
+.36975 .49443 .38628 .51048 .44377 .49944 .42758 .48305 Metetra
+.609 .726 .928 r
+.42758 .48305 .44377 .49944 .50285 .48915 .48704 .47136 Metetra
+.596 .707 .922 r
+.48704 .47136 .50285 .48915 .56364 .47964 .54821 .46149 Metetra
+.532 .681 .933 r
+.54821 .46149 .56364 .47964 .62662 .48076 .61144 .45899 Metetra
+.532 .642 .904 r
+.61144 .45899 .62662 .48076 .69216 .48527 .67706 .45862 Metetra
+.54 .603 .866 r
+.67706 .45862 .69216 .48527 .75968 .48085 .74526 .45939 Metetra
+.582 .679 .907 r
+.74526 .45939 .75968 .48085 .82994 .47974 .8153 .45091 Metetra
+.483 .562 .86 r
+.8153 .45091 .82994 .47974 .90318 .48095 .89007 .4622 Metetra
+.642 .736 .917 r
+.29605 .49258 .31326 .5086 .36975 .49443 .35294 .47701 Metetra
+.612 .714 .917 r
+.35294 .47701 .36975 .49443 .42758 .48305 .41111 .46528 Metetra
+.612 .714 .917 r
+.41111 .46528 .42758 .48305 .48704 .47136 .47092 .45322 Metetra
+.604 .711 .919 r
+.47092 .45322 .48704 .47136 .54821 .46149 .53246 .44189 Metetra
+.548 .674 .921 r
+.53246 .44189 .54821 .46149 .61144 .45899 .59601 .43791 Metetra
+.552 .664 .911 r
+.59601 .43791 .61144 .45899 .67706 .45862 .66183 .43379 Metetra
+.525 .616 .885 r
+.66183 .43379 .67706 .45862 .74526 .45939 .73041 .43521 Metetra
+.58 .655 .887 r
+.73041 .43521 .74526 .45939 .8153 .45091 .80095 .4274 Metetra
+.541 .646 .902 r
+.80095 .4274 .8153 .45091 .89007 .4622 .87464 .42521 Metetra
+.648 .751 .924 r
+.27842 .47728 .29605 .49258 .35294 .47701 .33574 .4603 Metetra
+.618 .729 .925 r
+.33574 .4603 .35294 .47701 .41111 .46528 .3943 .44715 Metetra
+.604 .711 .92 r
+.3943 .44715 .41111 .46528 .47092 .45322 .45446 .43578 Metetra
+.61 .726 .928 r
+.45446 .43578 .47092 .45322 .53246 .44189 .5164 .42299 Metetra
+.542 .685 .932 r
+.5164 .42299 .53246 .44189 .59601 .43791 .58033 .41864 Metetra
+.561 .693 .929 r
+.58033 .41864 .59601 .43791 .66183 .43379 .64647 .41188 Metetra
+.527 .652 .914 r
+.64647 .41188 .66183 .43379 .73041 .43521 .71528 .41059 Metetra
+.601 .664 .883 r
+.71528 .41059 .73041 .43521 .80095 .4274 .78592 .3988 Metetra
+.554 .61 .864 r
+.78592 .3988 .80095 .4274 .87464 .42521 .85994 .39602 Metetra
+.642 .723 .907 r
+.26059 .45956 .27842 .47728 .33574 .4603 .31819 .44325 Metetra
+.626 .731 .922 r
+.31819 .44325 .33574 .4603 .3943 .44715 .37717 .42866 Metetra
+.612 .714 .917 r
+.37717 .42866 .3943 .44715 .45446 .43578 .4377 .41583 Metetra
+.614 .702 .907 r
+.4377 .41583 .45446 .43578 .5164 .42299 .50002 .40262 Metetra
+.565 .682 .918 r
+.50002 .40262 .5164 .42299 .58033 .41864 .56427 .39564 Metetra
+.564 .657 .899 r
+.56427 .39564 .58033 .41864 .64647 .41188 .6308 .38954 Metetra
+.576 .675 .907 r
+.6308 .38954 .64647 .41188 .71528 .41059 .6996 .38094 Metetra
+.58 .615 .852 r
+.6996 .38094 .71528 .41059 .78592 .3988 .77092 .3732 Metetra
+.56 .644 .89 r
+.77092 .3732 .78592 .3988 .85994 .39602 .84511 .36752 Metetra
+.649 .738 .914 r
+.24232 .44255 .26059 .45956 .31819 .44325 .30035 .42479 Metetra
+.612 .714 .918 r
+.30035 .42479 .31819 .44325 .37717 .42866 .35957 .41195 Metetra
+.633 .746 .93 r
+.35957 .41195 .37717 .42866 .4377 .41583 .42062 .39547 Metetra
+.614 .702 .907 r
+.42062 .39547 .4377 .41583 .50002 .40262 .4833 .38183 Metetra
+.574 .686 .917 r
+.4833 .38183 .50002 .40262 .56427 .39564 .54792 .37331 Metetra
+.577 .675 .906 r
+.54792 .37331 .56427 .39564 .6308 .38954 .61475 .3645 Metetra
+.581 .654 .887 r
+.61475 .3645 .6308 .38954 .6996 .38094 .68392 .35538 Metetra
+.56 .644 .89 r
+.68392 .35538 .6996 .38094 .77092 .3732 .75582 .34942 Metetra
+.584 .679 .906 r
+.75582 .34942 .77092 .3732 .84511 .36752 .83001 .33851 Metetra
+.656 .752 .921 r
+.22357 .42625 .24232 .44255 .30035 .42479 .28208 .40702 Metetra
+.634 .733 .92 r
+.28208 .40702 .30035 .42479 .35957 .41195 .34184 .39055 Metetra
+.622 .693 .895 r
+.34184 .39055 .35957 .41195 .42062 .39547 .40315 .3758 Metetra
+.62 .716 .915 r
+.40315 .3758 .42062 .39547 .4833 .38183 .46625 .36062 Metetra
+.582 .689 .915 r
+.46625 .36062 .4833 .38183 .54792 .37331 .53124 .35054 Metetra
+.569 .671 .908 r
+.53124 .35054 .54792 .37331 .61475 .3645 .59848 .34237 Metetra
+.59 .693 .914 r
+.59848 .34237 .61475 .3645 .68392 .35538 .66799 .33048 Metetra
+.593 .671 .894 r
+.66799 .33048 .68392 .35538 .75582 .34942 .73989 .31818 Metetra
+.567 .609 .854 r
+.73989 .31818 .75582 .34942 .83001 .33851 .81487 .31132 Metetra
+.656 .74 .911 r
+.20453 .40853 .22357 .42625 .28208 .40702 .26341 .38888 Metetra
+.634 .733 .92 r
+.26341 .38888 .28208 .40702 .34184 .39055 .32356 .37199 Metetra
+.627 .731 .922 r
+.32356 .37199 .34184 .39055 .40315 .3758 .38532 .35572 Metetra
+.62 .716 .915 r
+.38532 .35572 .40315 .3758 .46625 .36062 .44883 .34008 Metetra
+.588 .704 .923 r
+.44883 .34008 .46625 .36062 .53124 .35054 .51422 .32843 Metetra
+.548 .674 .921 r
+.51422 .32843 .53124 .35054 .59848 .34237 .58192 .32205 Metetra
+.625 .732 .924 r
+.58192 .32205 .59848 .34237 .66799 .33048 .6517 .30394 Metetra
+.559 .644 .89 r
+.6517 .30394 .66799 .33048 .73989 .31818 .72441 .29686 Metetra
+.592 .72 .932 r
+.72441 .29686 .73989 .31818 .81487 .31132 .79933 .28242 Metetra
+.656 .728 .902 r
+.1852 .38937 .20453 .40853 .26341 .38888 .24445 .36928 Metetra
+.635 .721 .91 r
+.24445 .36928 .26341 .38888 .32356 .37199 .30497 .35194 Metetra
+.635 .721 .91 r
+.30497 .35194 .32356 .37199 .38532 .35572 .36717 .33411 Metetra
+.621 .705 .905 r
+.36717 .33411 .38532 .35572 .44883 .34008 .43106 .31799 Metetra
+.598 .696 .911 r
+.43106 .31799 .44883 .34008 .51422 .32843 .49686 .30473 Metetra
+.607 .688 .9 r
+.49686 .30473 .51422 .32843 .58192 .32205 .56481 .28991 Metetra
+.578 .607 .846 r
+.56481 .28991 .58192 .32205 .6517 .30394 .63522 .28031 Metetra
+.619 .706 .907 r
+.63522 .28031 .6517 .30394 .72441 .29686 .70776 .26223 Metetra
+.59 .606 .836 r
+.70776 .26223 .72441 .29686 .79933 .28242 .78316 .24943 Metetra
+.657 .74 .911 r
+.16536 .37089 .1852 .38937 .24445 .36928 .22499 .35035 Metetra
+.642 .736 .917 r
+.22499 .35035 .24445 .36928 .30497 .35194 .28598 .33147 Metetra
+.628 .719 .912 r
+.28598 .33147 .30497 .35194 .36717 .33411 .34851 .31426 Metetra
+.634 .733 .919 r
+.34851 .31426 .36717 .33411 .43106 .31799 .41292 .29545 Metetra
+.598 .696 .911 r
+.41292 .29545 .43106 .31799 .49686 .30473 .47912 .28168 Metetra
+.613 .702 .908 r
+.47912 .28168 .49686 .30473 .56481 .28991 .54751 .26518 Metetra
+.592 .682 .903 r
+.54751 .26518 .56481 .28991 .63522 .28031 .61823 .25158 Metetra
+.626 .666 .869 r
+.61823 .25158 .63522 .28031 .70776 .26223 .69112 .23171 Metetra
+.583 .636 .869 r
+.69112 .23171 .70776 .26223 .78316 .24943 .76702 .21939 Metetra
+.657 .74 .911 r
+.14509 .35201 .16536 .37089 .22499 .35035 .20511 .33101 Metetra
+.642 .736 .917 r
+.20511 .33101 .22499 .35035 .28598 .33147 .2665 .31166 Metetra
+.642 .736 .917 r
+.2665 .31166 .28598 .33147 .34851 .31426 .32959 .29176 Metetra
+.635 .71 .901 r
+.32959 .29176 .34851 .31426 .41292 .29545 .3944 .27242 Metetra
+.614 .702 .907 r
+.3944 .27242 .41292 .29545 .47912 .28168 .46105 .25587 Metetra
+.627 .686 .885 r
+.46105 .25587 .47912 .28168 .54751 .26518 .52984 .23653 Metetra
+.62 .663 .87 r
+.52984 .23653 .54751 .26518 .61823 .25158 .6008 .21772 Metetra
+.612 .625 .84 r
+.6008 .21772 .61823 .25158 .69112 .23171 .67411 .19946 Metetra
+.613 .642 .855 r
+.67411 .19946 .69112 .23171 .76702 .21939 .74991 .18059 Metetra
+.664 .741 .908 r
+.12438 .33273 .14509 .35201 .20511 .33101 .18491 .31016 Metetra
+.649 .726 .905 r
+.18491 .31016 .20511 .33101 .2665 .31166 .24678 .28921 Metetra
+.642 .712 .899 r
+.24678 .28921 .2665 .31166 .32959 .29176 .31026 .26879 Metetra
+.648 .715 .896 r
+.31026 .26879 .32959 .29176 .3944 .27242 .3756 .24668 Metetra
+.634 .688 .883 r
+.3756 .24668 .3944 .27242 .46105 .25587 .44271 .22619 Metetra
+.637 .661 .857 r
+.44271 .22619 .46105 .25587 .52984 .23653 .51185 .20395 Metetra
+.629 .641 .843 r
+.51185 .20395 .52984 .23653 .6008 .21772 .58306 .18219 Metetra
+.631 .627 .828 r
+.58306 .18219 .6008 .21772 .67411 .19946 .65643 .15861 Metetra
+.621 .595 .803 r
+.65643 .15861 .67411 .19946 .74991 .18059 .73213 .13546 Metetra
+.664 .741 .908 r
+.10321 .31302 .12438 .33273 .18491 .31016 .16415 .28995 Metetra
+.657 .739 .911 r
+.16415 .28995 .18491 .31016 .24678 .28921 .22655 .26739 Metetra
+.656 .728 .902 r
+.22655 .26739 .24678 .28921 .31026 .26879 .29062 .24422 Metetra
+.654 .706 .885 r
+.29062 .24422 .31026 .26879 .3756 .24668 .35643 .22043 Metetra
+.647 .693 .879 r
+.35643 .22043 .3756 .24668 .44271 .22619 .42401 .19709 Metetra
+.649 .675 .861 r
+.42401 .19709 .44271 .22619 .51185 .20395 .49355 .17196 Metetra
+.646 .657 .846 r
+.49355 .17196 .51185 .20395 .58306 .18219 .56506 .14612 Metetra
+.636 .629 .826 r
+.56506 .14612 .58306 .18219 .65643 .15861 .63867 .12067 Metetra
+.639 .624 .819 r
+.63867 .12067 .65643 .15861 .73213 .13546 .71441 .09332 Metetra
+.664 .741 .908 r
+.08158 .29288 .10321 .31302 .16415 .28995 .14293 .26929 Metetra
+.664 .741 .908 r
+.14293 .26929 .16415 .28995 .22655 .26739 .20587 .24509 Metetra
+.663 .73 .9 r
+.20587 .24509 .22655 .26739 .29062 .24422 .27047 .22026 Metetra
+.655 .717 .894 r
+.27047 .22026 .29062 .24422 .35643 .22043 .33672 .19587 Metetra
+.661 .719 .891 r
+.33672 .19587 .35643 .22043 .42401 .19709 .40486 .16969 Metetra
+.652 .695 .877 r
+.40486 .16969 .42401 .19709 .49355 .17196 .47485 .14391 Metetra
+.658 .698 .875 r
+.47485 .14391 .49355 .17196 .56506 .14612 .54683 .11626 Metetra
+.651 .685 .869 r
+.54683 .11626 .56506 .14612 .63867 .12067 .62089 .08897 Metetra
+.655 .678 .86 r
+.62089 .08897 .63867 .12067 .71441 .09332 .69705 .05974 Metetra
+.664 .741 .908 r
+.05946 .27229 .08158 .29288 .14293 .26929 .12122 .24816 Metetra
+.664 .741 .908 r
+.12122 .24816 .14293 .26929 .20587 .24509 .1846 .22341 Metetra
+.664 .741 .908 r
+.1846 .22341 .20587 .24509 .27047 .22026 .24966 .19799 Metetra
+.664 .741 .908 r
+.24966 .19799 .27047 .22026 .33672 .19587 .31649 .17189 Metetra
+.662 .73 .9 r
+.31649 .17189 .33672 .19587 .40486 .16969 .38514 .14508 Metetra
+.662 .73 .9 r
+.38514 .14508 .40486 .16969 .47485 .14391 .4557 .11752 Metetra
+.661 .719 .892 r
+.4557 .11752 .47485 .14391 .54683 .11626 .52824 .08918 Metetra
+.655 .717 .893 r
+.52824 .08918 .54683 .11626 .62089 .08897 .60288 .06118 Metetra
+.661 .719 .892 r
+.60288 .06118 .62089 .08897 .69705 .05974 .67969 .03119 Metetra
+P
+p
+.002 w
+.67932 .02494 m
+.94594 .43277 L
+s
+.94594 .43277 m
+.97506 .64585 L
+s
+.97506 .64585 m
+.69286 .25814 L
+s
+.69286 .25814 m
+.67932 .02494 L
+s
+.06024 .26735 m
+.02494 .49015 L
+s
+.02494 .49015 m
+.69286 .25814 L
+s
+.69286 .25814 m
+.67932 .02494 L
+s
+.67932 .02494 m
+.06024 .26735 L
+s
+P
+p
+p
+.002 w
+.06024 .26735 m
+.67932 .02494 L
+s
+P
+p
+.002 w
+.06024 .26735 m
+.0648 .2716 L
+s
+P
+[(4)] .05113 .25884 1 .93395 Mshowa
+p
+.002 w
+.1219 .2432 m
+.12636 .24756 L
+s
+P
+[(8)] .11298 .23449 1 .97619 Mshowa
+p
+.002 w
+.18518 .21843 m
+.18954 .22288 L
+s
+P
+[(12)] .17647 .20951 .97806 1 Mshowa
+p
+.002 w
+.25014 .19299 m
+.25439 .19755 L
+s
+P
+[(16)] .24165 .18387 .93173 1 Mshowa
+p
+.002 w
+.31686 .16687 m
+.32099 .17153 L
+s
+P
+[(20)] .30859 .15753 .8854 1 Mshowa
+p
+.002 w
+.38539 .14003 m
+.3894 .14481 L
+s
+P
+[(24)] .37738 .13048 .83907 1 Mshowa
+p
+.002 w
+.45582 .11245 m
+.45969 .11734 L
+s
+P
+[(28)] .44808 .10268 .79274 1 Mshowa
+p
+.002 w
+.52823 .0841 m
+.53196 .08909 L
+s
+P
+[(32)] .52077 .07411 .7464 1 Mshowa
+p
+.002 w
+.6027 .05494 m
+.60628 .06005 L
+s
+P
+[(36)] .59555 .04472 .70007 1 Mshowa
+p
+.002 w
+.67932 .02494 m
+.68274 .03015 L
+s
+P
+[(40)] .6725 .0145 .65374 1 Mshowa
+[(Dimension)] .30204 .09689 .86223 1 Mshowa
+P
+% End of Graphics
+MathPictureEnd
+\
+\>"], "Graphics",
+ Evaluatable->False,
+ AspectRatioFixed->True,
+ ImageSize->{381, 313},
+ ImageMargins->{{34, Inherited}, {Inherited, Inherited}},
+ ImageCache->GraphicsData["CompressedBitmap", "\<\
+eJzVXWuMXdV13r7n3jsve8aep8dP/BrjGRvzDBAgBoLHPIIJJOMkkJBAYhfG
+5WFISQKJ24GYlqZMRVuTkpaotHJb3PLDP5AaqahcCySkRqeRCi2qUik/goTU
+qOFHLOVHpNW11n7vvfadSZr+qJfG57XPOWutb+21115773NvvefL9x1+4J4v
+3//Fe8478Mg9D993/xcfPW/2oUfwVLVCqRXfwL8re1fQvlqhAID+4PRpOH35
+5Zc/9thjr7766s9+9jMFp6+66qrHH3/8e9/73s9//nMsM4eFAH7xi18c2t3S
++0mBffv2HT9+/LXXXsMyc0qdVgrwFWpuTs3h/n/2tsMCVVVdf/31CwsLr7/+
+ui0zB4rum1OncT8p0NPTMzs7e+LEiTfeeMOWOQ30krfnkFd1OikwMDBw8803
+P/PMM2+99RYywmVIVHwDvgz3kwJDQ0MHDx589tlnv//975syc3Qb7uE/3E8K
+jIyM3HHHHc8999wPfvADW2YOWA7cxb+kwMTExKFDh06ePPn222/bMqeBhcb7
+cD8psH79+jvvvPOFF1549913bRnCAFnHm3A/KbB58+a77777xRdf/OEPf2jK
+nCaZFb0KX6aSAtu2bbv33ntfeumlH/3oR7YMvUMRX/hvLimwc+fOI0eOnDp1
+6sc//rEtgyZDIMzR9nRSYGZmZn5+/uWXX37//fdtGTIaQgCFOA1Jgb179z74
+4IOvvPLKT37yE1OGDJOgm6O7VVLgkksueeSRR86cOfPBBx/YMqQgRXrCx88l
+BRLb5jKoHXzS8f93//9UVVCpBjyN+x8o1QK+0lB4Gveewr//Vk3A4ybp7wQf
+0zVQ1RLnfopPbZon5+/9d7yBrr6I+/9h7rJvHcPzTwnnh2lTEZJP4tG7WKrC
+MyNm24uFK/POo8HddFeD7mzOIou95lkN/2zezjueKljp76hn6wr6Qr1EHN2H
+f/+F7+PSfVQaCWbxTF/y/PCO9/n5DVBD5g4kqEl/rfwux12HkWrCevu+odrf
+ji+t8VzLyG918IbjfB3dMU7uObyLXzxbwXFd1mrGoNAGNZmUNncQr+j71Vl8
+T9uUX0ObDfSG/BbNYAXf0O+JNDJEmtD3yXfWhASp5+tGCyTdkH2bfXhGeL3n
+XH2O9foE3vlvjj8vR3ZH73t4+j2kBtA9n0b1NUiFbUWPwX1kvUkW2DCW2ODr
+DYson5vls41Ye/Hb6OogcXcO9P8KHsf3fcbhhTVpQO9pspbR8ij5klz3rD6v
+t7xMZrBZoqtrWEwr7nv0hK+lHPR7DlrEAug60EQESm/fYGqhs9K1giFYbY+w
+7F4LtchFpIfgfayPniInG5OaPuH0UjBPjcrEe7UnsFt8bq/xlGR990Y8NljW
+tpaXLaBiS9Gl/bnzMv86EtiRWitbP5D9r6vPhQR2T3u0gnf6vLHg2/V5fMeI
+9WwZKpaQj431ewlZNbCVtIP2wG7vwaffY9663mx3JWWG/LuzmucsYkMbztXn
+CsJqXeHjktYm5OLvDUKDsf0Jb6S36efL4lqv0+rytn9KfUr2Jpap1gSCZOSl
+6lNIoALfbW3sNcmTxN6OvWf4VEikIa9Wn9RkNfgoPvt5ttAK1pX8tjvG6+vr
+dkShKKSOgVO1JW/dj+Dft81+02wnvLcXLN29LTcCKw49ZjXKAlYm2rdvPIZ/
+f2qsvQncgnWrValUhtjg6IEjViQn3CnrZ5R6GP9eUPQKckyjVq5SI0Y1S5DL
+gUYPnfAywclg32n0YcYtrOXoyFnKLnVqfQ2imETE9TovXSxrDVbWhxhJW7Po
+mShpfQhJeC1f1xYkCkvXN54KBYzFrb2OH8S/v3MWc6TWlL4z0mwuKz3qPP2W
+kqCnIHzj31oJD9Wewpcq9shhVYkExKvb/FvKUto68QD+PRm0m8ajHAnJWxUh
+llYOLyw+cHv0loLEFEXpt7cDn/NpHfNn7abHOyJweE9mVmBdBF3dHuqdtC3p
+hNrJE4FWSrHwp/DaN4WWFGvBxJFaINAcyjUPtH1EOrOcpZojX219XNP7tSKX
+J5L2eLXVpKBKJiFqS+pVqslco8Ca7D9RG3IRY8XxS87lk0I7bbgESZ21acNl
+R0Y8vgmCNhNrxHKrotqoPJ9um/H6VNS6U7Rm6mamSeZxHElu+be/WSNBQZum
+1jappTkREb+9FUSCn2aPTP4g9lChwtj6xg2leiMpNDdIUNAb2SI+ZZSQTpG3
+/S/qWf6J1ct47LrsXsRJqh16zNb6zdozIyoHtTJhlJEqR4W8PGh6ahxfTOYe
+zShJ+9LxmHx40Yh5ItAE9VAEg9ZlVZLBafn6Dd2WJf7N6GxMqJEg88c8Wlva
+8madUMoAPWOz0ZGsuhPoWgxfRwQeR1UP8id6N92CC/xpPYr8pZbGyHtbK2lR
+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
+OA==\
+\>"],
+ ImageRangeCache->{{{0, 380}, {312, 0}} -> {-0.19513, -0.0690834, 0.00340824, \
+0.00340824}}],
+
+Cell[OutputFormData["\<\
+SurfaceGraphics[\"<<>>\"]\
+\>", "\<\
+-SurfaceGraphics-\
+\>"], "Output",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+The above graph is a surface plot of the results. The x-axis is  the number \
+of dimensions, the y-axis (\"into\" the page) is the number of popints, and \
+the vertical axis the runtime required. It can be seen once again that the \
+run-time is approximately linear with the number of points, but scales \
+approximately as the square of the number of dimensions. \
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "Section",
+ Evaluatable->False,
+ AspectRatioFixed->True],
+
+Cell["\<\
+[1]     \"An Algorithm for Finding Best Matches in Logarthimic Expected \
+Time\"
+        J.H Friedman, J.L Bentley, R.A Finkel
+        ACM Transactions on Mathematical Software, Vol 3 Number 3, 1977
+        Pages 200-226
+        
+ [2]    \"Similarity Indexing: Algorithms and Performance\"
+        D.A White, R Jain
+        Technical Report 1996, available at \"http://vision.ucsd.edu/papers\"\
+\
+\>", "Text",
+ Evaluatable->False,
+ AspectRatioFixed->True]
+}, Closed]]
+}, Open  ]]
+},
+WindowToolbars->{},
+CellGrouping->Manual,
+WindowSize->{1016, 600},
+WindowMargins->{{7, Automatic}, {Automatic, -39}},
+DockedCells->FEPrivate`FrontEndResource[
+ "FEExpressions", "CompatibilityToolbarPostScan"],
+PrivateNotebookOptions->{"ColorPalette"->{RGBColor, -1}},
+ShowCellLabel->True,
+ShowCellTags->False,
+RenderingOptions->{"ObjectDithering"->True,
+"RasterDithering"->False},
+MacintoshSystemPageSetup -> \
+"00<0001804P000000]P2:?oQon82n@960dL5:0?l0080001804P000000]P2:001\n\
+0000I00000400`<300000BL?00400@00000000000000060001T1T00000000000\n\
+00000000000000000000000000000000",
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "compatibility-yes"->{
+  Cell[2017, 71, 250, 6, 33, "CompatibilityTextTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2270, 79, 105, 2, 19, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2378, 83, 369, 8, 29, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2750, 93, 105, 2, 19, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2858, 97, 370, 8, 44, "CompatibilityControls",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21166, 575, 250, 6, 33, "CompatibilityTextTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21419, 583, 265, 6, 29, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21687, 591, 256, 6, 29, "CompatibilityInputTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[26303, 725, 556, 14, 44, "CompatibilityControls",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[26862, 741, 1165, 28, 489, "Input",
+   CellTags->"compatibility-yes"],
+  Cell[28030, 771, 288, 7, 33, "CompatibilityTextTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28321, 780, 222, 5, 29, "CompatibilityText",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28546, 787, 294, 7, 29, "CompatibilityInputTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[29658, 821, 783, 20, 65, "CompatibilityControls",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[30444, 843, 304, 8, 109, "Input",
+   CellTags->"compatibility-yes"],
+  Cell[38674, 1374, 288, 7, 33, "CompatibilityTextTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[38965, 1383, 222, 5, 29, "CompatibilityText",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[39190, 1390, 294, 7, 29, "CompatibilityInputTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[40460, 1428, 783, 20, 65, "CompatibilityControls",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[41246, 1450, 372, 10, 147, "Input",
+   CellTags->"compatibility-yes"],
+  Cell[54526, 2102, 250, 6, 33, "CompatibilityTextTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[54779, 2110, 928, 20, 95, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[55710, 2132, 256, 6, 29, "CompatibilityInputTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[57638, 2191, 497, 13, 44, "CompatibilityControls",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[58138, 2206, 499, 13, 204, "Input",
+   CellTags->"compatibility-yes"]},
+ "compatibility-no"->{
+  Cell[2017, 71, 250, 6, 33, "CompatibilityTextTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2270, 79, 105, 2, 19, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2378, 83, 369, 8, 29, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2750, 93, 105, 2, 19, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[2858, 97, 370, 8, 44, "CompatibilityControls",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21166, 575, 250, 6, 33, "CompatibilityTextTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21419, 583, 265, 6, 29, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21687, 591, 256, 6, 29, "CompatibilityInputTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[21946, 599, 4354, 124, 352, "CompatibilityInput",
+   CellTags->"compatibility-no"],
+  Cell[26303, 725, 556, 14, 44, "CompatibilityControls",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[28030, 771, 288, 7, 33, "CompatibilityTextTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28321, 780, 222, 5, 29, "CompatibilityText",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28546, 787, 294, 7, 29, "CompatibilityInputTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28843, 796, 812, 23, 76, "CompatibilityInput",
+   CellTags->"compatibility-no"],
+  Cell[29658, 821, 783, 20, 65, "CompatibilityControls",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[38674, 1374, 288, 7, 33, "CompatibilityTextTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[38965, 1383, 222, 5, 29, "CompatibilityText",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[39190, 1390, 294, 7, 29, "CompatibilityInputTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[39487, 1399, 970, 27, 76, "CompatibilityInput",
+   CellTags->"compatibility-no"],
+  Cell[40460, 1428, 783, 20, 65, "CompatibilityControls",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[54526, 2102, 250, 6, 33, "CompatibilityTextTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[54779, 2110, 928, 20, 95, "CompatibilityText",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[55710, 2132, 256, 6, 29, "CompatibilityInputTop",
+   CellTags->{"compatibility-yes", "compatibility-no"}],
+  Cell[55969, 2140, 1666, 49, 122, "CompatibilityInput",
+   CellTags->"compatibility-no"],
+  Cell[57638, 2191, 497, 13, 44, "CompatibilityControls",
+   CellTags->{"compatibility-yes", "compatibility-no"}]},
+ "compatibilitytag-semicolon-Show"->{
+  Cell[28030, 771, 288, 7, 33, "CompatibilityTextTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28321, 780, 222, 5, 29, "CompatibilityText",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[28546, 787, 294, 7, 29, "CompatibilityInputTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[29658, 821, 783, 20, 65, "CompatibilityControls",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[38674, 1374, 288, 7, 33, "CompatibilityTextTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[38965, 1383, 222, 5, 29, "CompatibilityText",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[39190, 1390, 294, 7, 29, "CompatibilityInputTop",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}],
+  Cell[40460, 1428, 783, 20, 65, "CompatibilityControls",
+   CellTags->{
+    "compatibility-yes", "compatibility-no", 
+     "compatibilitytag-semicolon-Show"}]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"compatibility-yes", 93373, 3345},
+ {"compatibility-no", 96418, 3412},
+ {"compatibilitytag-semicolon-Show", 99527, 3479}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 97, 2, 83, "Title",
+ Evaluatable->False],
+Cell[667, 26, 361, 7, 55, "Text",
+ Evaluatable->False],
+Cell[CellGroupData[{
+Cell[1053, 37, 84, 2, 71, "Section",
+ Evaluatable->False],
+Cell[1140, 41, 271, 7, 55, "Text",
+ Evaluatable->False],
+Cell[1414, 50, 79, 1, 33, "Input"],
+Cell[1496, 53, 382, 10, 166, "Input"],
+Cell[1881, 65, 133, 4, 33, "Text",
+ Evaluatable->False],
+Cell[2017, 71, 250, 6, 33, "CompatibilityTextTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[2270, 79, 105, 2, 19, "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[2378, 83, 369, 8, 29, "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[2750, 93, 105, 2, 19, "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[2858, 97, 370, 8, 44, "CompatibilityControls",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[3231, 107, 86, 1, 33, "Input"],
+Cell[3320, 110, 342, 7, 55, "Text",
+ Evaluatable->False],
+Cell[3665, 119, 93, 1, 33, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3795, 125, 89, 2, 71, "Section",
+ Evaluatable->False],
+Cell[3887, 129, 650, 11, 99, "Text",
+ Evaluatable->False],
+Cell[4540, 142, 479, 10, 121, "Text",
+ Evaluatable->False],
+Cell[5022, 154, 431, 8, 77, "Text",
+ Evaluatable->False],
+Cell[5456, 164, 466, 9, 77, "Text",
+ Evaluatable->False],
+Cell[5925, 175, 166, 5, 71, "Input"],
+Cell[6094, 182, 230, 6, 33, "Text",
+ Evaluatable->False,
+ PageBreakAbove->False],
+Cell[6327, 190, 111, 3, 33, "Input"],
+Cell[6441, 195, 725, 12, 121, "Text",
+ Evaluatable->False],
+Cell[7169, 209, 500, 13, 231, 163, 3, "GraphicsData", "PostScript", "Text",
+ Evaluatable->False,
+ PageBreakAbove->False,
+ PageBreakBelow->False],
+Cell[7672, 224, 2127, 46, 831, "Input",
+ PageBreakAbove->False],
+Cell[9802, 272, 512, 11, 99, "Text",
+ Evaluatable->False,
+ PageBreakBelow->False],
+Cell[10317, 285, 313, 7, 55, "Text",
+ Evaluatable->False,
+ PageBreakAbove->False],
+Cell[10633, 294, 386, 13, 223, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11056, 312, 95, 2, 71, "Section",
+ Evaluatable->False],
+Cell[11154, 316, 975, 20, 231, "Text",
+ Evaluatable->False],
+Cell[12132, 338, 499, 9, 77, "Text",
+ Evaluatable->False],
+Cell[12634, 349, 320, 7, 55, "Text",
+ Evaluatable->False,
+ PageBreakBelow->False],
+Cell[12957, 358, 3057, 72, 1325, "Input"],
+Cell[16017, 432, 422, 8, 77, "Text",
+ Evaluatable->False],
+Cell[16442, 442, 562, 17, 299, "Input"],
+Cell[17007, 461, 677, 11, 99, "Text",
+ Evaluatable->False],
+Cell[17687, 474, 1065, 28, 489, "Input"],
+Cell[18755, 504, 368, 7, 55, "Text",
+ Evaluatable->False],
+Cell[19126, 513, 384, 12, 166, "Input",
+ PageBreakAbove->False,
+ PageBreakBelow->False],
+Cell[19513, 527, 350, 8, 55, "Text",
+ Evaluatable->False,
+ PageBreakAbove->False,
+ PageBreakBelow->False],
+Cell[19866, 537, 705, 18, 318, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20608, 560, 85, 2, 71, "Section",
+ Evaluatable->False],
+Cell[20696, 564, 467, 9, 77, "Text",
+ Evaluatable->False],
+Cell[21166, 575, 250, 6, 33, "CompatibilityTextTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[21419, 583, 265, 6, 29, "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[21687, 591, 256, 6, 29, "CompatibilityInputTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[21946, 599, 4354, 124, 352, "CompatibilityInput",
+ CellTags->"compatibility-no"],
+Cell[26303, 725, 556, 14, 44, "CompatibilityControls",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[26862, 741, 1165, 28, 489, "Input",
+ CellTags->"compatibility-yes"],
+Cell[28030, 771, 288, 7, 33, "CompatibilityTextTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[28321, 780, 222, 5, 29, "CompatibilityText",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[28546, 787, 294, 7, 29, "CompatibilityInputTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[28843, 796, 812, 23, 76, "CompatibilityInput",
+ CellTags->"compatibility-no"],
+Cell[29658, 821, 783, 20, 65, "CompatibilityControls",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[30444, 843, 304, 8, 109, "Input",
+ CellTags->"compatibility-yes"],
+Cell[30751, 853, 7920, 519, 208, 4902, 465, "GraphicsData", "PostScript", \
+"Graphics",
+ Evaluatable->False],
+Cell[38674, 1374, 288, 7, 33, "CompatibilityTextTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[38965, 1383, 222, 5, 29, "CompatibilityText",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[39190, 1390, 294, 7, 29, "CompatibilityInputTop",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[39487, 1399, 970, 27, 76, "CompatibilityInput",
+ CellTags->"compatibility-no"],
+Cell[40460, 1428, 783, 20, 65, "CompatibilityControls",
+ CellTags->{
+  "compatibility-yes", "compatibility-no", "compatibilitytag-semicolon-Show"}],
+Cell[41246, 1450, 372, 10, 147, "Input",
+ CellTags->"compatibility-yes"],
+Cell[41621, 1462, 8364, 526, 214, 4944, 466, "GraphicsData", "PostScript", \
+"Graphics",
+ Evaluatable->False],
+Cell[49988, 1990, 380, 8, 77, "Text",
+ Evaluatable->False],
+Cell[50371, 2000, 432, 8, 77, "Text",
+ Evaluatable->False],
+Cell[50806, 2010, 401, 8, 77, "Text",
+ Evaluatable->False],
+Cell[51210, 2020, 3313, 80, 755, "Input"],
+Cell[54526, 2102, 250, 6, 33, "CompatibilityTextTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[54779, 2110, 928, 20, 95, "CompatibilityText",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[55710, 2132, 256, 6, 29, "CompatibilityInputTop",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[55969, 2140, 1666, 49, 122, "CompatibilityInput",
+ CellTags->"compatibility-no"],
+Cell[57638, 2191, 497, 13, 44, "CompatibilityControls",
+ CellTags->{"compatibility-yes", "compatibility-no"}],
+Cell[58138, 2206, 499, 13, 204, "Input",
+ CellTags->"compatibility-yes"],
+Cell[58640, 2221, 32732, 1057, 321, 20003, 844, "GraphicsData", "PostScript", \
+"Graphics",
+ Evaluatable->False],
+Cell[91375, 3280, 142, 6, 40, "Output",
+ Evaluatable->False],
+Cell[91520, 3288, 433, 8, 77, "Text",
+ Evaluatable->False]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[91990, 3301, 75, 2, 71, "Section",
+ Evaluatable->False],
+Cell[92068, 3305, 465, 13, 142, "Text",
+ Evaluatable->False]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

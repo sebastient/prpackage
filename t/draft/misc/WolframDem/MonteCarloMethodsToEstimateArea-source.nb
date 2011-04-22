@@ -1,0 +1,738 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     27675,        728]
+NotebookOptionsPosition[     26300,        678]
+NotebookOutlinePosition[     26958,        703]
+CellTagsIndexPosition[     26915,        700]
+WindowTitle->Monte Carlo Methods to Estimate Area - Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Monte Carlo Methods to Estimate Area", "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False,
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1: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
+FP/69esnAAAAAAAAAAAAwM74B4thROM=
+   "], {{0, 0}, {1800, 25}}, {0, 255},
+   ColorFunction->RGBColor],
+  ImageSize->{1800, 25},
+  PlotRange->{{0, 1800}, {0, 25}}]], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Column", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"tog", "[", "n", "]"}], ",", 
+      RowBox[{"Button", "[", 
+       RowBox[{"\"\<reset samples\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"n", "=", "1000"}], ",", 
+          RowBox[{
+           RowBox[{"samphorm", "=", 
+            RowBox[{"Transpose", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"RandomReal", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", 
+                   SqrtBox["2"]}], "}"}], ",", 
+                 RowBox[{"{", "10000", "}"}]}], "]"}], ",", 
+               RowBox[{"RandomReal", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"0", ",", "2"}], "}"}], ",", 
+                 RowBox[{"{", "10000", "}"}]}], "]"}]}], "}"}], "]"}]}], ";", 
+           
+           RowBox[{"sampcmc", "=", 
+            RowBox[{
+             SqrtBox["2"], 
+             RowBox[{"RandomReal", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "1"}], "}"}], ",", 
+               RowBox[{"{", "10000", "}"}]}], "]"}]}]}], ";", 
+           RowBox[{"sampva", "=", 
+            RowBox[{
+             SqrtBox["2"], 
+             RowBox[{"RandomReal", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "1"}], "}"}], ",", 
+               RowBox[{"{", "10000", "}"}]}], "]"}]}]}]}]}], "}"}]}], "]"}]}],
+      "}"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "1000", ",", "\"\<sample size\>\""}], "}"}], ",", 
+     "200", ",", "10000", ",", "50", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Initialization", "\[RuleDelayed]", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"SeedRandom", "[", "12345", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"horm", "[", "n_", "]"}], ":=", 
+       RowBox[{"a", "=", 
+        RowBox[{"ListPlot", "[", 
+         RowBox[{
+          RowBox[{"4.", " ", "2", " ", 
+           SqrtBox["2"], 
+           RowBox[{
+            RowBox[{"Accumulate", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"#", "\[Equal]", "True"}], ",", "1", ",", "0"}], 
+                "]"}], "&"}], "/@", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "\[LessEqual]", 
+                  RowBox[{"2", " ", 
+                   SqrtBox[
+                    RowBox[{"1", "-", 
+                    FractionBox[
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{"#", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ")"}], "2"], "2"]}]]}]}], 
+                 "&"}], "/@", 
+                RowBox[{"Take", "[", 
+                 RowBox[{"samphorm", ",", "n"}], "]"}]}], ")"}]}], "]"}], "/", 
+            RowBox[{"Range", "[", "n", "]"}]}]}], ",", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"GrayLevel", "[", "0", "]"}], ",", 
+             RowBox[{"PointSize", "[", 
+              RowBox[{"Which", "[", 
+               RowBox[{
+                RowBox[{"n", "<", "100"}], ",", "0.007", ",", 
+                RowBox[{"n", "<", "1000"}], ",", "0.004", ",", "True", ",", 
+                "0.001"}], "]"}], "]"}]}], "}"}]}], ",", 
+          RowBox[{"PlotLabel", "\[Rule]", 
+           RowBox[{"Style", "[", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"Grid", "[", 
+              RowBox[{
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{
+                 "{", "\"\<hit-or-miss method: black points\>\"", "}"}], ",", 
+                 
+                 RowBox[{"{", "\"\<crude Monte Carlo: red points\>\"", "}"}], 
+                 ",", 
+                 RowBox[{
+                 "{", "\"\<antithetic variables: blue points\>\"", "}"}]}], 
+                "}"}], ",", 
+               RowBox[{"Alignment", "\[Rule]", "Center"}], ",", 
+               RowBox[{"Spacings", "\[Rule]", "0.3"}]}], "]"}], ",", 
+             "\"\<Label\>\"", ",", "9"}], "]"}]}], ",", 
+          RowBox[{"AxesOrigin", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "8.5"}], "}"}]}], ",", 
+          RowBox[{"ImageSize", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"400", ",", "350"}], "}"}]}], ",", 
+          RowBox[{"Epilog", "\[Rule]", 
+           RowBox[{"Tooltip", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Opacity", "[", "0.5", "]"}], ",", "Orange", ",", 
+               RowBox[{"Thickness", "[", "0.005", "]"}], ",", 
+               RowBox[{"Line", "[", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"0", ",", "8.9"}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"n", ",", "8.9"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+             ",", "\"\<True area = 8.89\>\""}], "]"}]}], ",", 
+          RowBox[{"PlotRange", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"0", ",", "n"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"8.2", ",", "9.6"}], "}"}]}], "}"}]}]}], "]"}]}]}], ";", 
+      RowBox[{
+       RowBox[{"cmc", "[", "n_", "]"}], ":=", 
+       RowBox[{"b", "=", 
+        RowBox[{"ListPlot", "[", 
+         RowBox[{
+          RowBox[{"4", " ", "2", " ", 
+           SqrtBox["2"], 
+           RowBox[{
+            RowBox[{"Accumulate", "[", 
+             RowBox[{"(", " ", 
+              RowBox[{
+               RowBox[{
+                SqrtBox[
+                 RowBox[{"1", "-", 
+                  FractionBox[
+                   SuperscriptBox["#", "2"], "2"]}]], "&"}], "/@", 
+               RowBox[{"Take", "[", 
+                RowBox[{"sampcmc", ",", "n"}], "]"}]}], ")"}], "]"}], "/", 
+            RowBox[{"Range", "[", "n", "]"}]}]}], ",", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"PointSize", "[", 
+              RowBox[{"Which", "[", 
+               RowBox[{
+                RowBox[{"n", "<", "100"}], ",", "0.007", ",", 
+                RowBox[{"n", "<", "1000"}], ",", "0.004", ",", "True", ",", 
+                "0.001"}], "]"}], "]"}], ",", 
+             RowBox[{"Hue", "[", "1", "]"}]}], "}"}]}]}], "]"}]}]}], ";", 
+      RowBox[{
+       RowBox[{"mcva", "[", "n_", "]"}], ":=", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"r1", "=", 
+          RowBox[{"4", " ", "2", " ", 
+           SqrtBox["2"], 
+           RowBox[{
+            RowBox[{"Accumulate", "[", 
+             RowBox[{"(", " ", 
+              RowBox[{
+               RowBox[{
+                SqrtBox[
+                 RowBox[{"1", "-", 
+                  FractionBox[
+                   SuperscriptBox["#", "2"], "2"]}]], "&"}], "/@", 
+               RowBox[{"Take", "[", 
+                RowBox[{"sampva", ",", "n"}], "]"}]}], ")"}], "]"}], "/", 
+            RowBox[{"Range", "[", "n", "]"}]}]}]}], ";", 
+         RowBox[{"r2", "=", 
+          RowBox[{"4", " ", "2", " ", 
+           SqrtBox["2"], 
+           RowBox[{
+            RowBox[{"Accumulate", "[", 
+             RowBox[{"(", " ", 
+              RowBox[{
+               RowBox[{
+                SqrtBox[
+                 RowBox[{"1", "-", 
+                  FractionBox[
+                   SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{
+                    SqrtBox["2"], "-", "#"}], ")"}], "2"], "2"]}]], "&"}], "/@", 
+               RowBox[{"Take", "[", 
+                RowBox[{"sampva", ",", "n"}], "]"}]}], ")"}], "]"}], "/", 
+            RowBox[{"Range", "[", "n", "]"}]}]}]}], ";", 
+         RowBox[{"c", "=", 
+          RowBox[{"ListPlot", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"r1", "+", "r2"}], ")"}], "/", "2"}], ",", 
+            RowBox[{"PlotStyle", "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Hue", "[", "0.7", "]"}], ",", 
+               RowBox[{"PointSize", "[", "0.001", "]"}]}], "}"}]}]}], 
+           "]"}]}]}], ")"}]}], ";", 
+      RowBox[{
+       RowBox[{"tog", "[", "n_", "]"}], ":=", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"horm", "[", "n", "]"}], ";", 
+         RowBox[{"cmc", "[", "n", "]"}], ";", 
+         RowBox[{"mcva", "[", "n", "]"}], ";", 
+         RowBox[{"Show", "[", 
+          RowBox[{"a", ",", "b", ",", "c", ",", 
+           RowBox[{"ImageSize", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"500", ",", "400"}], "}"}]}], ",", 
+           RowBox[{"ImagePadding", "\[Rule]", "20"}]}], "]"}]}], ")"}]}], ";", 
+      RowBox[{"samphorm", "=", 
+       RowBox[{"Transpose", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"RandomReal", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              SqrtBox["2"]}], "}"}], ",", 
+            RowBox[{"{", "10000", "}"}]}], "]"}], ",", 
+          RowBox[{"RandomReal", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "2"}], "}"}], ",", 
+            RowBox[{"{", "10000", "}"}]}], "]"}]}], "}"}], "]"}]}], ";", 
+      RowBox[{"sampcmc", "=", 
+       RowBox[{
+        SqrtBox["2"], 
+        RowBox[{"RandomReal", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}], ",", 
+          RowBox[{"{", "10000", "}"}]}], "]"}]}]}], ";", 
+      RowBox[{"sampva", "=", 
+       RowBox[{
+        SqrtBox["2"], 
+        RowBox[{"RandomReal", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}], ",", 
+          RowBox[{"{", "10000", "}"}]}], "]"}]}]}], ";"}], 
+     "\[IndentingNewLine]", "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.416854368534*^9, {3.416856246435*^9, 
+   3.416856255856*^9}, {3.4169279830718107`*^9, 3.4169280496499357`*^9}, {
+   3.4169284886343107`*^9, 3.4169285121499357`*^9}, {3.417174818629737*^9, 
+   3.4171748200515933`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`n$$ = 1000, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`n$$], 1000, "sample size"}, 200, 10000, 50}}, 
+    Typeset`size$$ = {500., {211.5, 216.5}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`n$7321$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`n$$ = 1000}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`n$$, $CellContext`n$7321$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Column[{
+         $CellContext`tog[$CellContext`n$$], 
+         Button[
+         "reset samples", {$CellContext`n$$ = 
+           1000, $CellContext`samphorm = Transpose[{
+               RandomReal[{0, 2^Rational[1, 2]}, {10000}], 
+               RandomReal[{0, 2}, {10000}]}]; $CellContext`sampcmc = 
+            2^Rational[1, 2] RandomReal[{0, 1}, {10000}]; $CellContext`sampva = 
+            2^Rational[1, 2] RandomReal[{0, 1}, {10000}]}]}], 
+      "Specifications" :> {{{$CellContext`n$$, 1000, "sample size"}, 200, 
+         10000, 50, Appearance -> "Labeled"}}, "Options" :> {}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{545., {256., 261.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({SeedRandom[12345]; $CellContext`horm[
+          Pattern[$CellContext`n, 
+           Blank[]]] := ($CellContext`a = 
+         ListPlot[((4. 2) 2^Rational[1, 2]) (Accumulate[
+              Map[If[# == True, 1, 0]& , 
+               Map[Part[#, 2] <= 2 (1 - Part[#, 1]^2/2)^Rational[1, 2]& , 
+                Take[$CellContext`samphorm, $CellContext`n]]]]/
+            Range[$CellContext`n]), PlotStyle -> {
+             GrayLevel[0], 
+             PointSize[
+              
+              Which[$CellContext`n < 100, 0.007, $CellContext`n < 1000, 0.004,
+                True, 0.001]]}, PlotLabel -> Style[
+             
+             Grid[{{"hit-or-miss method: black points"}, {
+               "crude Monte Carlo: red points"}, {
+               "antithetic variables: blue points"}}, Alignment -> Center, 
+              Spacings -> 0.3], "Label", 9], AxesOrigin -> {0, 8.5}, 
+           ImageSize -> {400, 350}, Epilog -> Tooltip[{
+              Opacity[0.5], Orange, 
+              Thickness[0.005], 
+              Line[{{0, 8.9}, {$CellContext`n, 8.9}}]}, "True area = 8.89"], 
+           PlotRange -> {{0, $CellContext`n}, {8.2, 9.6}}]); $CellContext`cmc[
+         
+          Pattern[$CellContext`n, 
+           Blank[]]] := ($CellContext`b = 
+         ListPlot[((4 2) 2^Rational[1, 2]) (Accumulate[
+              Map[(1 - #^2/2)^Rational[1, 2]& , 
+               Take[$CellContext`sampcmc, $CellContext`n]]]/
+            Range[$CellContext`n]), PlotStyle -> {
+             PointSize[
+              
+              Which[$CellContext`n < 100, 0.007, $CellContext`n < 1000, 0.004,
+                True, 0.001]], 
+             Hue[1]}]); $CellContext`mcva[
+          Pattern[$CellContext`n, 
+           
+           Blank[]]] := ($CellContext`r1 = ((4 2) 2^Rational[1, 2]) (
+            Accumulate[
+              Map[(1 - #^2/2)^Rational[1, 2]& , 
+               Take[$CellContext`sampva, $CellContext`n]]]/
+            Range[$CellContext`n]); $CellContext`r2 = ((4 2) 
+            2^Rational[1, 2]) (Accumulate[
+              Map[(1 - (2^Rational[1, 2] - #)^2/2)^Rational[1, 2]& , 
+               Take[$CellContext`sampva, $CellContext`n]]]/
+            Range[$CellContext`n]); $CellContext`c = 
+          ListPlot[($CellContext`r1 + $CellContext`r2)/2, PlotStyle -> {
+              Hue[0.7], 
+              PointSize[0.001]}]); $CellContext`tog[
+          Pattern[$CellContext`n, 
+           
+           Blank[]]] := ($CellContext`horm[$CellContext`n]; \
+$CellContext`cmc[$CellContext`n]; $CellContext`mcva[$CellContext`n]; 
+         Show[$CellContext`a, $CellContext`b, $CellContext`c, 
+           ImageSize -> {500, 400}, ImagePadding -> 
+           20]); $CellContext`samphorm = Transpose[{
+           RandomReal[{0, 2^Rational[1, 2]}, {10000}], 
+           RandomReal[{0, 2}, {10000}]}]; $CellContext`sampcmc = 
+        2^Rational[1, 2] RandomReal[{0, 1}, {10000}]; $CellContext`sampva = 
+        2^Rational[1, 2] RandomReal[{0, 1}, {10000}]; Null}; 
+     Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->292526192],
+
+Cell[CellGroupData[{
+
+Cell["CAPTION", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "The area of the ellipse given by ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    SuperscriptBox["x", "2"], "2"], TraditionalForm]], "InlineMath"],
+ "+",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    SuperscriptBox["y", "2"], "4"], TraditionalForm]], "InlineMath"],
+ " =1 is estimated using three different Monte Carlo procedures. "
+}], "Text"]
+}, Close]]
+}, Open  ]],
+
+Cell[TextData[{
+ "First, an ordinary hit-or-miss approach, which generates random points in \
+the range ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"0", "\[LessEqual]", "x", "\[LessEqual]", 
+    SqrtBox["2"]}], TraditionalForm]], "InlineMath"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"0", "\[LessEqual]", "y", "\[LessEqual]", "2"}], TraditionalForm]],
+   "InlineMath"],
+ " and then estimates the area as the proportion of those points that fall \
+inside the ellipse multiplied by 8 ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SqrtBox["2"], ".", " "}], TraditionalForm]], "InlineMath"]
+}], "Text"],
+
+Cell[TextData[{
+ "Second, the procedure known as ",
+ StyleBox["crude Monte Carlo,",
+  FontSlant->"Italic"],
+ " which looks at the integral giving the area beneath the curve as the \
+expected value of some function, and then estimates it using the mean of that \
+function evaluated at a number of random numbers with the corresponding \
+probability distribution. "
+}], "Text"],
+
+Cell[TextData[{
+ "Thirdly, a refinement of the latter which uses ",
+ StyleBox["antithetic",
+  FontSlant->"Italic"],
+ " random variables, that is, variables that are negatively correlated and \
+which, adequately combined, produce an extremely good estimate."
+}], "Text"],
+
+Cell["\<\
+The behavior of the three approaches may be observed in the graph above. All \
+of them provide an unbiased estimate of the area (equal to 8.89 in the \
+example), but the antithetic variables method is seen to produce a more \
+stable result as the sample size increases, while the other two exhibit a \
+more fluctuating pattern. \
+\>", "Text"],
+
+Cell["\<\
+Move the slider to see the effect of sample size on the estimation. Press the \
+button to obtain a new set of random samples.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "\"",
+ ButtonBox["Monte Carlo Methods to Estimate Area",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/MonteCarloMethodsToEstimateArea/"],
+     None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/MonteCarloMethodsToEstimateArea/"],
+ "\"",
+ " from ",
+ ButtonBox["the Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/MonteCarloMethodsToEstimateArea/\
+",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/MonteCarloMethodsToEstimateArea/"],
+     None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/MonteCarloMethodsToEstimateArea/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Tomas Garza",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Tomas+Garza"], 
+    None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Tomas+Garza"]
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " system (Version 6 or higher) is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[1, 1, 1]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+MonteCarloMethodsToEstimateArea"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+CellInsertionPointCell->None,
+WindowSize->{745, 650},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowElements->{
+ "StatusArea", "MemoryMonitor", "MagnificationPopUp", "VerticalScrollBar", 
+  "MenuBar"},
+WindowTitle->"Monte Carlo Methods to Estimate Area - Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[638, 23, 156, 3, 70, "Section"],
+Cell[797, 28, 3700, 64, 70, "Section"],
+Cell[4500, 94, 10478, 273, 70, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15015, 372, 5027, 102, 70, "Output",
+ CellID->292526192],
+Cell[CellGroupData[{
+Cell[20067, 478, 209, 6, 70, "Section"],
+Cell[20279, 486, 362, 12, 70, "Text"]
+}, Close]]
+}, Open  ]],
+Cell[20667, 502, 598, 18, 70, "Text"],
+Cell[21268, 522, 375, 8, 70, "Text"],
+Cell[21646, 532, 269, 6, 70, "Text"],
+Cell[21918, 540, 352, 6, 70, "Text"],
+Cell[22273, 548, 149, 3, 70, "Text"],
+Cell[CellGroupData[{
+Cell[22447, 555, 355, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[22805, 566, 988, 29, 70, "Text"],
+Cell[23796, 597, 430, 14, 70, "Text"],
+Cell[CellGroupData[{
+Cell[24251, 615, 815, 24, 70, "Text"],
+Cell[25069, 641, 1203, 33, 70, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+(* NotebookSignature 2SjuUs1RbwMTNA0Ca#O5t5su *)

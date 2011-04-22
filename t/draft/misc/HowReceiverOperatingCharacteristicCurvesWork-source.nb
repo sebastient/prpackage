@@ -1,0 +1,1545 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     57776,       1535]
+NotebookOptionsPosition[     55861,       1471]
+NotebookOutlinePosition[     56532,       1496]
+CellTagsIndexPosition[     56489,       1493]
+WindowTitle->How Receiver Operating Characteristic Curves Work - Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["How Receiver Operating Characteristic Curves Work", "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False,
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJztnVuSozgWQDNiPqa3MJ+zpVlCbaB3WlGVNV9dvYH6TQRUph/ZGIHQmwvG
+xoZzQu3Aku7VfUj4Nk53//fLn//78q+Xl5f/NP/88e+Xl8v154Xj5+fp89y0
+4+X63L7VnQu02XqOt9FzjRK5qtRMoYZFpk11/Ji+WDye92+r7+fFfbnGkuu9
+eIQ4LBVJ+YRo5DPnRdITDp0TLRg6m/62nY/n08f5+H461G37fWqum57z4Xy2
+jby0prMZOh4/jodLOx2bt6fzRSEA3B/KMKGSBy/DSKVcyYOn8krHqajvqed6
+G6iol4qkfAIVNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsizPA/lj72AEA
+AMCmWLu0AXh01j6jAAAAcdb+hNwUJ5e1zZnPDEeey/e1jx0AAABsirVLm03x
+XFVlhs1X1JNY+4wCAAB02B9PJ4BdsvYpBAAAgOeGihpADo9GAUDIr+Lnr7ef
+a9vw16/i73VtMPx6+2v1gGwMijeAE89FAQA2DRW1BxX14lBRA0wi+lx0baMA
+AAAAAAAAAAAAbkj0uegR4L4cDoe1TYA1YQMAbIaDy9rm3JU9+w4AjwB3np3D
+BgDYDHuuKu/su3k0ynNRACGLHMy93dm2ijCPpHvD7LliAQAAmA0VNRioqIGK
+GlYk9Vz0AAAAAAAAAAAAALBR9KPR8Kf0a9sFAAAAAAAAAAAAcCt4LgoAAAAA
+AAAAAAB7I/Vc9ONheH9/X9uEzUJsZ0PoAGBZ3gNuLQgggR21GUjl7SC2syF0
+ALAsVNQgxMv14XAI/xOja9sIAAAAT0lYWM5jbT/msGffAQAAAGAp9lxV3sF3
+b1r0uehSZgAAAAAAAAAAAAA8Ar9b6rpuXpu3+tf0PBcFWJcFvxYBAAAAANgh
+VNQAADCK5LnobwAAAAAAAAAAAIANUbcPRav+wehH7LmoUqpsqKqmNTSXRVE0
+by593mtRXlrfo7mImTlVN6ebUOhR07q3jmxVWXqquqxVOUjZq1eDVNe662ro
+Nxe1Xr5o2lt5cUc7VWr3BpGindNL6TkDl5nVIGWtbuaXWbwJo/OVKjSX68oL
+shMTO4ylHf+yy5GbhU5EubJJPeWgx5ayBfvOIR2qD5QJXWmFtJs2pLsLvu40
+4oOesh/tJ3TKW/3DomZONgVdVPtNXvVXYWydyBRl/NWNWNW62L06G344TcNW
+L/SVpaTqcmeOWGWOm3W+TFPWsbL8dE1yklUal73ghDtBH+Hu1dE/HBM7/t7h
+sjNoN29Calrl2GadWfsMeoc0elcR584clrm5qzO5a+5mQe4imy2Tu1qcu+g2
+7od7mkvVtqJtajgInQuqzUrRtWFCzIAkzQdK0/RR1U33JEhtgOhosnmLKtX0
+DArVhaJHtZOlmgPbVN+mWZhRGzNvEc13MD61kIRcEPS2WciRp/C97a0ow569
+DCOVRurZU0lFnUoBFbWkKiv7I0xFLc4dFXUAFfVUtVTUYRD2V1EnfTd7u920
+v+va/NXoSXM86qXVwFtzgNvS7vJG3730Ga76Wkq/6lFz3dlWOa+69XpUOSix
+ixQtrrVV1pxBleO+uesMsv6QjenXF+bViFjGO5rtObaUp7bVoENe21Kqy1Un
+1M8xOaxNftysOh61q5joKStQpbkIQ2p54HRWXcqsOsbVU7oZNBr8Fbv+yotk
+GBkvbuFbu9/LkY6DF3ZvTvqtOVXdBi0dlN6WZekEsHfQ2flmjpnQ+25vfn//
+2yH1eswnokp/tNkpsJNrTqJruX4tzAkKBJXJVdUbbJmtrwtrUfuoGm2Ru5S3
+AcrEGQyPld3jzbFTH+oP+is3d+XVuev2wI1zN9w8rZM1I3dFf203xxKvuUyT
+TevJkd8JSzF7iVHBzJa+D0vFZJLapawNh6xiQ91ixaf03R+lDHvaMqwPCKl8
++lRGgkZF3W3Q0oGKmoq685yKmoo6L5jZ0vdhqZhMUruUteEQFfUk37VU98C8
+qRvq+uPjQz8UPZ/P+snoZYIqVAwtaFY0r+E0+8l8VIM3Gs70JkelUoLR0XBm
+2X5dldcmWS5lQ2r1jDue+DBaRvrzvidVpc2WOKJicRvVZu+HaFqjgpngC/MS
+Fek2rRvSjKCy9rnxfepWFFKokVMzWaEsU9GDbEYnbfuoYOpGkdcwql/Sv+fc
+CVdJcY1a+Yo3WuUaZsfE+9S+j3mTRuFZoAxL9eTtFK6ecccTH0bnlmGkMtXz
+dKnMLCTpifZTUUfnyNOR4QGrstQuHTXGFqSiXiV3wlVSXKNWvuKNVrmG2TGh
+ooZb0+T0rUWf/br9e1HvuWjR/z1/+JOUIujKPxYu+l9YCEX0kGVARDxjjHxa
+ygZv6ejF6KiE0cfp0eUk6JMrmVamQx1qkPTIRzNSo4LC0OnbV7S/tD7WRw32
+ElFYP1/y7EkZn09lPhHedej7vDiHSkbzq79YsWcWfUUUzYgXf7mdqa04eiK0
+ebYxe86d9yE+T3n+OzuVqHbMx01Up/kkCud7Q0ZJ5uvCRQhNGvVCoueayK9O
+mKP8qDDd9szol7b5AM5LSup0P7LvxXBX8dWGvlCGTTJm1IBwianK3QySyo2k
+clR/KtShBkmPfDQjNSpIRS0xexJRy8NjS0UtMfVBcmegoh6FijrkEarKPVfU
+Gd89w+rwd/Tt34uq/kuT6C2xsG5WhXvLsu+KUb+8/kxsvQMryUIxdp8PLc/c
+FiblXaJEcgvKuODFf54N8yYXwYejZ2fUbO8i5b7kXwRSPfJtFu1JWZ7BtlZu
+eRg9XXJEbcuriorIU2xkjYjQi2hJFjXeFvFmhjeNUWu9HhO3/LQoe8tdSKqC
+ys+f+tE5aZVoBSU0T87U+sr2emq4Ur7k9eQrhydiaqiF3LqSX4QFfacMk684
+yaT7l2GkUr7iJJOoqKMrUlGPritxZ9RyT9aIUFHn133e3IVQUQvVUlHPhor6
+1r6r/k9G9X1A/47+dDrZ/9+lb9++vbr8+PHDe7X7w077rafHU+JNTo1GF/Wu
+U52hhtCjqGEZJVGdoZsp5ZmZoRe2kc3Fd0tnKGKvJQ9UKr8pRh15dY0MZTOO
+e/pTa43OSUmFpn5Pbzzv7agveTNCJRnZ70FCX4OU5ZWn9KfiELrpLZ3aIZn0
+RYmGN+NRPsIpd7y19pa7qIhQZ15coicVmamMLjpb1SLmLUgmzlOtzau6RRAm
+bYxFTJoh9Vy+U4aNKonqDN1MKc/MDL2wjXydWIaRylElz5LKVExSS2Scigqm
+HHl1jQxlM457+lNrjc5JSYWmUlF7jqQ2RmqHZNIXJRrejEf5CKfc8dbaW+6i
+IkKdeXGJnlRkpjK66GxVi5i3IJk4T7U2r+oWQZi0MRYxaYbUZnyPLvH/lte2
+FP/69esnAAAAAAAAAAAAwM74B4thROM=
+   "], {{0, 0}, {1800, 25}}, {0, 255},
+   ColorFunction->RGBColor],
+  ImageSize->{1800, 25},
+  PlotRange->{{0, 1800}, {0, 25}}]], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"xeps", "=", 
+     RowBox[{"-", "0.01"}]}], ";", 
+    RowBox[{"\[Delta]Chop", "=", "0.001"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"xs", "=", 
+     RowBox[{"(", 
+      RowBox[{"0.875", "-", "0.735"}], ")"}]}], ";", 
+    RowBox[{"xo", "=", 
+     RowBox[{".735", "+", "xeps"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"ys", "=", 
+     RowBox[{"(", 
+      RowBox[{"0.81", "-", "0.52"}], ")"}]}], ";", 
+    RowBox[{"yo", "=", "0.52"}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"rsx", "[", "x_", "]"}], ":=", 
+     RowBox[{"xo", "+", 
+      RowBox[{"x", "*", "xs"}]}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"rsy", "[", "y_", "]"}], ":=", 
+     RowBox[{"yo", "+", 
+      RowBox[{"y", "*", "ys"}]}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"rs", "[", 
+      RowBox[{"{", 
+       RowBox[{"x_", ",", " ", "y_"}], "}"}], "]"}], ":=", 
+     RowBox[{"Scaled", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"rsx", "[", "x", "]"}], ",", 
+        RowBox[{"rsy", "[", "y", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"CSet", "=", 
+     RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"rocpts", "=", "\[IndentingNewLine]", 
+     RowBox[{"Table", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"With", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"z", "=", 
+             RowBox[{"CDF", "[", 
+              RowBox[{
+               RowBox[{"NormalDistribution", "[", 
+                RowBox[{"20.0", ",", "5"}], "]"}], ",", "x"}], "]"}]}], "}"}],
+            ",", 
+           RowBox[{"If", "[", 
+            RowBox[{"FPR", ",", 
+             RowBox[{"1.0", "-", "z"}], ",", "z"}], "]"}]}], "]"}], ",", 
+         RowBox[{"1.0", "-", 
+          RowBox[{"CDF", "[", 
+           RowBox[{
+            RowBox[{"NormalDistribution", "[", 
+             RowBox[{"\[Mu]", ",", "6.0"}], "]"}], ",", "x"}], "]"}]}]}], 
+        "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "5", ",", "70", ",", "1"}], "}"}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"a", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"\[Mu]", "-", "20.0"}], ")"}], "/", "6"}]}], ";", 
+    RowBox[{"b", "=", 
+     RowBox[{"5", "/", "6"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"auc", "=", 
+     RowBox[{"CDF", "[", 
+      RowBox[{
+       RowBox[{"NormalDistribution", "[", 
+        RowBox[{"0", ",", "1"}], "]"}], ",", 
+       RowBox[{"a", "/", 
+        RowBox[{"Sqrt", "[", 
+         RowBox[{"1", "+", 
+          RowBox[{"b", "^", "2"}]}], "]"}]}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Map", "[", 
+     RowBox[{"rs", ",", "rocpts"}], "]"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"color1", "=", 
+     RowBox[{"RGBColor", "[", 
+      RowBox[{"0.33", ",", " ", "0.6", ",", " ", ".7"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"color2", "=", 
+     RowBox[{"RGBColor", "[", 
+      RowBox[{"0.48", ",", " ", "0.11", ",", " ", ".56"}], "]"}]}], ";", "\n", 
+    RowBox[{"g1", "=", 
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"PDF", "[", 
+        RowBox[{
+         RowBox[{"NormalDistribution", "[", 
+          RowBox[{"20", ",", "5"}], "]"}], ",", "x"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "0", ",", "40"}], "}"}], ",", 
+       RowBox[{"Axes", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Black", ",", 
+          RowBox[{"Thickness", "[", "Medium", "]"}]}], "}"}]}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "85"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}]}], "]"}]}], ";", "\n", 
+    RowBox[{"g2", "=", 
+     RowBox[{"If", "[", 
+      RowBox[{"FPR", ",", 
+       RowBox[{"Plot", "[", 
+        RowBox[{
+         RowBox[{"PDF", "[", 
+          RowBox[{
+           RowBox[{"NormalDistribution", "[", 
+            RowBox[{"20", ",", "5"}], "]"}], ",", "x"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "\[DoubleStruckCapitalC]", ",", "40"}], "}"}], 
+         ",", 
+         RowBox[{"Axes", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "85"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+         RowBox[{"FillingStyle", "\[Rule]", "color1"}]}], "]"}], ",", 
+       RowBox[{"Plot", "[", 
+        RowBox[{
+         RowBox[{"PDF", "[", 
+          RowBox[{
+           RowBox[{"NormalDistribution", "[", 
+            RowBox[{"20", ",", "5"}], "]"}], ",", "x"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "\[DoubleStruckCapitalC]"}], "}"}], ",", 
+         RowBox[{"Axes", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "85"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+         RowBox[{"FillingStyle", "\[Rule]", "color1"}]}], "]"}]}], "]"}]}], 
+    ";", "\n", 
+    RowBox[{"g3", "=", 
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"PDF", "[", 
+        RowBox[{
+         RowBox[{"NormalDistribution", "[", 
+          RowBox[{"\[Mu]", ",", "6.0"}], "]"}], ",", "x"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "0", ",", "70"}], "}"}], ",", 
+       RowBox[{"Axes", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Black", ",", 
+          RowBox[{"Thickness", "[", "Medium", "]"}]}], "}"}]}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "85"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Black", ",", 
+          RowBox[{"Thickness", "[", "Medium", "]"}]}], "}"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";", "\n", 
+    RowBox[{"g4", "=", 
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"PDF", "[", 
+        RowBox[{
+         RowBox[{"NormalDistribution", "[", 
+          RowBox[{"\[Mu]", ",", "6.0"}], "]"}], ",", "x"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "\[DoubleStruckCapitalC]", ",", "70"}], "}"}], ",", 
+       
+       RowBox[{"Axes", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", "85"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}], ",", 
+       RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+       RowBox[{"FillingStyle", "\[Rule]", "color2"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Black", ",", 
+          RowBox[{"Thickness", "[", "Medium", "]"}]}], "}"}]}]}], "]"}]}], 
+    ";", "\[IndentingNewLine]", 
+    RowBox[{"Z1", "=", 
+     RowBox[{"z", "/.", 
+      RowBox[{"First", "[", 
+       RowBox[{"(", 
+        RowBox[{"FindRoot", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"PDF", "[", 
+            RowBox[{
+             RowBox[{"NormalDistribution", "[", 
+              RowBox[{"\[Mu]", ",", "6.`"}], "]"}], ",", "z"}], "]"}], 
+           "\[Equal]", 
+           RowBox[{"PDF", "[", 
+            RowBox[{
+             RowBox[{"NormalDistribution", "[", 
+              RowBox[{"20", ",", "5"}], "]"}], ",", "z"}], "]"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"z", ",", 
+            RowBox[{"20", "+", "3", "+", 
+             RowBox[{
+              RowBox[{"Abs", "[", 
+               RowBox[{"\[Mu]", "-", "20"}], "]"}], "/", "2"}]}]}], "}"}]}], 
+         "]"}], ")"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"g5", "=", 
+     RowBox[{"If", "[", 
+      RowBox[{"FPR", ",", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"Z1", "\[GreaterEqual]", " ", "\[DoubleStruckCapitalC]"}], 
+         ",", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"PDF", "[", 
+            RowBox[{
+             RowBox[{"NormalDistribution", "[", 
+              RowBox[{"\[Mu]", ",", "6.0"}], "]"}], ",", "x"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "\[DoubleStruckCapitalC]", ",", "Z1"}], "}"}], 
+           ",", 
+           RowBox[{"Axes", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"0", ",", "85"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}], ",", 
+           RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+           RowBox[{"FillingStyle", "\[Rule]", 
+            RowBox[{"Blend", "[", 
+             RowBox[{"{", 
+              RowBox[{"color2", ",", "color1"}], "}"}], "]"}]}]}], "]"}], ",", 
+         RowBox[{"{", "}"}]}], "]"}], ",", 
+       RowBox[{"{", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"g6", "=", 
+     RowBox[{"If", "[", 
+      RowBox[{"FPR", ",", 
+       RowBox[{"Plot", "[", 
+        RowBox[{
+         RowBox[{"PDF", "[", 
+          RowBox[{
+           RowBox[{"NormalDistribution", "[", 
+            RowBox[{"20", ",", "5"}], "]"}], ",", "x"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"Z1", ",", "\[DoubleStruckCapitalC]"}], "]"}], ",", 
+           "70"}], "}"}], ",", 
+         RowBox[{"Axes", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"True", ",", "False"}], "}"}]}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "85"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0.09"}], "}"}]}], "}"}]}], ",", 
+         RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+         RowBox[{"FillingStyle", "\[Rule]", 
+          RowBox[{"Blend", "[", 
+           RowBox[{"{", 
+            RowBox[{"color2", ",", "color1"}], "}"}], "]"}]}]}], "]"}], ",", 
+       RowBox[{"{", "}"}]}], "]"}]}], ";", "\n", 
+    RowBox[{"labelFPR", "=", 
+     RowBox[{"Style", "[", 
+      RowBox[{
+       RowBox[{"StringForm", "[", 
+        RowBox[{"\"\<FPR = ``\>\"", ",", 
+         RowBox[{"NumberForm", "[", 
+          RowBox[{
+           RowBox[{"fpr", "=", 
+            RowBox[{"Chop", "[", 
+             RowBox[{
+              RowBox[{"1.0", "-", 
+               RowBox[{"CDF", "[", 
+                RowBox[{
+                 RowBox[{"NormalDistribution", "[", 
+                  RowBox[{"20.0", ",", "5"}], "]"}], ",", 
+                 "\[DoubleStruckCapitalC]"}], "]"}]}], ",", "\[Delta]Chop"}], 
+             "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", "2"}], "}"}]}], "]"}]}], "]"}], ",", 
+       "\"\<Label\>\"", ",", "12", ",", "Black"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"labelSpecificity", "=", 
+     RowBox[{"Style", "[", 
+      RowBox[{
+       RowBox[{"StringForm", "[", 
+        RowBox[{"\"\<Specificity = ``\>\"", ",", 
+         RowBox[{"NumberForm", "[", 
+          RowBox[{
+           RowBox[{"specificity", "=", 
+            RowBox[{"Chop", "[", 
+             RowBox[{
+              RowBox[{"CDF", "[", 
+               RowBox[{
+                RowBox[{"NormalDistribution", "[", 
+                 RowBox[{"20.0", ",", "5"}], "]"}], ",", 
+                "\[DoubleStruckCapitalC]"}], "]"}], ",", "\[Delta]Chop"}], 
+             "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", "2"}], "}"}]}], "]"}]}], "]"}], ",", 
+       "\"\<Label\>\"", ",", "12", ",", "Black"}], "]"}]}], ";", "\n", 
+    RowBox[{"labelTPR", "=", 
+     RowBox[{"Style", "[", 
+      RowBox[{
+       RowBox[{"StringForm", "[", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+          "FPR", ",", "\"\<TPR = ``\>\"", ",", "\"\<Sensitivity = ``\>\""}], 
+          "]"}], ",", 
+         RowBox[{"NumberForm", "[", 
+          RowBox[{
+           RowBox[{"tpr", "=", 
+            RowBox[{"Chop", "[", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"1.0", "-", 
+               RowBox[{"CDF", "[", 
+                RowBox[{
+                 RowBox[{"NormalDistribution", "[", 
+                  RowBox[{"\[Mu]", ",", "6.0"}], "]"}], ",", 
+                 "\[DoubleStruckCapitalC]"}], "]"}]}], ",", 
+              "\[IndentingNewLine]", "\[Delta]Chop"}], "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", "2"}], "}"}]}], "]"}]}], "]"}], ",", 
+       "\"\<Label\>\"", ",", "12", ",", "Black"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"labelAUC", "=", "\[IndentingNewLine]", 
+     RowBox[{"Style", "[", 
+      RowBox[{
+       RowBox[{"StringForm", "[", 
+        RowBox[{"\"\<AUC = ``\>\"", ",", "\[IndentingNewLine]", 
+         RowBox[{"NumberForm", "[", 
+          RowBox[{
+           RowBox[{"Chop", "[", 
+            RowBox[{"auc", ",", "\[Delta]Chop"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"4", ",", "2"}], "}"}]}], "]"}]}], "]"}], ",", 
+       "\"\<Label\>\"", ",", "12", ",", "Black"}], "]"}]}], ";", "\n", 
+    RowBox[{
+     RowBox[{"f2", "[", "x_", "]"}], ":=", 
+     RowBox[{"Style", "[", 
+      RowBox[{"x", ",", "14", ",", "Bold", ",", "color1"}], "]"}]}], ";", 
+    "\n", 
+    RowBox[{
+     RowBox[{"f1", "[", "x_", "]"}], ":=", 
+     RowBox[{"Style", "[", 
+      RowBox[{"x", ",", "14", ",", "Bold", ",", "color2"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"pt", "=", 
+     RowBox[{"If", "[", 
+      RowBox[{"FPR", ",", 
+       RowBox[{"rs", "[", 
+        RowBox[{"{", 
+         RowBox[{"fpr", ",", "tpr"}], "}"}], "]"}], ",", 
+       RowBox[{"rs", "[", 
+        RowBox[{"{", 
+         RowBox[{"specificity", ",", "tpr"}], "}"}], "]"}]}], "]"}]}], ";", 
+    "\n", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"g2", ",", "g4", ",", "g5", ",", "g6", ",", "g1", ",", "g3"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Axes", "\[Rule]", "True"}], ",", " ", 
+      RowBox[{"AxesLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\"\<X\>\"", ",", " ", "\"\<probability density\>\""}], 
+        "}"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Prolog", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"RGBColor", "[", 
+          RowBox[{".6", ",", ".73", ",", ".36"}], "]"}], ",", 
+         RowBox[{"Thickness", "[", "Large", "]"}], ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"Map", "[", 
+           RowBox[{"rs", ",", "rocpts"}], "]"}], "]"}]}], "}"}]}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Epilog", "\[Rule]", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"\"\<Healthy\>\"", "//", "f2"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"8", ",", "0.04"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "6"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"\"\<Diseased\>\"", "//", "f1"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Which", "[", 
+              RowBox[{
+               RowBox[{"\[Mu]", "<", "23"}], ",", "40", ",", 
+               RowBox[{
+                RowBox[{"\[Mu]", "\[GreaterEqual]", " ", "23"}], "&&", " ", 
+                RowBox[{"\[Mu]", "<", "35"}]}], ",", "50", ",", "True", ",", 
+               " ", "63"}], "]"}], ",", "0.015"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "6"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{"FPR", ",", "labelFPR", ",", "labelSpecificity"}], "]"}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"47", ",", "0.071"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{"labelTPR", ",", 
+           RowBox[{"{", 
+            RowBox[{"47", ",", "0.079"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{"labelAUC", ",", 
+           RowBox[{"{", 
+            RowBox[{"47", ",", "0.087"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{"x", " ", "axis", " ", "and", " ", "label"}], " ", "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.725", "+", "xeps"}], ",", "0.5"}], "}"}], "]"}], 
+            ",", 
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.94", "+", "xeps"}], ",", "0.5"}], "}"}], "]"}]}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{"FPR", ",", "\"\<FPR\>\"", ",", "\"\<Specificity\>\""}], 
+            "]"}], ",", 
+           RowBox[{"Scaled", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"0.96", "+", "xeps"}], ",", "0.5"}], "}"}], "]"}], ",", 
+           
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "1"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{"yaxis", " ", "and", " ", "label"}], " ", "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.725", "+", "xeps"}], ",", "0.5"}], "}"}], "]"}], 
+            ",", 
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.725", "+", "xeps"}], ",", "0.95"}], "}"}], "]"}]}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{"FPR", ",", "\"\<TPR\>\"", ",", "\"\<Sensitivity\>\""}], 
+            "]"}], ",", 
+           RowBox[{"Scaled", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"0.725", "+", "xeps"}], ",", "0.97"}], "}"}], "]"}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "y", " ", "axis", " ", "tick", " ", "and", " ", "tick", " ", 
+           "label"}], " ", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<1\>\"", ",", 
+           RowBox[{"Scaled", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.70", "+", "xeps"}], ",", "0.81"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<0\>\"", ",", 
+           RowBox[{"Scaled", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.70", "+", "xeps"}], ",", "0.52"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "0"}], "}"}]}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.715", "+", "xeps"}], ",", "0.81"}], "}"}], "]"}], 
+            ",", 
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.725", "+", "xeps"}], ",", "0.81"}], "}"}], "]"}]}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.715", "+", "xeps"}], ",", "0.52"}], "}"}], "]"}], 
+            ",", 
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.725", "+", "xeps"}], ",", "0.52"}], "}"}], "]"}]}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "x", " ", "axis", " ", "tick", " ", "and", " ", "tick", " ", 
+           "label"}], " ", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<1\>\"", ",", 
+           RowBox[{"Scaled", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.865", "+", "xeps"}], ",", "0.4"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<0\>\"", ",", 
+           RowBox[{"Scaled", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.715", "+", "xeps"}], ",", "0.4"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.875", "+", "xeps"}], ",", "0.48"}], "}"}], "]"}], 
+            ",", 
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.875", "+", "xeps"}], ",", "0.5"}], "}"}], "]"}]}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.735", "+", "xeps"}], ",", "0.48"}], "}"}], "]"}], 
+            ",", 
+            RowBox[{"Scaled", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"0.735", "+", "xeps"}], ",", "0.5"}], "}"}], "]"}]}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{"roc", " ", "points"}], "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"RGBColor", "[", 
+          RowBox[{".49", ",", "0", ",", "0"}], "]"}], ",", 
+         RowBox[{"AbsolutePointSize", "[", "6", "]"}], ",", 
+         RowBox[{"Point", "[", "pt", "]"}]}], "\[IndentingNewLine]", "}"}]}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"ImageSize", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"500", ",", "300"}], "}"}]}]}], "\[IndentingNewLine]", 
+     "]"}]}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[DoubleStruckCapitalC]", ",", "20"}], "}"}], ",", "10", ",", 
+     "65", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Mu]", ",", "30"}], "}"}], ",", "15", ",", "45", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"FPR", ",", 
+     RowBox[{"{", 
+      RowBox[{"False", ",", "True"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"TrackedSymbols", "\[RuleDelayed]", 
+    RowBox[{"{", 
+     RowBox[{"\[DoubleStruckCapitalC]", ",", "\[Mu]", ",", "FPR"}], "}"}]}], 
+   ",", 
+   RowBox[{"SynchronousUpdating", "\[Rule]", "False"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.4678439618757477`*^9, {3.4678965950586977`*^9, 
+   3.467896623343059*^9}, {3.4679231875327263`*^9, 3.467923199628695*^9}, {
+   3.467932066207448*^9, 3.467932078375022*^9}, {3.4679324922807198`*^9, 
+   3.4679325032654*^9}, {3.4680714238399878`*^9, 3.4680715265812607`*^9}, {
+   3.468071618648466*^9, 3.468071629850587*^9}, {3.468071855038103*^9, 
+   3.468071947648576*^9}, {3.4681434473406963`*^9, 3.4681434666843224`*^9}, {
+   3.4697152952795177`*^9, 3.4697153021591616`*^9}, {3.469715720196041*^9, 
+   3.469715743502591*^9}, {3.469784667472183*^9, 3.4697846697341976`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`FPR$$ = 
+    False, $CellContext`\[DoubleStruckCapitalC]$$ = 20, $CellContext`\[Mu]$$ =
+     30, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`\[DoubleStruckCapitalC]$$], 20}, 10, 65}, {{
+       Hold[$CellContext`\[Mu]$$], 30}, 15, 45}, {
+      Hold[$CellContext`FPR$$], {False, True}}}, Typeset`size$$ = {
+    500., {148., 152.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = 
+    True, $CellContext`\[DoubleStruckCapitalC]$248151$$ = 
+    0, $CellContext`\[Mu]$248152$$ = 0, $CellContext`FPR$248153$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`FPR$$ = 
+        False, $CellContext`\[DoubleStruckCapitalC]$$ = 
+        20, $CellContext`\[Mu]$$ = 30}, "ControllerVariables" :> {
+        Hold[$CellContext`\[DoubleStruckCapitalC]$$, $CellContext`\
+\[DoubleStruckCapitalC]$248151$$, 0], 
+        Hold[$CellContext`\[Mu]$$, $CellContext`\[Mu]$248152$$, 0], 
+        Hold[$CellContext`FPR$$, $CellContext`FPR$248153$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`xeps = -0.01; $CellContext`\[Delta]Chop = 
+        0.001; $CellContext`xs = 0.875 - 0.735; $CellContext`xo = 
+        0.735 + $CellContext`xeps; $CellContext`ys = 
+        0.81 - 0.52; $CellContext`yo = 0.52; $CellContext`rsx[
+          Pattern[$CellContext`x, 
+           
+           Blank[]]] := $CellContext`xo + $CellContext`x $CellContext`xs; \
+$CellContext`rsy[
+          Pattern[$CellContext`y, 
+           
+           Blank[]]] := $CellContext`yo + $CellContext`y $CellContext`ys; \
+$CellContext`rs[{
+           Pattern[$CellContext`x, 
+            Blank[]], 
+           Pattern[$CellContext`y, 
+            Blank[]]}] := Scaled[{
+           $CellContext`rsx[$CellContext`x], 
+           $CellContext`rsy[$CellContext`y]}]; $CellContext`CSet = {}; \
+$CellContext`rocpts = Table[{
+           With[{$CellContext`z$ = CDF[
+               NormalDistribution[20., 5], $CellContext`x]}, 
+            If[$CellContext`FPR$$, 1. - $CellContext`z$, $CellContext`z$]], 
+           1. - CDF[
+            
+            NormalDistribution[$CellContext`\[Mu]$$, 
+             6.], $CellContext`x]}, {$CellContext`x, 5, 70, 
+           1}]; $CellContext`a = ($CellContext`\[Mu]$$ - 20.)/
+         6; $CellContext`b = 5/6; $CellContext`auc = CDF[
+          NormalDistribution[0, 1], $CellContext`a/Sqrt[
+          1 + $CellContext`b^2]]; 
+       Map[$CellContext`rs, $CellContext`rocpts]; $CellContext`color1 = 
+        RGBColor[0.33, 0.6, 0.7]; $CellContext`color2 = 
+        RGBColor[0.48, 0.11, 0.56]; $CellContext`g1 = Plot[
+          PDF[
+           NormalDistribution[20, 5], $CellContext`x], {$CellContext`x, 0, 
+           40}, Axes -> {True, False}, PlotStyle -> {Black, 
+            Thickness[Medium]}, 
+          PlotRange -> {{0, 85}, {0, 0.09}}]; $CellContext`g2 = 
+        If[$CellContext`FPR$$, 
+          Plot[
+           PDF[
+            NormalDistribution[
+            20, 5], $CellContext`x], {$CellContext`x, $CellContext`\
+\[DoubleStruckCapitalC]$$, 40}, Axes -> {True, False}, 
+           PlotRange -> {{0, 85}, {0, 0.09}}, Filling -> Axis, 
+           FillingStyle -> $CellContext`color1], 
+          Plot[
+           PDF[
+            NormalDistribution[20, 5], $CellContext`x], {$CellContext`x, 
+            0, $CellContext`\[DoubleStruckCapitalC]$$}, Axes -> {True, False},
+            PlotRange -> {{0, 85}, {0, 0.09}}, Filling -> Axis, 
+           FillingStyle -> $CellContext`color1]]; $CellContext`g3 = Plot[
+          PDF[
+           
+           NormalDistribution[$CellContext`\[Mu]$$, 
+            6.], $CellContext`x], {$CellContext`x, 0, 70}, 
+          Axes -> {True, False}, PlotStyle -> {Black, 
+            Thickness[Medium]}, PlotRange -> {{0, 85}, {0, 0.09}}, 
+          PlotStyle -> {Black, 
+            Thickness[Medium]}]; $CellContext`g4 = Plot[
+          PDF[
+           
+           NormalDistribution[$CellContext`\[Mu]$$, 
+            6.], $CellContext`x], {$CellContext`x, $CellContext`\
+\[DoubleStruckCapitalC]$$, 70}, Axes -> {True, False}, 
+          PlotRange -> {{0, 85}, {0, 0.09}}, Filling -> Axis, 
+          FillingStyle -> $CellContext`color2, PlotStyle -> {Black, 
+            Thickness[Medium]}]; $CellContext`Z1 = 
+        ReplaceAll[$CellContext`z, 
+          First[
+           FindRoot[PDF[
+              NormalDistribution[$CellContext`\[Mu]$$, 6.], $CellContext`z] == 
+            PDF[
+              NormalDistribution[20, 5], $CellContext`z], {$CellContext`z, 20 + 
+             3 + Abs[$CellContext`\[Mu]$$ - 20]/2}]]]; $CellContext`g5 = 
+        If[$CellContext`FPR$$, 
+          If[$CellContext`Z1 >= $CellContext`\[DoubleStruckCapitalC]$$, 
+           Plot[
+            PDF[
+             
+             NormalDistribution[$CellContext`\[Mu]$$, 
+              6.], $CellContext`x], {$CellContext`x, $CellContext`\
+\[DoubleStruckCapitalC]$$, $CellContext`Z1}, Axes -> {True, False}, 
+            PlotRange -> {{0, 85}, {0, 0.09}}, Filling -> Axis, FillingStyle -> 
+            Blend[{$CellContext`color2, $CellContext`color1}]], {}], {}]; \
+$CellContext`g6 = If[$CellContext`FPR$$, 
+          Plot[
+           PDF[
+            NormalDistribution[20, 5], $CellContext`x], {$CellContext`x, 
+            Max[$CellContext`Z1, $CellContext`\[DoubleStruckCapitalC]$$], 70},
+            Axes -> {True, False}, PlotRange -> {{0, 85}, {0, 0.09}}, Filling -> 
+           Axis, FillingStyle -> 
+           Blend[{$CellContext`color2, $CellContext`color1}]], {}]; \
+$CellContext`labelFPR = Style[
+          StringForm["FPR = ``", 
+           NumberForm[$CellContext`fpr = Chop[1. - CDF[
+               NormalDistribution[
+               20., 5], $CellContext`\[DoubleStruckCapitalC]$$], \
+$CellContext`\[Delta]Chop], {4, 2}]], "Label", 12, 
+          Black]; $CellContext`labelSpecificity = Style[
+          StringForm["Specificity = ``", 
+           NumberForm[$CellContext`specificity = Chop[
+              CDF[
+               NormalDistribution[
+               20., 5], $CellContext`\[DoubleStruckCapitalC]$$], \
+$CellContext`\[Delta]Chop], {4, 2}]], "Label", 12, 
+          Black]; $CellContext`labelTPR = Style[
+          StringForm[
+           If[$CellContext`FPR$$, "TPR = ``", "Sensitivity = ``"], 
+           NumberForm[$CellContext`tpr = Chop[1. - CDF[
+               
+               NormalDistribution[$CellContext`\[Mu]$$, 
+                6.], $CellContext`\[DoubleStruckCapitalC]$$], $CellContext`\
+\[Delta]Chop], {4, 2}]], "Label", 12, Black]; $CellContext`labelAUC = Style[
+          StringForm["AUC = ``", 
+           NumberForm[
+            Chop[$CellContext`auc, $CellContext`\[Delta]Chop], {4, 2}]], 
+          "Label", 12, Black]; $CellContext`f2[
+          Pattern[$CellContext`x, 
+           Blank[]]] := 
+        Style[$CellContext`x, 14, Bold, $CellContext`color1]; $CellContext`f1[
+         
+          Pattern[$CellContext`x, 
+           Blank[]]] := 
+        Style[$CellContext`x, 14, Bold, $CellContext`color2]; $CellContext`pt = 
+        If[$CellContext`FPR$$, 
+          $CellContext`rs[{$CellContext`fpr, $CellContext`tpr}], 
+          $CellContext`rs[{$CellContext`specificity, $CellContext`tpr}]]; 
+       Show[{$CellContext`g2, $CellContext`g4, $CellContext`g5, \
+$CellContext`g6, $CellContext`g1, $CellContext`g3}, Axes -> True, 
+         AxesLabel -> {"X", "probability density"}, Prolog -> {
+           RGBColor[0.6, 0.73, 0.36], 
+           Thickness[Large], 
+           Line[
+            Map[$CellContext`rs, $CellContext`rocpts]]}, Epilog -> {
+           Text[
+            $CellContext`f2["Healthy"], {8, 0.04}, {0, 0}, {1, 6}], 
+           Text[
+            $CellContext`f1["Diseased"], {
+             Which[$CellContext`\[Mu]$$ < 23, 40, 
+              And[$CellContext`\[Mu]$$ >= 23, $CellContext`\[Mu]$$ < 35], 50, 
+              True, 63], 0.015}, {0, 0}, {1, 6}], 
+           Text[
+            
+            If[$CellContext`FPR$$, $CellContext`labelFPR, \
+$CellContext`labelSpecificity], {47, 0.071}, {1, 0}], 
+           Text[$CellContext`labelTPR, {47, 0.079}, {1, 0}], 
+           Text[$CellContext`labelAUC, {47, 0.087}, {1, 0}], 
+           Arrow[{
+             Scaled[{0.725 + $CellContext`xeps, 0.5}], 
+             Scaled[{0.94 + $CellContext`xeps, 0.5}]}], 
+           Text[
+            If[$CellContext`FPR$$, "FPR", "Specificity"], 
+            Scaled[{0.96 + $CellContext`xeps, 0.5}], {0, 0}, {0, 1}], 
+           Arrow[{
+             Scaled[{0.725 + $CellContext`xeps, 0.5}], 
+             Scaled[{0.725 + $CellContext`xeps, 0.95}]}], 
+           Text[
+            If[$CellContext`FPR$$, "TPR", "Sensitivity"], 
+            Scaled[{0.725 + $CellContext`xeps, 0.97}], {0, 0}], 
+           Text["1", 
+            Scaled[{0.7 + $CellContext`xeps, 0.81}, {-1, 0}]], 
+           Text["0", 
+            Scaled[{0.7 + $CellContext`xeps, 0.52}, {-1, 0}]], 
+           Line[{
+             Scaled[{0.715 + $CellContext`xeps, 0.81}], 
+             Scaled[{0.725 + $CellContext`xeps, 0.81}]}], 
+           Line[{
+             Scaled[{0.715 + $CellContext`xeps, 0.52}], 
+             Scaled[{0.725 + $CellContext`xeps, 0.52}]}], 
+           Text["1", 
+            Scaled[{0.865 + $CellContext`xeps, 0.4}, {0, 0}]], 
+           Text["0", 
+            Scaled[{0.715 + $CellContext`xeps, 0.4}, {0, 0}]], 
+           Line[{
+             Scaled[{0.875 + $CellContext`xeps, 0.48}], 
+             Scaled[{0.875 + $CellContext`xeps, 0.5}]}], 
+           Line[{
+             Scaled[{0.735 + $CellContext`xeps, 0.48}], 
+             Scaled[{0.735 + $CellContext`xeps, 0.5}]}], 
+           RGBColor[0.49, 0, 0], 
+           AbsolutePointSize[6], 
+           Point[$CellContext`pt]}, ImageSize -> {500, 300}]), 
+      "Specifications" :> {{{$CellContext`\[DoubleStruckCapitalC]$$, 20}, 10, 
+         65, Appearance -> "Labeled"}, {{$CellContext`\[Mu]$$, 30}, 15, 45, 
+         Appearance -> "Labeled"}, {$CellContext`FPR$$, {False, True}}}, 
+      "Options" :> {
+       TrackedSymbols :> {$CellContext`\[DoubleStruckCapitalC]$$, \
+$CellContext`\[Mu]$$, $CellContext`FPR$$}, SynchronousUpdating -> False}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{545., {214., 219.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->69293746],
+
+Cell[CellGroupData[{
+
+Cell["CAPTION", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "Visually the ROC curve, shown in the top-right corner, is the shaded area \
+under the right curve versus the shaded area under the left curve as the \
+threshold parameter ",
+ Cell[BoxData[
+  FormBox["\[DoubleStruckCapitalC]", TraditionalForm]], "InlineMath"],
+ " varies. A more detailed explanation now follows."
+}], "Text"]
+}, Close]]
+}, Open  ]],
+
+Cell[TextData[{
+ "Let ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]], "InlineMath"],
+ " be a possible medical diagnostic for disease. For example, ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]], "InlineMath"],
+ ", could be eye pressure and the disease could be glaucoma. We suppose that \
+the distribution of ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]], "InlineMath"],
+ " in healthy people is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"N", "(", 
+    RowBox[{"20", ",", "5"}], ")"}], TraditionalForm]], "InlineMath"],
+ " and in the diseased population it is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"N", "(", 
+    RowBox[{"\[Mu]", ",", "6"}], ")"}], TraditionalForm]], "InlineMath"],
+ ", where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", ">", "20"}], TraditionalForm]], "InlineMath"],
+ ". These curves are shown on the left. The receiver operating characteristic \
+(ROC) curve can be used to visualize and quantify how useful ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]], "InlineMath"],
+ " is in the detection of this disease. We suppose that people are diagnosed \
+healthy or diseased according as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"X", "<", "\[DoubleStruckCapitalC]"}], TraditionalForm]], 
+  "InlineMath"],
+ " or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"X", "\[GreaterEqual]", "\[DoubleStruckCapitalC]"}], 
+   TraditionalForm]], "InlineMath"],
+ ". In the above diagram, we show the case where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "=", "30"}], TraditionalForm]], "InlineMath"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[DoubleStruckCapitalC]", "=", "20"}], TraditionalForm]], 
+  "InlineMath"],
+ ". The ROC curve plots sensitivity versus specificity, where"
+}], "Text"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"sensitivity", "=", 
+    RowBox[{
+     RowBox[{"Pr", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"X", "\[GreaterEqual]", " ", "\[DoubleStruckCapitalC]"}], "|",
+         "diseased"}], "}"}]}], "=", 
+     RowBox[{"purple", " ", "area", " ", "in", " ", "plot"}]}]}], 
+   TraditionalForm]], "InlineMath"],
+ ","
+}], "Text"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"specificity", "=", 
+    RowBox[{
+     RowBox[{"Pr", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"X", "<", "\[DoubleStruckCapitalC]"}], "|", "healthy"}], 
+       "}"}]}], "=", 
+     RowBox[{"blue", " ", "area", " ", "in", " ", "plot"}]}]}], 
+   TraditionalForm]], "InlineMath"],
+ "."
+}], "Text"],
+
+Cell[TextData[{
+ "Keeping ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ " fixed, as we vary the threshold parameter, ",
+ Cell[BoxData[
+  FormBox["\[DoubleStruckCapitalC]", TraditionalForm]], "InlineMath"],
+ ", we trace out the ROC curve, shown in the upper-right corner. For any \
+fixed value of ",
+ Cell[BoxData[
+  FormBox["\[DoubleStruckCapitalC]", TraditionalForm]], "InlineMath"],
+ ", the point shown on the ROC curve corresponds to the two shaded areas."
+}], "Text"],
+
+Cell[TextData[{
+ "The usefulness of the test depends on ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ ". The larger ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ " is, the larger the difference between the normal and diseased populations \
+and the easier it is to detect disease. So the diagnostic test improves if ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ " increases. The ",
+ Cell[BoxData[
+  FormBox["AUC", TraditionalForm]], "InlineMath"],
+ " or area under the ROC curve quantifies the usefulness of the test, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"0", "<", " ", "AUC", "<", "1"}], TraditionalForm]], 
+  "InlineMath"],
+ ". Increasing ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ " increases the ",
+ Cell[BoxData[
+  FormBox["AUC", TraditionalForm]], "InlineMath"],
+ ". For large enough ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]], "InlineMath"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"AUC", "\[DotEqual]", "1"}], TraditionalForm]], "InlineMath"],
+ ". In our Demonstration, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"AUC", "=", "0.5"}], TraditionalForm]], "InlineMath"],
+ " when ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "=", "20"}], TraditionalForm]], "InlineMath"],
+ ". In this case, the test is useless and is equivalent to simply random \
+guessing. Obviously, when ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "<", "20"}], TraditionalForm]], "InlineMath"],
+ ", the test, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"X", "\[GreaterEqual]", "\[DoubleStruckCapitalC]"}], 
+   TraditionalForm]], "InlineMath"],
+ ", is worse than useless!"
+}], "Text"],
+
+Cell[TextData[{
+ "Sometimes the ROC curve is defined as the plot of FPR versus TPR, where \
+FPR, the false positive rate, is defined as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"FPR", "=", 
+    RowBox[{"1", "-", "specificity"}]}], TraditionalForm]], "InlineMath"],
+ " and TPR is the true positive rate, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"TPR", "=", "sensitivity"}], TraditionalForm]], "InlineMath"],
+ ". Click the FPR checkbox to select this type of plot. In this plot, ",
+ Cell[BoxData[
+  FormBox[Cell["FPR", "InlineMath"], TraditionalForm]], "InlineMath"],
+ " is the area to the right of ",
+ Cell[BoxData[
+  FormBox["\[DoubleStruckCapitalC]", TraditionalForm]], "InlineMath"],
+ " for the healthy population and is shown as the colored area under the left \
+curve. When this area overlaps with the curve of the diseased population on \
+the right, the blended color is shown. Similarly TPR is the area to the right \
+of ",
+ Cell[BoxData[
+  FormBox["\[DoubleStruckCapitalC]", TraditionalForm]], "InlineMath"],
+ " in the diseased population and is shown as the colored area under the \
+right curve; once again the overlapping area is shown as the blended color."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell["DETAILS", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "Denote the cumulative distribution functions of ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]], "InlineMath"],
+ " in the healthy and diseased populations by ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["F", "h"], "(", "x", ")"}], TraditionalForm]], 
+  "InlineMath"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["F", "d"], "(", "X", ")"}], TraditionalForm]], 
+  "InlineMath"],
+ ". Then the tail functions are respectively ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["T", "i"], "(", "x", ")"}], "=", 
+    RowBox[{"1", "-", 
+     RowBox[{
+      SubscriptBox["F", "i"], "(", "x", ")"}]}]}], TraditionalForm]], 
+  "InlineMath"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{" ", 
+    RowBox[{
+     RowBox[{"i", "=", "h"}], ",", "d"}]}], TraditionalForm]], "InlineMath"],
+ ". It may be shown that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"ROC", "(", "t", ")"}], "=", 
+    RowBox[{
+     SubscriptBox["T", "d"], "(", 
+     RowBox[{
+      SubsuperscriptBox["T", "h", 
+       RowBox[{"-", "1"}]], "(", "t", ")"}], ")"}]}], TraditionalForm]], 
+  "InlineMath"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"t", "\[Element]", 
+    RowBox[{"(", 
+     RowBox[{"0", ",", "1"}], ")"}]}], TraditionalForm]], "InlineMath"],
+ " and"
+}], "Text"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"AUC", "=", 
+    RowBox[{
+     SubsuperscriptBox["\[Integral]", "0", "1"], 
+     RowBox[{
+      RowBox[{"ROC", "(", "t", ")"}], "d", "\[InvisibleSpace]", "t"}]}]}], 
+   TraditionalForm]], "InlineMath"],
+ "."
+}], "Text"],
+
+Cell["\<\
+An explicit closed-form formula for AUC in the case of binormal populations \
+is given in [1], p. 34.\
+\>", "Text"],
+
+Cell[TextData[{
+ "The AUC can be interpreted as the probability that a randomly chosen member \
+from the diseased population will have a higher ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]], "InlineMath"],
+ " than a randomly chosen member from the healthy population."
+}], "Text"],
+
+Cell[TextData[{
+ "An interesting example of the use of ROC curves to compare classifiers is \
+given in [2], figure 9.6, p. 316. See also the Demonstration \"",
+ ButtonBox["Uncertainty of Measurement and Diagnostic Accuracy Measures\"",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+UncertaintyOfMeasurementAndDiagnosticAccuracyMeasures/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+UncertaintyOfMeasurementAndDiagnosticAccuracyMeasures/"],
+ " for an illustration of the use of ROC to compare two diagnostic tests. In \
+practice, ROC curves are often used to compare a number of diagnostic tests \
+or classifiers."
+}], "Text"],
+
+Cell["\<\
+The glaucoma example discussed in this Demonstration is presented in [4] and \
+there are many similar examples in the references below. Two in-depth \
+treatments of ROC curves are provided in [1] and [3].\
+\>", "Text"],
+
+Cell[TextData[{
+ "[1] W. J. Krzanowski and D. J. Hand, ",
+ StyleBox["ROC Curves for Continuous Data,",
+  FontSlant->"Italic"],
+ " CRC/Chapman & Hall, 2009."
+}], "Text"],
+
+Cell[TextData[{
+ "[2] T. Hastie, R. Tibshirani, and J. Friedman, ",
+ StyleBox["The Elements of Statistical Learning: Data Mining, Inference, and \
+Prediction",
+  FontSlant->"Italic"],
+ ", 2nd ed., New York: Springer, 2009. "
+}], "Text"],
+
+Cell[TextData[{
+ "[3] M.S. Pepe, ",
+ StyleBox["The Statistical Evaluation of Medical Tests for Classification and \
+Prediction,",
+  FontSlant->"Italic"],
+ " New York: Oxford, 2003."
+}], "Text"],
+
+Cell[TextData[{
+ "[4] J. A. Swets, R. M. Dawes, and J. Monahan, \"Better Decisions through \
+Science,\" ",
+ StyleBox["Scientific American",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["283",
+  FontWeight->"Bold"],
+ ", 2000 pp. 82\[Dash]87. "
+}], "Text"]
+}, Close]],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "\"",
+ ButtonBox["How Receiver Operating Characteristic Curves Work",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+HowReceiverOperatingCharacteristicCurvesWork/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+HowReceiverOperatingCharacteristicCurvesWork/"],
+ "\"",
+ " from ",
+ ButtonBox["the Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/\
+HowReceiverOperatingCharacteristicCurvesWork/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+HowReceiverOperatingCharacteristicCurvesWork/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+HowReceiverOperatingCharacteristicCurvesWork/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Ian McLeod",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Ian+McLeod"], 
+    None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Ian+McLeod"]
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " system (Version 6 or higher) is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[1, 1, 1]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+HowReceiverOperatingCharacteristicCurvesWork"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+CellInsertionPointCell->None,
+WindowSize->{745, 650},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowElements->{
+ "StatusArea", "MemoryMonitor", "MagnificationPopUp", "VerticalScrollBar", 
+  "MenuBar"},
+WindowTitle->"How Receiver Operating Characteristic Curves Work - Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[651, 23, 169, 3, 70, "Section"],
+Cell[823, 28, 3700, 64, 70, "Section"],
+Cell[4526, 94, 25878, 673, 70, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30441, 772, 10988, 229, 70, "Output",
+ CellID->69293746],
+Cell[CellGroupData[{
+Cell[41454, 1005, 209, 6, 70, "Section"],
+Cell[41666, 1013, 342, 7, 70, "Text"]
+}, Close]]
+}, Open  ]],
+Cell[42034, 1024, 1717, 50, 70, "Text"],
+Cell[43754, 1076, 380, 13, 70, "Text"],
+Cell[44137, 1091, 357, 13, 70, "Text"],
+Cell[44497, 1106, 497, 12, 70, "Text"],
+Cell[44997, 1120, 1683, 51, 70, "Text"],
+Cell[46683, 1173, 1177, 25, 70, "Text"],
+Cell[CellGroupData[{
+Cell[47885, 1202, 209, 6, 70, "Section"],
+Cell[48097, 1210, 1319, 50, 70, "Text"],
+Cell[49419, 1262, 272, 10, 70, "Text"],
+Cell[49694, 1274, 125, 3, 70, "Text"],
+Cell[49822, 1279, 285, 6, 70, "Text"],
+Cell[50110, 1287, 686, 14, 70, "Text"],
+Cell[50799, 1303, 228, 4, 70, "Text"],
+Cell[51030, 1309, 168, 5, 70, "Text"],
+Cell[51201, 1316, 236, 6, 70, "Text"],
+Cell[51440, 1324, 193, 6, 70, "Text"],
+Cell[51636, 1332, 250, 9, 70, "Text"]
+}, Close]],
+Cell[CellGroupData[{
+Cell[51922, 1346, 355, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[52280, 1357, 1064, 31, 70, "Text"],
+Cell[53347, 1390, 427, 14, 70, "Text"],
+Cell[CellGroupData[{
+Cell[53799, 1408, 815, 24, 70, "Text"],
+Cell[54617, 1434, 1216, 33, 70, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+(* NotebookSignature HS4HgYONP#qAmDpW4ykQjlF1 *)

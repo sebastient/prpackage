@@ -1,0 +1,863 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     31625,        853]
+NotebookOptionsPosition[     30300,        803]
+NotebookOutlinePosition[     30984,        829]
+CellTagsIndexPosition[     30941,        826]
+WindowTitle->Graphical Illustration of Bivariate Constrained Optimization - \
+Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Graphical Illustration of Bivariate Constrained Optimization", "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False,
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1: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
+FP/69esnAAAAAAAAAAAAwM74B4thROM=
+   "], {{0, 0}, {1800, 25}}, {0, 255},
+   ColorFunction->RGBColor],
+  ImageSize->{1800, 25},
+  PlotRange->{{0, 1800}, {0, 25}}]], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"f", "=", 
+       RowBox[{"Switch", "[", 
+        RowBox[{"i", ",", "1", ",", 
+         RowBox[{"x", "+", "y"}], ",", "2", ",", 
+         RowBox[{"x", " ", "y"}], ",", "3", ",", 
+         RowBox[{
+          RowBox[{"x", "^", "2"}], "-", 
+          RowBox[{"y", "^", "2"}]}]}], "]"}]}], "}"}], ",", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{"cylinder", ",", 
+         RowBox[{"ContourPlot3D", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"x", "^", "2"}], "+", 
+               RowBox[{"y", "^", "2"}]}], "\[Equal]", "1"}], ",", 
+             RowBox[{"z", "\[Equal]", "0"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "1.5"}], ",", "1.5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"-", "1.5"}], ",", "1.5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"z", ",", 
+             RowBox[{"-", "1.5"}], ",", "1.5"}], "}"}], ",", 
+           RowBox[{"Mesh", "\[Rule]", "None"}], ",", 
+           RowBox[{"BoxRatios", "\[Rule]", "Automatic"}], ",", 
+           RowBox[{"BoundaryStyle", "\[Rule]", "None"}], ",", 
+           RowBox[{"ContourStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Directive", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"RGBColor", "[", 
+                  RowBox[{"1", ",", " ", "0", ",", " ", "0"}], "]"}], ",", 
+                 RowBox[{"Opacity", "[", "0.2", "]"}]}], "}"}], "]"}], ",", 
+              RowBox[{"Directive", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"RGBColor", "[", 
+                  RowBox[{"0", ",", " ", "1", ",", " ", "0.25098"}], "]"}], 
+                 ",", 
+                 RowBox[{"Opacity", "[", "0.2", "]"}]}], "}"}], "]"}]}], 
+             "}"}]}]}], "]"}], ",", 
+         RowBox[{"{", "}"}]}], "]"}], ",", 
+       RowBox[{"ContourPlot3D", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"z", "\[Equal]", "f"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", 
+           RowBox[{"-", "1.5"}], ",", "1.5"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"y", ",", 
+           RowBox[{"-", "1.5"}], ",", "1.5"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"z", ",", 
+           RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+         RowBox[{"Mesh", "\[Rule]", "None"}], ",", 
+         RowBox[{"BoxRatios", "\[Rule]", "Automatic"}], ",", 
+         RowBox[{"ContourStyle", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"Directive", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"RGBColor", "[", 
+               RowBox[{"0", ",", " ", "0", ",", " ", "1"}], "]"}], ",", 
+              RowBox[{"Opacity", "[", "op", "]"}]}], "}"}], "]"}], "}"}]}]}], 
+        "]"}], ",", 
+       RowBox[{"Graphics3D", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Opacity", "[", "1", "]"}], ",", 
+          RowBox[{"PointSize", "[", "0.02", "]"}], ",", 
+          RowBox[{"RGBColor", "[", 
+           RowBox[{"0.501961", ",", " ", "0.25098", ",", " ", "0"}], "]"}], 
+          ",", 
+          RowBox[{"Point", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Cos", "[", "t", "]"}], ",", 
+             RowBox[{"Sin", "[", "t", "]"}], ",", "0"}], "}"}], "]"}], ",", 
+          RowBox[{"RGBColor", "[", 
+           RowBox[{"0", ",", " ", "1", ",", " ", "1"}], "]"}], ",", 
+          RowBox[{"Point", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Cos", "[", "t", "]"}], ",", 
+             RowBox[{"Sin", "[", "t", "]"}], ",", 
+             RowBox[{"f", "/.", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"x", "\[Rule]", 
+                 RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+                RowBox[{"y", "\[Rule]", 
+                 RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}]}], "}"}], "]"}], 
+          ",", 
+          RowBox[{"RGBColor", "[", 
+           RowBox[{"0.25098", ",", " ", "0", ",", " ", "0.501961"}], "]"}], 
+          ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", "t", "]"}], ",", 
+               RowBox[{"Sin", "[", "t", "]"}], ",", "0"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Cos", "[", "t", "]"}], ",", 
+               RowBox[{"Sin", "[", "t", "]"}], ",", 
+               RowBox[{"f", "/.", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"x", "\[Rule]", 
+                   RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+                  RowBox[{"y", "\[Rule]", 
+                   RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}]}], "}"}]}], 
+            "}"}], "]"}]}], "}"}], "]"}], ",", 
+       RowBox[{"ParametricPlot3D", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Cos", "[", "t", "]"}], ",", 
+             RowBox[{"Sin", "[", "t", "]"}], ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Cos", "[", "t", "]"}], ",", 
+             RowBox[{"Sin", "[", "t", "]"}], ",", 
+             RowBox[{"f", "/.", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"x", "\[Rule]", 
+                 RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+                RowBox[{"y", "\[Rule]", 
+                 RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}]}], "}"}]}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"t", ",", "0", ",", 
+           RowBox[{"2", "Pi"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"Graphics3D", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Text", "[", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{
+              RowBox[{"Row", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<z\>\"", ",", "Italic"}], "]"}], ",", 
+                 "\"\< = \>\"", ",", 
+                 RowBox[{"ToString", "[", 
+                  RowBox[{"N", "[", 
+                   RowBox[{
+                    RowBox[{"f", "/.", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"x", "\[Rule]", 
+                    RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+                    RowBox[{"y", "\[Rule]", 
+                    RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}], ",", "3"}], 
+                   "]"}], "]"}]}], "}"}], "]"}], ",", "14"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1.2"}], ",", 
+              RowBox[{"-", "1.2"}], ",", "2.5"}], "}"}]}], "]"}], ",", 
+          RowBox[{"Text", "[", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{
+              RowBox[{"Row", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<x\>\"", ",", "Italic"}], "]"}], ",", 
+                 "\"\< = \>\"", ",", 
+                 RowBox[{"ToString", "[", 
+                  RowBox[{"N", "[", 
+                   RowBox[{
+                    RowBox[{"Cos", "[", "t", "]"}], ",", "3"}], "]"}], 
+                  "]"}]}], "}"}], "]"}], ",", "14"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1.2"}], ",", 
+              RowBox[{"-", "1.2"}], ",", "2.3"}], "}"}]}], "]"}], ",", 
+          RowBox[{"Text", "[", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{
+              RowBox[{"Row", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<y\>\"", ",", "Italic"}], "]"}], ",", 
+                 "\"\< = \>\"", ",", 
+                 RowBox[{"ToString", "[", 
+                  RowBox[{"N", "[", 
+                   RowBox[{
+                    RowBox[{"Sin", "[", "t", "]"}], ",", "3"}], "]"}], 
+                  "]"}]}], "}"}], "]"}], ",", "14"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1.2"}], ",", 
+              RowBox[{"-", "1.2"}], ",", "2.1"}], "}"}]}], "]"}]}], "}"}], 
+        "]"}], ",", 
+       RowBox[{"Axes", "\[Rule]", "axes"}], ",", 
+       RowBox[{"Boxed", "\[Rule]", "boxed"}], ",", 
+       RowBox[{"ImageSize", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"400", ",", "400"}], "}"}]}]}], "]"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "\"\<choose function\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{"x", "+", "y"}], "]"}]}], ",", 
+       RowBox[{"2", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{"x", " ", "y"}], "]"}]}], ",", 
+       RowBox[{"3", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          RowBox[{"x", "^", "2"}], "-", 
+          RowBox[{"y", "^", "2"}]}], "]"}]}]}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "\"\<move point\>\""}], "}"}], ",", "0", 
+     ",", 
+     RowBox[{"2", " ", "3.1415"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cylinder", ",", "False"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"False", ",", "True"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"axes", ",", "False"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"False", ",", "True"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"boxed", ",", "False"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"False", ",", "True"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"op", ",", ".4", ",", "\"\<surface opacity\>\""}], "}"}], ",", 
+     "0", ",", "1", ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ControlPlacement", "\[Rule]", "Left"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.449129041921875*^9, 3.44912904653125*^9}, {
+   3.44931921153329*^9, 3.449319277056842*^9}, {3.4493193230424395`*^9, 
+   3.4493194399401283`*^9}, {3.44957336725*^9, 3.449573385609375*^9}, {
+   3.4495737455*^9, 3.449573747*^9}, {3.4495738374375*^9, 
+   3.449573948828125*^9}, {3.449576665997162*^9, 3.4495767596785293`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`axes$$ = False, $CellContext`boxed$$ = 
+    False, $CellContext`cylinder$$ = False, $CellContext`i$$ = 
+    1, $CellContext`op$$ = 0.4, $CellContext`t$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`i$$], 1, "choose function"}, {
+      1 -> TraditionalForm[$CellContext`x + $CellContext`y], 2 -> 
+       TraditionalForm[$CellContext`x $CellContext`y], 3 -> 
+       TraditionalForm[$CellContext`x^2 - $CellContext`y^2]}}, {{
+       Hold[$CellContext`t$$], 0, "move point"}, 0, 6.283}, {{
+       Hold[$CellContext`cylinder$$], False}, {False, True}}, {{
+       Hold[$CellContext`axes$$], False}, {False, True}}, {{
+       Hold[$CellContext`boxed$$], False}, {False, True}}, {{
+       Hold[$CellContext`op$$], 0.4, "surface opacity"}, 0, 1}}, 
+    Typeset`size$$ = {400., {198., 202.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True, $CellContext`i$1356$$ =
+     False, $CellContext`t$1357$$ = 0, $CellContext`cylinder$1358$$ = 
+    False, $CellContext`axes$1359$$ = False, $CellContext`boxed$1360$$ = 
+    False, $CellContext`op$1361$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`axes$$ = False, $CellContext`boxed$$ = 
+        False, $CellContext`cylinder$$ = False, $CellContext`i$$ = 
+        1, $CellContext`op$$ = 0.4, $CellContext`t$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`i$$, $CellContext`i$1356$$, False], 
+        Hold[$CellContext`t$$, $CellContext`t$1357$$, 0], 
+        Hold[$CellContext`cylinder$$, $CellContext`cylinder$1358$$, False], 
+        Hold[$CellContext`axes$$, $CellContext`axes$1359$$, False], 
+        Hold[$CellContext`boxed$$, $CellContext`boxed$1360$$, False], 
+        Hold[$CellContext`op$$, $CellContext`op$1361$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      With[{$CellContext`f$ = 
+         Switch[$CellContext`i$$, 1, $CellContext`x + $CellContext`y, 
+           2, $CellContext`x $CellContext`y, 
+           3, $CellContext`x^2 - $CellContext`y^2]}, 
+        Show[
+         If[$CellContext`cylinder$$, 
+          
+          ContourPlot3D[{$CellContext`x^2 + $CellContext`y^2 == 
+            1, $CellContext`z == 0}, {$CellContext`x, -1.5, 
+            1.5}, {$CellContext`y, -1.5, 1.5}, {$CellContext`z, -1.5, 1.5}, 
+           Mesh -> None, BoxRatios -> Automatic, BoundaryStyle -> None, 
+           ContourStyle -> {
+             Directive[{
+               RGBColor[1, 0, 0], 
+               Opacity[0.2]}], 
+             Directive[{
+               RGBColor[0, 1, 0.25098], 
+               Opacity[0.2]}]}], {}], 
+         ContourPlot3D[{$CellContext`z == $CellContext`f$}, {$CellContext`x, \
+-1.5, 1.5}, {$CellContext`y, -1.5, 1.5}, {$CellContext`z, -2, 2}, Mesh -> 
+          None, BoxRatios -> Automatic, ContourStyle -> {
+            Directive[{
+              RGBColor[0, 0, 1], 
+              Opacity[$CellContext`op$$]}]}], 
+         Graphics3D[{
+           Opacity[1], 
+           PointSize[0.02], 
+           RGBColor[0.501961, 0.25098, 0], 
+           Point[{
+             Cos[$CellContext`t$$], 
+             Sin[$CellContext`t$$], 0}], 
+           RGBColor[0, 1, 1], 
+           Point[{
+             Cos[$CellContext`t$$], 
+             Sin[$CellContext`t$$], 
+             
+             ReplaceAll[$CellContext`f$, {$CellContext`x -> 
+               Cos[$CellContext`t$$], $CellContext`y -> 
+               Sin[$CellContext`t$$]}]}], 
+           RGBColor[0.25098, 0, 0.501961], 
+           Line[{{
+              Cos[$CellContext`t$$], 
+              Sin[$CellContext`t$$], 0}, {
+              Cos[$CellContext`t$$], 
+              Sin[$CellContext`t$$], 
+              
+              ReplaceAll[$CellContext`f$, {$CellContext`x -> 
+                Cos[$CellContext`t$$], $CellContext`y -> 
+                Sin[$CellContext`t$$]}]}}]}], 
+         ParametricPlot3D[{{
+            Cos[$CellContext`t$$], 
+            Sin[$CellContext`t$$], 0}, {
+            Cos[$CellContext`t$$], 
+            Sin[$CellContext`t$$], 
+            
+            ReplaceAll[$CellContext`f$, {$CellContext`x -> 
+              Cos[$CellContext`t$$], $CellContext`y -> 
+              Sin[$CellContext`t$$]}]}}, {$CellContext`t$$, 0, 2 Pi}], 
+         Graphics3D[{
+           Text[
+            Style[
+             Row[{
+               Style["z", Italic], " = ", 
+               ToString[
+                N[
+                 
+                 ReplaceAll[$CellContext`f$, {$CellContext`x -> 
+                   Cos[$CellContext`t$$], $CellContext`y -> 
+                   Sin[$CellContext`t$$]}], 3]]}], 14], {-1.2, -1.2, 2.5}], 
+           Text[
+            Style[
+             Row[{
+               Style["x", Italic], " = ", 
+               ToString[
+                N[
+                 Cos[$CellContext`t$$], 3]]}], 14], {-1.2, -1.2, 2.3}], 
+           Text[
+            Style[
+             Row[{
+               Style["y", Italic], " = ", 
+               ToString[
+                N[
+                 Sin[$CellContext`t$$], 3]]}], 14], {-1.2, -1.2, 2.1}]}], 
+         Axes -> $CellContext`axes$$, Boxed -> $CellContext`boxed$$, 
+         ImageSize -> {400, 400}]], 
+      "Specifications" :> {{{$CellContext`i$$, 1, "choose function"}, {
+         1 -> TraditionalForm[$CellContext`x + $CellContext`y], 2 -> 
+          TraditionalForm[$CellContext`x $CellContext`y], 3 -> 
+          TraditionalForm[$CellContext`x^2 - $CellContext`y^2]}}, \
+{{$CellContext`t$$, 0, "move point"}, 0, 6.283, ImageSize -> 
+         Tiny}, {{$CellContext`cylinder$$, False}, {
+         False, True}}, {{$CellContext`axes$$, False}, {
+         False, True}}, {{$CellContext`boxed$$, False}, {
+         False, True}}, {{$CellContext`op$$, 0.4, "surface opacity"}, 0, 1, 
+         ImageSize -> Tiny}}, "Options" :> {ControlPlacement -> Left}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{633., {226., 231.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->163754786],
+
+Cell[CellGroupData[{
+
+Cell["CAPTION", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "This Demonstration illustrates graphically finding a constrained extrema of \
+a function of two variables ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"z", "=", 
+    RowBox[{"f", 
+     RowBox[{"(", 
+      RowBox[{"x", ",", "y"}], ")"}]}]}], TraditionalForm]], "InlineMath"],
+ " with a constraint ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"g", 
+     RowBox[{"(", 
+      RowBox[{"x", ",", "y"}], ")"}]}], "=", "0"}], TraditionalForm]], 
+  "InlineMath"],
+ ". In this Demonstration ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"g", "(", 
+     RowBox[{"x", ",", "y"}], ")"}], "=", 
+    RowBox[{
+     FormBox[
+      SuperscriptBox["x", "2"],
+      TraditionalForm], "+", 
+     FormBox[
+      SuperscriptBox["y", "2"],
+      TraditionalForm], "-", "1"}]}], TraditionalForm]], "InlineMath"],
+ ". While the brown point moves on the unit circle, the cyan point moves on \
+the curve, which is the intersection of the surface that is the graph of the \
+function ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]], "InlineMath"],
+ " and the cylinder given by ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"z", "=", 
+    RowBox[{"g", "(", 
+     RowBox[{"x", ",", "y"}], ")"}]}], TraditionalForm]], "InlineMath"],
+ "."
+}], "Text"]
+}, Close]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["DETAILS", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "To find the extrema of a function ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"z", "=", 
+    RowBox[{"f", 
+     RowBox[{"(", 
+      RowBox[{"x", ",", "y"}], ")"}]}]}], TraditionalForm]], "InlineMath"],
+ ", subject to the constraint that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"g", 
+     RowBox[{"(", 
+      RowBox[{"x", ",", "y"}], ")"}]}], "=", "0"}], TraditionalForm]], 
+  "InlineMath"],
+ ", form an auxiliary function ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"w", "=", 
+    RowBox[{
+     RowBox[{"f", 
+      RowBox[{"(", 
+       RowBox[{"x", ",", "y"}], ")"}]}], "+", 
+     RowBox[{"\[Lambda]g", 
+      RowBox[{"(", 
+       RowBox[{"x", ",", "y"}], ")"}]}]}]}], TraditionalForm]], 
+  "InlineMath"],
+ ". The coordinates ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{"x", ",", "y"}], ")"}], TraditionalForm]], "InlineMath"],
+ " of the extrema satisfy three equations: ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"g", 
+     RowBox[{"(", 
+      RowBox[{"x", ",", "y"}], ")"}]}], "=", "0"}], TraditionalForm]], 
+  "InlineMath"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["w", "x"], "=", "0"}], TraditionalForm]], "InlineMath"],
+ ", and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["w", "y"], TraditionalForm]], "InlineMath"],
+ "=0.  The function ",
+ Cell[BoxData[
+  FormBox["w", TraditionalForm]], "InlineMath"],
+ " is referred to as the Lagrangian, and ",
+ Cell[BoxData[
+  FormBox["\[Lambda]", TraditionalForm]], "InlineMath"],
+ " as the Lagrange multiplier. One observes that the first of the three \
+equations is simply ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["w", "\[Lambda]"], "=", "0"}], TraditionalForm]], 
+  "InlineMath"],
+ ", and that we really have three variables ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{"x", ",", "y", ",", "\[Lambda]"}], ")"}], TraditionalForm]], 
+  "InlineMath"],
+ ", so the system we solve is not overdetermined. This method assumes that \
+the constraint equation defines a smooth (differentiable) closed curve, so \
+that no points require special testing."
+}], "Text"]
+}, Close]],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "\"",
+ ButtonBox["Graphical Illustration of Bivariate Constrained Optimization",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+GraphicalIllustrationOfBivariateConstrainedOptimization/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+GraphicalIllustrationOfBivariateConstrainedOptimization/"],
+ "\"",
+ " from ",
+ ButtonBox["the Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/\
+GraphicalIllustrationOfBivariateConstrainedOptimization/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+GraphicalIllustrationOfBivariateConstrainedOptimization/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/\
+GraphicalIllustrationOfBivariateConstrainedOptimization/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Izidor Hafner",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Izidor+Hafner"],
+     None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Izidor+Hafner"]
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " system (Version 6 or higher) is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[1, 1, 1]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+GraphicalIllustrationOfBivariateConstrainedOptimization"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+CellInsertionPointCell->None,
+WindowSize->{780, 650},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowElements->{
+ "StatusArea", "MemoryMonitor", "MagnificationPopUp", "VerticalScrollBar", 
+  "MenuBar"},
+WindowTitle->"Graphical Illustration of Bivariate Constrained Optimization - \
+Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[664, 24, 180, 3, 70, "Section"],
+Cell[847, 29, 3700, 64, 70, "Section"],
+Cell[4550, 95, 11104, 287, 70, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15691, 387, 6708, 146, 70, "Output",
+ CellID->163754786],
+Cell[CellGroupData[{
+Cell[22424, 537, 209, 6, 70, "Section"],
+Cell[22636, 545, 1241, 42, 70, "Text"]
+}, Close]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23925, 593, 209, 6, 70, "Section"],
+Cell[24137, 601, 2102, 72, 70, "Text"]
+}, Close]],
+Cell[CellGroupData[{
+Cell[26275, 678, 355, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[26633, 689, 1130, 31, 70, "Text"],
+Cell[27766, 722, 436, 14, 70, "Text"],
+Cell[CellGroupData[{
+Cell[28227, 740, 815, 24, 70, "Text"],
+Cell[29045, 766, 1227, 33, 70, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+(* NotebookSignature aR4SXZSdh6wl6BTdbEFFc9qt *)

@@ -1,0 +1,189 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      6891,        180]
+NotebookOptionsPosition[      6253,        156]
+NotebookOutlinePosition[      6599,        171]
+CellTagsIndexPosition[      6556,        168]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "\"\<@\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"oldPath", "=", "$Path"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.506762656203125*^9, 3.506762657625*^9}, 
+   3.506762858234375*^9, 3.506764854421875*^9, {3.50676538765625*^9, 
+   3.50676540009375*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "::", "\<\"wrsym\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Symbol \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\[FormalA]\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is Protected.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/wrsym\\\", ButtonNote -> \
+\\\"Clear::wrsym\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5069044175625*^9, 3.506933568234375*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "::", "\<\"wrsym\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Symbol \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\[FormalB]\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is Protected.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/wrsym\\\", ButtonNote -> \
+\\\"Clear::wrsym\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5069044175625*^9, 3.506933568234375*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Clear", "::", "\<\"wrsym\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Symbol \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\[FormalC]\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is Protected.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/wrsym\\\", ButtonNote -> \
+\\\"Clear::wrsym\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5069044175625*^9, 3.506933568234375*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"General", "::", "\<\"stop\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Further output of \\\\\\\"\\\
+\", \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Clear :: \
+\\\"wrsym\\\"\\), \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" will \
+be suppressed during this calculation.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.5069044175625*^9, 3.50693356825*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+   "MainDir", "=", "\"\<E:\\\\work\\\\thesis\\\\\:8bba\:6587\\\\nb\>\""}], 
+   ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.5067628610625*^9, 3.506762869921875*^9}, {
+   3.50676290171875*^9, 3.506762931578125*^9}, 3.506762974546875*^9, {
+   3.506763075234375*^9, 3.506763078125*^9}, {3.506763164*^9, 
+   3.50676318171875*^9}, {3.506763338625*^9, 3.50676338553125*^9}, {
+   3.506763443078125*^9, 3.506763479453125*^9}, {3.5067637605625*^9, 
+   3.50676376334375*^9}, {3.5069030950625*^9, 3.506903102078125*^9}, 
+   3.506903150703125*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", "MainDir", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dirs", "=", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"WordCharacter", ".."}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.50676422615625*^9, 3.506764227875*^9}, 
+   3.5067642709375*^9, {3.506903152359375*^9, 3.506903153234375*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"DataDir", "=", "\"\<data\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"featureDir", "=", "\"\<features\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"myPath", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"FileNameJoin", "[", 
+       RowBox[{"{", 
+        RowBox[{"MainDir", ",", "#"}], "}"}], "]"}], "&"}], ",", "dirs"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.5067628610625*^9, 3.506762869921875*^9}, {
+   3.50676290171875*^9, 3.506762931578125*^9}, 3.506762974546875*^9, {
+   3.506763075234375*^9, 3.506763078125*^9}, {3.506763164*^9, 
+   3.50676318171875*^9}, {3.506763338625*^9, 3.50676338553125*^9}, {
+   3.506763443078125*^9, 3.506763479453125*^9}, {3.5067637605625*^9, 
+   3.50676376334375*^9}, {3.506764280953125*^9, 3.506764290203125*^9}, {
+   3.506764323828125*^9, 3.5067643543125*^9}, {3.506764521171875*^9, 
+   3.50676452375*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"$Path", "=", 
+    RowBox[{"Join", "[", 
+     RowBox[{"oldPath", ",", " ", "myPath"}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.506764552953125*^9, 3.506764556359375*^9}, {
+  3.5067647944375*^9, 3.50676487965625*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetDirectory", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{"MainDir", ",", "DataDir"}], "}"}], "]"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.506763656125*^9, 3.506763670546875*^9}, {
+   3.506763896625*^9, 3.506763935796875*^9}, {3.506764026359375*^9, 
+   3.506764028453125*^9}, 3.50676410215625*^9, {3.5067642430625*^9, 
+   3.5067642490625*^9}, {3.506764295015625*^9, 3.506764296484375*^9}, {
+   3.506764433515625*^9, 3.506764477078125*^9}, {3.506764531*^9, 
+   3.506764546828125*^9}, {3.506903110859375*^9, 3.506903137875*^9}}]
+},
+WindowSize->{683, 719},
+WindowMargins->{{Automatic, 273}, {Automatic, 28}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 323, 7, 67, "Input"],
+Cell[893, 31, 594, 11, 25, "Message"],
+Cell[1490, 44, 594, 11, 28, "Message"],
+Cell[2087, 57, 594, 11, 25, "Message"],
+Cell[2684, 70, 644, 11, 40, "Message"]
+}, Open  ]],
+Cell[3343, 84, 624, 12, 94, "Input"],
+Cell[3970, 98, 364, 8, 67, "Input"],
+Cell[4337, 108, 972, 22, 121, "Input"],
+Cell[5312, 132, 295, 7, 67, "Input"],
+Cell[5610, 141, 639, 13, 67, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
