@@ -1,0 +1,682 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     28637,        672]
+NotebookOptionsPosition[     27426,        626]
+NotebookOutlinePosition[     28092,        651]
+CellTagsIndexPosition[     28049,        648]
+WindowTitle->N-Step Transition Matrices for Markov Chains - Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ StyleBox["N",
+  FontSlant->"Italic"],
+ "-Step Transition Matrices for Markov Chains"
+}], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False,
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1: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
+FP/69esnAAAAAAAAAAAAwM74B4thROM=
+   "], {{0, 0}, {1800, 25}}, {0, 255},
+   ColorFunction->RGBColor],
+  ImageSize->{1800, 25},
+  PlotRange->{{0, 1800}, {0, 25}}]], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"data2", "=", 
+     RowBox[{"Take", "[", 
+      RowBox[{"data", ",", "h", ",", "h"}], "]"}]}], ";", 
+    RowBox[{"data3", "=", 
+     RowBox[{
+      RowBox[{"DiagonalMatrix", "[", 
+       RowBox[{"1", "/", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Max", "[", 
+            RowBox[{"#", ",", "1"}], "]"}], "&"}], ",", 
+          RowBox[{"Total", "[", 
+           RowBox[{"Transpose", "[", "data2", "]"}], "]"}]}], "]"}]}], "]"}], 
+      ".", "data2"}]}], ";", 
+    RowBox[{"data4", "=", 
+     RowBox[{"MatrixPower", "[", 
+      RowBox[{"data3", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"Pane", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Switch", "[", 
+       RowBox[{"switch", ",", "\[IndentingNewLine]", "3", ",", 
+        RowBox[{"Style", "[", 
+         RowBox[{
+          RowBox[{"MatrixForm", "[", 
+           RowBox[{"Round", "[", 
+            RowBox[{"data4", ",", ".001"}], "]"}], "]"}], ",", 
+          RowBox[{"FontSize", "\[Rule]", "11"}]}], "]"}], ",", 
+        "\[IndentingNewLine]", "1", ",", 
+        RowBox[{"GraphPlot", "[", 
+         RowBox[{"data2", " ", ",", 
+          RowBox[{"SelfLoopStyle", "\[Rule]", "True"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"VertexLabeling", "\[Rule]", "True"}], ",", 
+          RowBox[{"DirectedEdges", "\[Rule]", "True"}]}], 
+         "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", "2", ",", 
+        RowBox[{"Style", "[", 
+         RowBox[{
+          RowBox[{"MatrixForm", "[", 
+           RowBox[{"data3", "//", "N"}], "]"}], ",", 
+          RowBox[{"FontSize", "\[Rule]", "11"}]}], "]"}]}], 
+       "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"350", ",", "100"}], "}"}]}], "]"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"data", ",", 
+       RowBox[{"Normal", "@", 
+        RowBox[{"SparseArray", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Band", "[", 
+              RowBox[{"{", 
+               RowBox[{"2", ",", "1"}], "}"}], "]"}], "\[Rule]", "1"}], ",", 
+            RowBox[{
+             RowBox[{"Band", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "2"}], "}"}], "]"}], "\[Rule]", "1"}]}], 
+           "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"13", ",", "13"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "None"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"h", ",", "5", ",", "\"\<number of states\>\""}], "}"}], ",", 
+     "2", ",", "8", ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "5", ",", "\"\<iterations (t)\>\""}], "}"}], ",", "1",
+      ",", "100", ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"data2", ",", 
+     RowBox[{"ControlType", "\[Rule]", "None"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"data3", ",", 
+     RowBox[{"ControlType", "\[Rule]", "None"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"data4", ",", 
+     RowBox[{"ControlType", "\[Rule]", "None"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"switch", ",", "1", ",", "\"\<\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "\[Rule]", "\"\<graph of transitions\>\""}], ",", 
+       RowBox[{"2", "\[Rule]", "\"\<transition matrix\>\""}], ",", 
+       RowBox[{"3", "\[Rule]", "\"\<transitions after t moves\>\""}]}], 
+      "}"}]}], "}"}], ",", 
+   RowBox[{"Dynamic", "[", 
+    RowBox[{"Panel", "[", 
+     RowBox[{
+      RowBox[{"Grid", "[", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"With", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"i", "=", "i"}], ",", 
+             RowBox[{"j", "=", "j"}]}], "}"}], ",", 
+           RowBox[{"Checkbox", "[", 
+            RowBox[{
+             RowBox[{"Dynamic", "[", 
+              RowBox[{"data", "[", 
+               RowBox[{"[", 
+                RowBox[{"i", ",", "j"}], "]"}], "]"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "1"}], "}"}], ",", 
+             RowBox[{"Appearance", "\[Rule]", "Small"}]}], "]"}]}], "]"}], 
+         ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "h"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "h"}], "}"}]}], "]"}], "]"}], ",", 
+      RowBox[{"ImageSize", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"185", ",", "155"}], "}"}]}], ",", 
+      RowBox[{"Alignment", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Left", ",", "Top"}], "}"}]}], ",", 
+      RowBox[{"FrameMargins", "\[Rule]", "0"}]}], "]"}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"TrackedSymbols", "\[Rule]", "Manipulate"}], ",", 
+   RowBox[{"AutorunSequencing", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"2", ",", "3"}], "}"}]}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.429445116237283*^9, 3.429445141831033*^9}, {
+   3.429445176862283*^9, 3.4294452085966578`*^9}, {3.4294452756904078`*^9, 
+   3.4294452968466578`*^9}, {3.4294453841591578`*^9, 3.429445435674783*^9}, {
+   3.4294456362216578`*^9, 3.4294456500654078`*^9}, {3.429445785237283*^9, 
+   3.4294457882841578`*^9}, {3.429445844737283*^9, 3.4294459354091578`*^9}, {
+   3.4294461060029078`*^9, 3.4294461066279078`*^9}, {3.4294463649404078`*^9, 
+   3.4294463656591578`*^9}, {3.4294464348154078`*^9, 
+   3.4294464527529078`*^9}, {3.4294464980654078`*^9, 3.429446511581033*^9}, {
+   3.429447913173736*^9, 3.4294479273084087`*^9}, {3.4294479668980017`*^9, 
+   3.429447967492158*^9}, {3.4294480624122*^9, 3.429448112502825*^9}, {
+   3.429448269807703*^9, 3.42944833892502*^9}, {3.429448396211403*^9, 
+   3.4294484180883627`*^9}, {3.4294488392049575`*^9, 3.429448998364043*^9}, {
+   3.429449063521127*^9, 3.429449105162285*^9}, {3.4294491429283934`*^9, 
+   3.4294491719443903`*^9}, {3.4294492068820033`*^9, 
+   3.4294492266007533`*^9}, {3.429449258428878*^9, 3.429449343803878*^9}, {
+   3.4294493951007533`*^9, 3.4294494309132533`*^9}, {3.4294494683507533`*^9, 
+   3.429449505053878*^9}, {3.429449539522628*^9, 3.429449571303878*^9}, {
+   3.4294498981632533`*^9, 3.4294499021632533`*^9}, {3.4294499365070033`*^9, 
+   3.4294499374445033`*^9}, {3.429449982178878*^9, 3.429450017210128*^9}, {
+   3.4294500830070033`*^9, 3.4294501138820033`*^9}, {3.4294501491632533`*^9, 
+   3.4294501854132533`*^9}, {3.429451448928878*^9, 3.4294514601320033`*^9}, {
+   3.429455881190578*^9, 3.429455994148873*^9}, {3.4294560502124786`*^9, 
+   3.4294560593143883`*^9}, 3.4294577348820033`*^9, {3.42954048756479*^9, 
+   3.429540487799168*^9}, {3.4295405798628464`*^9, 3.4295405857222967`*^9}, 
+   3.429540690145508*^9, 3.429540730192896*^9, {3.4295407846467175`*^9, 
+   3.4295407857404814`*^9}, {3.4295409495863285`*^9, 3.429540957430179*^9}, {
+   3.4296269620838614`*^9, 3.4296269629432473`*^9}, {3.489154117404683*^9, 
+   3.489154118862683*^9}, 3.4891543943936825`*^9, {3.4891545191406827`*^9, 
+   3.4891545749826827`*^9}, {3.4891566067026825`*^9, 3.489156648637683*^9}, {
+   3.489156691255683*^9, 3.489156717144683*^9}, 3.489156897307683*^9, {
+   3.4891573798796825`*^9, 3.489157419558683*^9}, 3.489157456374683*^9, {
+   3.4891576518246827`*^9, 3.489157716675683*^9}, 3.489157760203683*^9, {
+   3.489157835493683*^9, 3.489157848427683*^9}, {3.4891579348396826`*^9, 
+   3.489157969128683*^9}, {3.489158083215683*^9, 3.4891581212516828`*^9}, {
+   3.489158195514683*^9, 3.4891582440756826`*^9}, {3.489166683937683*^9, 
+   3.489166687888683*^9}, {3.489166744024683*^9, 3.489166810602683*^9}, {
+   3.489166895013683*^9, 3.489166971802683*^9}, {3.4891670240356827`*^9, 
+   3.489167027371683*^9}, {3.4891670842876825`*^9, 3.4891670854176826`*^9}, {
+   3.489167161897683*^9, 3.489167163296683*^9}, {3.4891672348316827`*^9, 
+   3.489167361137683*^9}, {3.489167445414683*^9, 3.489167474170683*^9}, {
+   3.489167744701683*^9, 3.4891677471816826`*^9}, {3.4894944944880886`*^9, 
+   3.4894944976570883`*^9}, {3.4894946344900885`*^9, 
+   3.4894946356060886`*^9}, {3.489496422553088*^9, 3.4894964292870884`*^9}, {
+   3.4894985880970883`*^9, 3.4894985948860884`*^9}, {3.4894986323860884`*^9, 
+   3.4894986380140886`*^9}, {3.489498704954088*^9, 3.4894987071010885`*^9}, {
+   3.4894987529130883`*^9, 3.489498763105088*^9}, {3.4894988775970883`*^9, 
+   3.4894988908510885`*^9}, {3.4894989425540886`*^9, 3.489498964105088*^9}, {
+   3.489499024329088*^9, 3.489499063765088*^9}, {3.489500317204088*^9, 
+   3.4895003377870884`*^9}, {3.489500391350088*^9, 3.4895004075170884`*^9}, {
+   3.4895004793670883`*^9, 3.4895004806830883`*^9}, {3.4895005191310883`*^9, 
+   3.4895005248480883`*^9}, {3.4895005967450886`*^9, 
+   3.4895006100570884`*^9}, {3.489500662461088*^9, 3.4895006634410887`*^9}, {
+   3.4895017962400885`*^9, 3.4895018773440886`*^9}, {3.4895019105370884`*^9, 
+   3.489501913079088*^9}, {3.4895019917260885`*^9, 3.4895020724700885`*^9}, 
+   3.489502183013088*^9, 3.4895022136340885`*^9, {3.4895022437070885`*^9, 
+   3.4895022703400884`*^9}, {3.4895023172800884`*^9, 
+   3.4895023465050883`*^9}, {3.4895023819920883`*^9, 
+   3.4895024031540885`*^9}, {3.4895026649150887`*^9, 
+   3.4895027097590885`*^9}, {3.489502776324088*^9, 3.4895028299130883`*^9}, {
+   3.4895102859200883`*^9, 3.4895102887310886`*^9}, {3.4895103483380885`*^9, 
+   3.4895103490490885`*^9}, {3.4895103973260884`*^9, 
+   3.4895103979760885`*^9}, {3.4897774436324887`*^9, 3.489777453813489*^9}, {
+   3.489780606709*^9, 3.489780620104*^9}, {3.4897806747209997`*^9, 
+   3.48978068883*^9}, {3.489780732236*^9, 3.489780753477*^9}, {3.48978146*^9, 
+   3.489781467493*^9}},
+ CellID->12215638]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`data$$ = {{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0}, {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 1, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0}, {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 
+    1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 
+    0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 
+    0}, {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 1, 
+    0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0}, {0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 1, 0, 1}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+    0}}, $CellContext`data2$$ = {{0, 1, 0, 0, 0}, {1, 0, 1, 0, 0}, {0, 1, 0, 
+    1, 0}, {0, 0, 1, 0, 1}, {0, 0, 0, 1, 
+    0}}, $CellContext`data3$$ = {{0, 1, 0, 0, 0}, {
+      Rational[1, 2], 0, 
+      Rational[1, 2], 0, 0}, {0, 
+      Rational[1, 2], 0, 
+      Rational[1, 2], 0}, {0, 0, 
+      Rational[1, 2], 0, 
+      Rational[1, 2]}, {0, 0, 0, 1, 0}}, $CellContext`data4$$ = {{0, 
+      Rational[5, 8], 0, 
+      Rational[3, 8], 0}, {
+      Rational[5, 16], 0, 
+      Rational[1, 2], 0, 
+      Rational[3, 16]}, {0, 
+      Rational[1, 2], 0, 
+      Rational[1, 2], 0}, {
+      Rational[3, 16], 0, 
+      Rational[1, 2], 0, 
+      Rational[5, 16]}, {0, 
+      Rational[3, 8], 0, 
+      Rational[5, 8], 0}}, $CellContext`h$$ = 5, $CellContext`n$$ = 
+    5, $CellContext`switch$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`data$$], {{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {
+       1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 
+       0, 0, 0}, {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 1, 
+       0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0}, {0, 0, 
+       0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 
+       0}, {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 
+       1, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0}, {0, 0, 0, 0, 
+       0, 0, 0, 0, 0, 0, 1, 0, 1}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+       0}}}}, {{
+       Hold[$CellContext`h$$], 5, "number of states"}, 2, 8, 1}, {{
+       Hold[$CellContext`n$$], 5, "iterations (t)"}, 1, 100, 1}, {
+      Hold[$CellContext`data2$$]}, {
+      Hold[$CellContext`data3$$]}, {
+      Hold[$CellContext`data4$$]}, {{
+       Hold[$CellContext`switch$$], 1, ""}, {
+      1 -> "graph of transitions", 2 -> "transition matrix", 3 -> 
+       "transitions after t moves"}}, {
+      Hold[
+       Dynamic[
+        Panel[
+         Grid[
+          Table[
+           
+           With[{$CellContext`i$ = $CellContext`i, $CellContext`j$ = \
+$CellContext`j}, 
+            Checkbox[
+             Dynamic[
+              Part[$CellContext`data$$, $CellContext`i$, $CellContext`j$]], {
+             0, 1}, Appearance -> 
+             Small]], {$CellContext`i, $CellContext`h$$}, {$CellContext`j, \
+$CellContext`h$$}]], ImageSize -> {185, 155}, Alignment -> {Left, Top}, 
+         FrameMargins -> 0]]], Manipulate`Dump`ThisIsNotAControl}}, 
+    Typeset`size$$ = {350., {47.5, 52.5}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True, $CellContext`h$1227$$ =
+     0, $CellContext`n$1228$$ = 0, $CellContext`switch$1229$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`data$$ = {{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0}, {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 1, 0, 0, 
+         0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0,
+          0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 
+         0, 0}, {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1,
+          0, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0}, {0, 0, 
+         0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 
+         1, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1}, {0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 1, 0}}, $CellContext`data2$$ = 
+        Null, $CellContext`data3$$ = Null, $CellContext`data4$$ = 
+        Null, $CellContext`h$$ = 5, $CellContext`n$$ = 
+        5, $CellContext`switch$$ = 1}, "ControllerVariables" :> {
+        Hold[$CellContext`h$$, $CellContext`h$1227$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$1228$$, 0], 
+        Hold[$CellContext`switch$$, $CellContext`switch$1229$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`data2$$ = 
+        Take[$CellContext`data$$, $CellContext`h$$, $CellContext`h$$]; \
+$CellContext`data3$$ = Dot[
+          DiagonalMatrix[1/Map[Max[#, 1]& , 
+            Total[
+             
+             Transpose[$CellContext`data2$$]]]], $CellContext`data2$$]; \
+$CellContext`data4$$ = MatrixPower[$CellContext`data3$$, $CellContext`n$$]; 
+       Pane[
+         Switch[$CellContext`switch$$, 3, 
+          Style[
+           MatrixForm[
+            Round[$CellContext`data4$$, 0.001]], FontSize -> 11], 1, 
+          
+          GraphPlot[$CellContext`data2$$, SelfLoopStyle -> True, 
+           VertexLabeling -> True, DirectedEdges -> True], 2, 
+          Style[
+           MatrixForm[
+            N[$CellContext`data3$$]], FontSize -> 11]], {350, 100}]), 
+      "Specifications" :> {{{$CellContext`data$$, {{0, 1, 0, 0, 0, 0, 0, 0, 0,
+           0, 0, 0, 0}, {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 1, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
+          0}, {0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 1, 
+          0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 
+          0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 
+          0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 1, 0, 1, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1}, {0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}}}, ControlType -> 
+         None}, {{$CellContext`h$$, 5, "number of states"}, 2, 8, 1, 
+         Appearance -> "Labeled"}, {{$CellContext`n$$, 5, "iterations (t)"}, 
+         1, 100, 1, Appearance -> "Labeled"}, {$CellContext`data2$$, 
+         ControlType -> None}, {$CellContext`data3$$, ControlType -> 
+         None}, {$CellContext`data4$$, ControlType -> 
+         None}, {{$CellContext`switch$$, 1, ""}, {
+         1 -> "graph of transitions", 2 -> "transition matrix", 3 -> 
+          "transitions after t moves"}}, 
+        Dynamic[
+         Panel[
+          Grid[
+           Table[
+            
+            With[{$CellContext`i$ = $CellContext`i, $CellContext`j$ = \
+$CellContext`j}, 
+             Checkbox[
+              Dynamic[
+               Part[$CellContext`data$$, $CellContext`i$, $CellContext`j$]], {
+              0, 1}, Appearance -> 
+              Small]], {$CellContext`i, $CellContext`h$$}, {$CellContext`j, \
+$CellContext`h$$}]], ImageSize -> {185, 155}, Alignment -> {Left, Top}, 
+          FrameMargins -> 0]]}, 
+      "Options" :> {
+       TrackedSymbols -> Manipulate, AutorunSequencing -> {2, 3}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{399., {197., 202.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->263944752],
+
+Cell[CellGroupData[{
+
+Cell["CAPTION", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "In this Demonstration you can explore the equilibria of Markov chains. \
+Select the number of states and check the entries of the transition matrix \
+you want to be nonzero. This generates a transition matrix in which all the \
+checked elements in a row have equal probabilities. The result shows the \
+transition matrix, its graph, and its ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["t", "th"], TraditionalForm]], "InlineMath"],
+ " power."
+}], "Text"]
+}, Close]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "\"",
+ StyleBox[ButtonBox["N",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+NStepTransitionMatricesForMarkovChains/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/NStepTransitionMatricesForMarkovChains/\
+"],
+  FontSlant->"Italic"],
+ ButtonBox["-Step Transition Matrices for Markov Chains",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+NStepTransitionMatricesForMarkovChains/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/NStepTransitionMatricesForMarkovChains/\
+"],
+ "\"",
+ " from ",
+ ButtonBox["the Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/\
+NStepTransitionMatricesForMarkovChains/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/\
+NStepTransitionMatricesForMarkovChains/"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/NStepTransitionMatricesForMarkovChains/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Phillip Bonacich",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Phillip+\
+Bonacich"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Phillip+Bonacich"]
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " system (Version 6 or higher) is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[1, 1, 1]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+NStepTransitionMatricesForMarkovChains"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+CellInsertionPointCell->None,
+WindowSize->{710, 650},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowElements->{
+ "StatusArea", "MemoryMonitor", "MagnificationPopUp", "VerticalScrollBar", 
+  "MenuBar"},
+WindowTitle->"N-Step Transition Matrices for Markov Chains - Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[646, 23, 217, 7, 70, "Section"],
+Cell[866, 32, 3700, 64, 70, "Section"],
+Cell[4569, 98, 9996, 206, 70, "Input",
+ CellID->12215638]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14602, 309, 7871, 156, 70, "Output",
+ CellID->263944752],
+Cell[CellGroupData[{
+Cell[22498, 469, 209, 6, 70, "Section"],
+Cell[22710, 477, 474, 10, 70, "Text"]
+}, Close]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23232, 493, 355, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[23590, 504, 1310, 39, 70, "Text"],
+Cell[24903, 545, 442, 14, 70, "Text"],
+Cell[CellGroupData[{
+Cell[25370, 563, 815, 24, 70, "Text"],
+Cell[26188, 589, 1210, 33, 70, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+(* NotebookSignature bTjBUXs1XTYzdCp4XZ97JzsV *)

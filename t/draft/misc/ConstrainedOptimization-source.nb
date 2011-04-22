@@ -1,0 +1,1601 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     64894,       1591]
+NotebookOptionsPosition[     63507,       1539]
+NotebookOutlinePosition[     64153,       1564]
+CellTagsIndexPosition[     64110,       1561]
+WindowTitle->Constrained Optimization - Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Constrained Optimization", "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False,
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1: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
+FP/69esnAAAAAAAAAAAAwM74B4thROM=
+   "], {{0, 0}, {1800, 25}}, {0, 255},
+   ColorFunction->RGBColor],
+  ImageSize->{1800, 25},
+  PlotRange->{{0, 1800}, {0, 25}}]], "Section",
+ CellFrame->{{0, 0}, {0, 0}},
+ ShowCellBracket->False],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"xmin", "=", 
+   RowBox[{"-", "2"}]}], ";", 
+  RowBox[{"xmax", "=", "2"}], ";", 
+  RowBox[{"ymin", "=", 
+   RowBox[{"-", "2"}]}], ";", 
+  RowBox[{"ymax", "=", "2"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f1", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox["x", "2"], "+", 
+    RowBox[{"2", 
+     SuperscriptBox["y", "2"]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f2", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox["x", "2"], "+", "y"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f3", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{"x", " ", "y"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f4", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"4", " ", "x"}], "-", 
+    RowBox[{"2", "y"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"g1", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox["y", "2"], "-", 
+    RowBox[{"2", "y"}], "+", 
+    FractionBox[
+     SuperscriptBox["x", "2"], "2"], "+", "x", "+", "1"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"g2", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    FractionBox["1", "3"], 
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"x", "-", 
+         FractionBox["1", "2"]}], ")"}], "2"], "+", 
+      RowBox[{"2", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"y", "+", 
+          FractionBox["1", "3"]}], ")"}], "4"]}], "-", "1"}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"g3", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox["x", "2"], "+", 
+    SuperscriptBox["y", "2"], "-", "1"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"scal", "=", "0.3"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fplot", "[", "f_", "]"}], ":=", 
+   RowBox[{"Plot3D", "[", 
+    RowBox[{
+     RowBox[{"f", "[", 
+      RowBox[{"x", ",", "y"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", "ymin", ",", "ymax"}], "}"}], ",", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+     ",", " ", 
+     RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+     RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}], ",", 
+     RowBox[{"Mesh", "\[Rule]", "None"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"gplot", "[", 
+    RowBox[{"g_", ",", "f_", ",", "opts_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", " ", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ylsg", ",", "yl", ",", "gp", ",", "gp1"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"ylsg", "=", 
+       RowBox[{"Quiet", "@", 
+        RowBox[{"Solve", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"g", "[", 
+            RowBox[{"x", ",", "y"}], "]"}], "==", "0"}], ",", "y"}], 
+         "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"yl", "=", 
+       RowBox[{"y", "/.", "ylsg"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"gp1", "=", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x", ",", "#", ",", 
+            RowBox[{"f", "[", 
+             RowBox[{"x", ",", "#"}], "]"}]}], "}"}], "&"}], ",", "yl"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"gp", "=", 
+       RowBox[{"ParametricPlot3D", "[", 
+        RowBox[{"gp1", ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}], ",", 
+         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+         RowBox[{"PlotStyle", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"{", 
+            RowBox[{"Thick", ",", "Red"}], "}"}], "}"}]}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"opts", ",", "showgc"}], "]"}], ",", "gp", ",", 
+        RowBox[{"{", "}"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fcplot", "[", "f_", "]"}], ":=", 
+   RowBox[{"ContourPlot", "[", 
+    RowBox[{
+     RowBox[{"f", "[", 
+      RowBox[{"x", ",", "y"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", "ymin", ",", "ymax"}], "}"}], ",", 
+     RowBox[{"ContourLabels", "\[Rule]", "Automatic"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"gcplot", "[", 
+    RowBox[{"g_", ",", "opts_"}], "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"MemberQ", "[", 
+      RowBox[{"opts", ",", "showgc"}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ContourPlot", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"g", "[", 
+         RowBox[{"x", ",", "y"}], "]"}], "==", "0"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", "ymin", ",", "ymax"}], "}"}], ",", 
+       RowBox[{"ContourStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Red", ",", "Thick"}], "}"}]}]}], "]"}], ",", 
+     RowBox[{"{", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"gradplots", "[", 
+    RowBox[{"p_", ",", "f_", ",", "g_", ",", "opts_"}], "]"}], ":=", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"opts", ",", "showgradg"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"Red", ",", "Thick", ",", 
+          RowBox[{"Arrowheads", "[", "Medium", "]"}], ",", 
+          RowBox[{"Arrow", "[", 
+           RowBox[{"{", 
+            RowBox[{"p", ",", 
+             RowBox[{
+              RowBox[{"p", "+", 
+               RowBox[{"scal", "*", 
+                RowBox[{"D", "[", 
+                 RowBox[{
+                  RowBox[{"g", "[", 
+                   RowBox[{"x", ",", "y"}], "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "}"}]}], "]"}]}]}], "/.", 
+              
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"x", "\[Rule]", 
+                 RowBox[{"p", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+                RowBox[{"y", "\[Rule]", 
+                 RowBox[{"p", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}], "}"}], 
+           "]"}]}], "\[IndentingNewLine]", "}"}], ",", 
+        RowBox[{"{", "}"}]}], "\[IndentingNewLine]", "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"opts", ",", "showgradf"}], "]"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", "Thick", ",", 
+          RowBox[{"Arrowheads", "[", "Medium", "]"}], ",", 
+          RowBox[{"Arrow", "[", 
+           RowBox[{"{", 
+            RowBox[{"p", ",", 
+             RowBox[{
+              RowBox[{"p", "+", 
+               RowBox[{"scal", "*", 
+                RowBox[{"D", "[", 
+                 RowBox[{
+                  RowBox[{"f", "[", 
+                   RowBox[{"x", ",", "y"}], "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "}"}]}], "]"}]}]}], "/.", 
+              
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"x", "\[Rule]", 
+                 RowBox[{"p", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+                RowBox[{"y", "\[Rule]", 
+                 RowBox[{"p", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}], "}"}], 
+           "]"}]}], " ", "\[IndentingNewLine]", "}"}], ",", 
+        RowBox[{"{", "}"}]}], "\[IndentingNewLine]", " ", "]"}]}], " ", 
+     "\[IndentingNewLine]", "}"}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ptplot2", "[", "p_", "]"}], ":=", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"PointSize", "[", "Large", "]"}], ",", "Red", ",", 
+      RowBox[{"Point", "[", "p", "]"}]}], "}"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ptplot3", "[", 
+    RowBox[{"p_", ",", "f_"}], "]"}], ":=", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{"{", 
+     RowBox[{"Red", ",", 
+      RowBox[{"Sphere", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"p", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{"p", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", 
+          RowBox[{"f", "[", 
+           RowBox[{
+            RowBox[{"p", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"p", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "}"}], ",", "0.13"}], 
+       "]"}]}], "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"minsol", "[", 
+    RowBox[{"f_", ",", "g_", ",", "otype_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"sol", ",", "sol2"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"sol", "=", 
+       RowBox[{"Quiet", "@", 
+        RowBox[{"otype", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"f", "[", 
+             RowBox[{"x", ",", "y"}], "]"}], ",", 
+            RowBox[{
+             RowBox[{"g", "[", 
+              RowBox[{"x", ",", "y"}], "]"}], "\[Equal]", "0"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", "y"}], "}"}]}], "]"}]}]}], ";", 
+      RowBox[{"sol2", "=", 
+       RowBox[{"sol", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], ";", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"x", ",", "y"}], "}"}], "/.", "sol2"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"pltmin2", "[", 
+    RowBox[{"f_", ",", "g_", ",", "opts_", ",", "otype_"}], "]"}], ":=", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"MemberQ", "[", 
+        RowBox[{"opts", ",", "showopt"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"PointSize", "[", "Large", "]"}], ",", "Green", ",", 
+         RowBox[{"Point", "[", 
+          RowBox[{"minsol", "[", 
+           RowBox[{"f", ",", "g", ",", "otype"}], "]"}], "]"}]}], "}"}], ",", 
+       
+       RowBox[{"{", "}"}]}], "]"}], "}"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pltmin3", "[", 
+   RowBox[{"f_", ",", "g_", ",", "opts_", ",", "otype_"}], "]"}], ":=", 
+  RowBox[{"Graphics3D", "[", 
+   RowBox[{"{", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"MemberQ", "[", 
+       RowBox[{"opts", ",", "showopt"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"Green", ",", 
+        RowBox[{"Sphere", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"minsol", "[", 
+              RowBox[{"f", ",", "g", ",", "otype"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{
+             RowBox[{"minsol", "[", 
+              RowBox[{"f", ",", "g", ",", "otype"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", 
+            RowBox[{"f", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"minsol", "[", 
+                RowBox[{"f", ",", "g", ",", "otype"}], "]"}], "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{
+               RowBox[{"minsol", "[", 
+                RowBox[{"f", ",", "g", ",", "otype"}], "]"}], "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "  ", "}"}], ",", 
+          "0.13"}], "]"}]}], " ", "}"}], ",", 
+      RowBox[{"{", "}"}]}], "]"}], "}"}], "]"}]}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.4247778187948155`*^9, 3.4247778456344995`*^9}, {
+   3.4248415671601686`*^9, 3.424841568751369*^9}, {3.42484293465625*^9, 
+   3.424842975125*^9}, {3.424862597515625*^9, 3.42486259834375*^9}, {
+   3.424863132796875*^9, 3.424863134390625*^9}, {3.42486322765625*^9, 
+   3.424863246625*^9}, {3.424863485328125*^9, 3.424863491359375*^9}, {
+   3.424865312890625*^9, 3.424865315328125*^9}, {3.424866241375*^9, 
+   3.42486625259375*^9}, {3.424867343296875*^9, 3.424867349703125*^9}, {
+   3.424867463796875*^9, 3.424867474359375*^9}, {3.424867522890625*^9, 
+   3.42486752453125*^9}, {3.424867562640625*^9, 3.424867577484375*^9}, {
+   3.424868472*^9, 3.42486847578125*^9}, 3.424868542953125*^9, {
+   3.4248685799375*^9, 3.424868581984375*^9}, {3.4248687431875*^9, 
+   3.42486874546875*^9}, {3.4256171286408143`*^9, 3.4256171299200144`*^9}},
+ CellID->23424039],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"min", "=", 
+     RowBox[{"minsol", "[", 
+      RowBox[{"f", ",", "g", ",", "otype"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Dynamic", "@", 
+     RowBox[{"Grid", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Show", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"fcplot", "[", "f", "]"}], ",", 
+              RowBox[{"gcplot", "[", 
+               RowBox[{"g", ",", "opts"}], "]"}], ",", 
+              RowBox[{"Graphics", "[", 
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{"MemberQ", "[", 
+                    RowBox[{"opts", ",", "showgradg"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"Red", ",", "Thick", ",", 
+                    RowBox[{"Arrowheads", "[", "Medium", "]"}], ",", 
+                    RowBox[{"Dynamic", "@", 
+                    RowBox[{"Arrow", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"p", ",", 
+                    RowBox[{
+                    RowBox[{"p", "+", 
+                    RowBox[{"scal", "*", 
+                    RowBox[{"D", "[", 
+                    RowBox[{
+                    RowBox[{"g", "[", 
+                    RowBox[{"x", ",", "y"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "}"}]}], "]"}]}]}], "/.", 
+                    
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"x", "\[Rule]", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+                    RowBox[{"y", "\[Rule]", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}], "}"}], 
+                    "]"}]}]}], "\[IndentingNewLine]", "}"}], ",", 
+                   RowBox[{"{", "}"}]}], "\[IndentingNewLine]", "]"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{"MemberQ", "[", 
+                    RowBox[{"opts", ",", "showgradf"}], "]"}], ",", 
+                   "\[IndentingNewLine]", 
+                   RowBox[{"{", 
+                    RowBox[{"Blue", ",", "Thick", ",", 
+                    RowBox[{"Arrowheads", "[", "Medium", "]"}], ",", 
+                    RowBox[{"Dynamic", "@", 
+                    RowBox[{"Arrow", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"p", ",", 
+                    RowBox[{
+                    RowBox[{"p", "+", 
+                    RowBox[{"scal", "*", 
+                    RowBox[{"D", "[", 
+                    RowBox[{
+                    RowBox[{"f", "[", 
+                    RowBox[{"x", ",", "y"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"x", ",", "y"}], "}"}], "}"}]}], "]"}]}]}], "/.", 
+                    
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"x", "\[Rule]", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+                    RowBox[{"y", "\[Rule]", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}], "}"}], 
+                    "]"}]}]}], " ", "\[IndentingNewLine]", "}"}], ",", 
+                   RowBox[{"{", "}"}]}], "\[IndentingNewLine]", " ", "]"}]}], 
+                " ", "\[IndentingNewLine]", "}"}], "\[IndentingNewLine]", 
+               "]"}], ",", 
+              RowBox[{"Graphics", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"PointSize", "[", "Large", "]"}], ",", "Red", ",", 
+                 RowBox[{"Dynamic", "@", 
+                  RowBox[{"Point", "[", "p", "]"}]}]}], "}"}], "]"}], ",", 
+              RowBox[{"Graphics", "[", 
+               RowBox[{"{", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"MemberQ", "[", 
+                   RowBox[{"opts", ",", "showopt"}], "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"PointSize", "[", "Large", "]"}], ",", "Green", 
+                    ",", 
+                    RowBox[{"Dynamic", "@", 
+                    RowBox[{"Point", "[", "min", "]"}]}]}], "}"}], ",", 
+                  RowBox[{"{", "}"}]}], "]"}], "}"}], "]"}]}], "}"}], ",", 
+            RowBox[{"ImageSize", "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{"290", ",", "290"}], "}"}]}]}], "]"}], ",", 
+          RowBox[{"Show", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"fplot", "[", "f", "]"}], ",", 
+              RowBox[{"gplot", "[", 
+               RowBox[{"g", ",", "f", ",", "opts"}], "]"}], ",", 
+              RowBox[{"Graphics3D", "[", 
+               RowBox[{"Dynamic", "@", 
+                RowBox[{"{", 
+                 RowBox[{"Red", ",", 
+                  RowBox[{"Dynamic", "@", 
+                   RowBox[{"Sphere", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"f", "[", 
+                    RowBox[{
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "}"}], ",", 
+                    "0.13"}], "]"}]}]}], "}"}]}], "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"Graphics3D", "[", 
+               RowBox[{"{", 
+                RowBox[{"Dynamic", "@", 
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{"MemberQ", "[", 
+                    RowBox[{"opts", ",", "showopt"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"Green", ",", 
+                    RowBox[{"Sphere", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"min", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                    RowBox[{"min", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], ",", 
+                    RowBox[{"f", "[", 
+                    RowBox[{
+                    RowBox[{"min", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                    RowBox[{"min", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "  ", "}"}], 
+                    ",", "0.13"}], "]"}]}], " ", "}"}], ",", 
+                   RowBox[{"{", "}"}]}], "]"}]}], "}"}], "]"}]}], "}"}], ",", 
+            
+            RowBox[{"ImageSize", "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{"290", ",", "290"}], "}"}]}]}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Row", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Text", "[", 
+              RowBox[{"Style", "[", 
+               RowBox[{"\"\<optimal solution at \>\"", ",", "14"}], "]"}], 
+              "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{"Style", "[", 
+               RowBox[{"\"\<(\>\"", ",", "14"}], "]"}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{"Style", "[", 
+               RowBox[{
+                RowBox[{"min", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], ",", "14"}], "]"}], "]"}], 
+             ",", " ", 
+             RowBox[{"Text", "[", 
+              RowBox[{"Style", "[", 
+               RowBox[{"\"\< , \>\"", ",", "14"}], "]"}], "]"}], ",", " ", 
+             RowBox[{"Text", "[", 
+              RowBox[{"Style", "[", 
+               RowBox[{
+                RowBox[{"min", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], ",", "14"}], "]"}], "]"}], 
+             ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{"Style", "[", 
+               RowBox[{"\"\<)\>\"", ",", "14"}], "]"}], "]"}]}], "}"}], "]"}],
+           ",", "SpanFromLeft"}], "}"}]}], "}"}], "]"}]}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"otype", ",", "NMinimize", ",", "\"\<optimization type \>\""}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NMinimize", "\[Rule]", "\"\<minimum\>\""}], ",", 
+       RowBox[{"NMaximize", "\[Rule]", "\"\<maximum\>\""}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"f", ",", "f1", ",", "\"\<f\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"f1", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", " ", 
+         RowBox[{
+          SuperscriptBox["x", "2"], " ", "+", 
+          RowBox[{"2", " ", 
+           SuperscriptBox["y", "2"]}]}], "]"}]}], ",", 
+       RowBox[{"f2", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          SuperscriptBox["x", "2"], "+", "y"}], "]"}]}], ",", 
+       RowBox[{"f3", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{"x", " ", "y"}], "]"}]}], ",", 
+       RowBox[{"f4", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          RowBox[{"8", "x"}], "-", 
+          RowBox[{"4", "y"}]}], "]"}]}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"g", ",", "g2", ",", "\"\<g\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"g1", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          SuperscriptBox["y", "2"], "-", 
+          RowBox[{"2", "y"}], "+", 
+          FractionBox[
+           SuperscriptBox["x", "2"], "2"], "+", 
+          FractionBox["1", "2"], "+", "1"}], "]"}]}], ",", 
+       RowBox[{"g2", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          FractionBox["1", "3"], 
+          RowBox[{"(", 
+           RowBox[{
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"x", "-", 
+               FractionBox["1", "2"]}], ")"}], "2"], "+", 
+            RowBox[{"2", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"y", "+", 
+                FractionBox["1", "3"]}], ")"}], "4"]}], "-", "1"}], ")"}]}], 
+         "]"}]}], ",", 
+       RowBox[{"g3", "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          SuperscriptBox["x", "2"], "+", 
+          SuperscriptBox["y", "2"], "-", "1"}], "]"}]}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"p", ",", 
+       RowBox[{"{", 
+        RowBox[{"0.5", ",", "0.5"}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"xmin", ",", "ymin"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"xmax", ",", "ymax"}], "}"}], ",", "Locator"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"opts", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "showgc", ",", "showopt", ",", "showgradf", ",", "showgradg"}], "}"}],
+        ",", "\"\<\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"showgc", "\[Rule]", 
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "\"\<show g \>\"", "}"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"showopt", "\[Rule]", 
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "\"\<show optimal solution \>\"", "}"}], "]"}]}]}], 
+      "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "CheckboxBar"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"opts", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "showgc", ",", "showopt", ",", "showgradf", ",", "showgradg"}], "}"}],
+        ",", "\"\<\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"showgradf", "\[Rule]", 
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "\"\<show gradient \[Del] vector of f \>\"", "}"}], 
+         "]"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"showgradg", "\[Rule]", 
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "\"\<show gradient \[Del] vector of g \>\"", "}"}], 
+         "]"}]}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "CheckboxBar"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"min", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "None"}]}], "}"}], ",", 
+   RowBox[{"TrackedSymbols", "\[RuleDelayed]", 
+    RowBox[{"{", 
+     RowBox[{"f", ",", "g", ",", "p", ",", "opts", ",", "otype"}], "}"}]}], 
+   ",", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}], ",", 
+   RowBox[{"AutorunSequencing", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2", ",", "3", ",", "4", ",", "5"}], "}"}]}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, 3.4234074823842*^9, {3.4234076443044*^9, 
+   3.4234077047474003`*^9}, {3.4234081920954*^9, 3.4234081956584*^9}, {
+   3.4234083448114*^9, 3.4234083577623997`*^9}, {3.4234814295594*^9, 
+   3.4234814663442*^9}, {3.423481502583*^9, 3.4234816140137997`*^9}, {
+   3.4234816598466*^9, 3.4234817891968*^9}, {3.4234818425488*^9, 
+   3.4234818731092*^9}, {3.42348219475*^9, 3.4234822513156*^9}, {
+   3.4234824547363997`*^9, 3.423482474252*^9}, {3.4234826146972*^9, 
+   3.423482615212*^9}, {3.423570835574794*^9, 3.423570835808794*^9}, {
+   3.423570959081994*^9, 3.423571009516794*^9}, {3.4235715686509943`*^9, 
+   3.4235715854929943`*^9}, {3.423571629053994*^9, 3.423571640917994*^9}, {
+   3.423571821208994*^9, 3.423571821403994*^9}, {3.423572057811994*^9, 
+   3.423572075445994*^9}, {3.423580258269594*^9, 3.423580271887594*^9}, {
+   3.4237220177509828`*^9, 3.4237220180005827`*^9}, {3.423722283263983*^9, 
+   3.423722322591583*^9}, {3.4237223596571827`*^9, 3.423722487967183*^9}, {
+   3.4237227458039827`*^9, 3.423722797330783*^9}, {3.4237230072785826`*^9, 
+   3.4237230181205826`*^9}, {3.423723061816183*^9, 3.4237230632981825`*^9}, {
+   3.423723347608183*^9, 3.423723353426983*^9}, {3.4237234025825825`*^9, 
+   3.4237234076213827`*^9}, {3.423723611513383*^9, 3.4237236121373825`*^9}, {
+   3.423723657876583*^9, 3.423723658469383*^9}, 3.4237242327365828`*^9, {
+   3.423794132430608*^9, 3.4237941744570074`*^9}, {3.423794394790208*^9, 
+   3.4237944233472075`*^9}, {3.4237944773612075`*^9, 
+   3.4237945529332075`*^9}, {3.4237945900672073`*^9, 3.423794592528208*^9}, {
+   3.4237947019832077`*^9, 3.4237947059642076`*^9}, {3.4237949534202075`*^9, 
+   3.4237949760652075`*^9}, {3.423795015856208*^9, 3.4237950244732075`*^9}, {
+   3.4237952267472076`*^9, 3.4237952332042074`*^9}, {3.4237962762912073`*^9, 
+   3.4237962867872076`*^9}, {3.4237963223392076`*^9, 3.4237963245902076`*^9}, 
+   3.4237963564562073`*^9, {3.4237969154572077`*^9, 3.4237969500602074`*^9}, {
+   3.4237969938402076`*^9, 3.423797005283208*^9}, {3.4237973055642076`*^9, 
+   3.4237973253172073`*^9}, {3.4238013560812073`*^9, 
+   3.4238013936662073`*^9}, {3.4238014847302074`*^9, 3.4238014852622075`*^9}, 
+   3.4238015276212077`*^9, {3.4239071913962555`*^9, 3.4239072029166555`*^9}, 
+   3.4239072697002554`*^9, {3.423913064738456*^9, 3.4239131618640556`*^9}, {
+   3.4239138669226556`*^9, 3.4239139005874557`*^9}, {3.4239140364658556`*^9, 
+   3.4239140395858555`*^9}, {3.4239140707078557`*^9, 3.4239140721586556`*^9}, 
+   3.4239141747910557`*^9, {3.423914375296856*^9, 3.423914404718856*^9}, {
+   3.4239144421508555`*^9, 3.4239146949608555`*^9}, {3.4239147365098553`*^9, 
+   3.4239147393828554`*^9}, {3.4239148428978558`*^9, 
+   3.4239150057838554`*^9}, {3.4239152682858553`*^9, 
+   3.4239154725218554`*^9}, {3.4239156459908557`*^9, 3.423915655605856*^9}, 
+   3.4239174932018557`*^9, {3.4239179697488556`*^9, 3.4239180171248555`*^9}, 
+   3.4239226787878556`*^9, 3.4246156066901655`*^9, {3.4246156464971457`*^9, 
+   3.424615654978994*^9}, {3.4246878094162073`*^9, 3.4246878260342073`*^9}, {
+   3.4246879713152075`*^9, 3.424687985674207*^9}, 3.4246881447522073`*^9, {
+   3.424688282269207*^9, 3.424688351944207*^9}, {3.424688429445207*^9, 
+   3.4246884311932073`*^9}, {3.424688469812207*^9, 3.4246884732522073`*^9}, {
+   3.4247772301639585`*^9, 3.4247775039243317`*^9}, {3.4247775980147395`*^9, 
+   3.4247776453674746`*^9}, {3.424777710073944*^9, 3.424777710778015*^9}, {
+   3.4247777436483016`*^9, 3.4247777675506916`*^9}, {3.4247778193738737`*^9, 
+   3.4247778414360795`*^9}, {3.4248415799677687`*^9, 
+   3.4248415811065693`*^9}, {3.424862615515625*^9, 3.424862615859375*^9}, {
+   3.424863258359375*^9, 3.42486326640625*^9}, {3.424867967296875*^9, 
+   3.4248679753125*^9}, {3.425684101375*^9, 3.4256841130625*^9}, {
+   3.425932915938388*^9, 3.4259329161258965`*^9}, 3.4263349956189623`*^9, {
+   3.426335070157415*^9, 3.4263350881032095`*^9}, {3.4263351323496337`*^9, 
+   3.42633524572697*^9}, {3.426335360323429*^9, 3.4263354912855234`*^9}, {
+   3.4263366271611*^9, 3.4263366489942827`*^9}, {3.4263383572190886`*^9, 
+   3.426338380653432*^9}, {3.426352575751809*^9, 3.426352713007533*^9}},
+ CellID->352929460]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`f$$ = $CellContext`f1, $CellContext`g$$ = \
+$CellContext`g2, $CellContext`min$$ = {-0.4760604053416187, 
+    0.0588343033167397}, $CellContext`opts$$ = {$CellContext`showgc, \
+$CellContext`showopt, $CellContext`showgradf, $CellContext`showgradg}, \
+$CellContext`otype$$ = NMinimize, $CellContext`p$$ = {0.5, 0.5}, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`otype$$], NMinimize, "optimization type "}, {
+      NMinimize -> "minimum", NMaximize -> "maximum"}}, {{
+       Hold[$CellContext`f$$], $CellContext`f1, "f"}, {$CellContext`f1 -> 
+       TraditionalForm[$CellContext`x^2 + 
+         2 $CellContext`y^2], $CellContext`f2 -> 
+       TraditionalForm[$CellContext`x^2 + $CellContext`y], $CellContext`f3 -> 
+       TraditionalForm[$CellContext`x $CellContext`y], $CellContext`f4 -> 
+       TraditionalForm[8 $CellContext`x - 4 $CellContext`y]}}, {{
+       Hold[$CellContext`g$$], $CellContext`g2, "g"}, {$CellContext`g1 -> 
+       TraditionalForm[
+        Rational[3, 2] + Rational[1, 2] $CellContext`x^2 - 
+         2 $CellContext`y + $CellContext`y^2], $CellContext`g2 -> 
+       TraditionalForm[
+        Rational[1, 3] (-1 + (Rational[-1, 2] + $CellContext`x)^2 + 
+          2 (Rational[1, 3] + $CellContext`y)^4)], $CellContext`g3 -> 
+       TraditionalForm[-1 + $CellContext`x^2 + $CellContext`y^2]}}, {{
+       Hold[$CellContext`p$$], {0.5, 0.5}}, {-2, -2}, {2, 2}}, {{
+       Hold[$CellContext`opts$$], {$CellContext`showgc, $CellContext`showopt, \
+$CellContext`showgradf, $CellContext`showgradg}, ""}, {$CellContext`showgc -> 
+       Row[{"show g "}], $CellContext`showopt -> 
+       Row[{"show optimal solution "}]}}, {{
+       Hold[$CellContext`opts$$], {$CellContext`showgc, $CellContext`showopt, \
+$CellContext`showgradf, $CellContext`showgradg}, ""}, {$CellContext`showgradf -> 
+       Row[{"show gradient \[Del] vector of f "}], $CellContext`showgradg -> 
+       Row[{"show gradient \[Del] vector of g "}]}}, {{
+       Hold[$CellContext`min$$], {0, 0}}}}, Typeset`size$$ = {
+    588., {153., 158.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`otype$466148$$ = 
+    False, $CellContext`f$466149$$ = False, $CellContext`g$466150$$ = 
+    False, $CellContext`p$466151$$ = {0, 0}, $CellContext`opts$466152$$ = 
+    False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`f$$ = $CellContext`f1, $CellContext`g$$ = \
+$CellContext`g2, $CellContext`min$$ = {0, 
+         0}, $CellContext`opts$$ = {$CellContext`showgc, \
+$CellContext`showopt, $CellContext`showgradf, $CellContext`showgradg}, \
+$CellContext`otype$$ = NMinimize, $CellContext`p$$ = {0.5, 0.5}}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`otype$$, $CellContext`otype$466148$$, False], 
+        Hold[$CellContext`f$$, $CellContext`f$466149$$, False], 
+        Hold[$CellContext`g$$, $CellContext`g$466150$$, False], 
+        Hold[$CellContext`p$$, $CellContext`p$466151$$, {0, 0}], 
+        Hold[$CellContext`opts$$, $CellContext`opts$466152$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`min$$ = $CellContext`minsol[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`otype$$]; Dynamic[
+         Grid[{{
+            Show[{
+              $CellContext`fcplot[$CellContext`f$$], 
+              $CellContext`gcplot[$CellContext`g$$, $CellContext`opts$$], 
+              Graphics[{
+                If[
+                 MemberQ[$CellContext`opts$$, $CellContext`showgradg], {
+                 Red, Thick, 
+                  Arrowheads[Medium], 
+                  Dynamic[
+                   Arrow[{$CellContext`p$$, 
+                    ReplaceAll[$CellContext`p$$ + $CellContext`scal D[
+                    $CellContext`g$$[$CellContext`x, $CellContext`y], \
+{{$CellContext`x, $CellContext`y}}], {$CellContext`x -> 
+                    Part[$CellContext`p$$, 1], $CellContext`y -> 
+                    Part[$CellContext`p$$, 2]}]}]]}, {}], 
+                If[
+                 MemberQ[$CellContext`opts$$, $CellContext`showgradf], {
+                 Blue, Thick, 
+                  Arrowheads[Medium], 
+                  Dynamic[
+                   Arrow[{$CellContext`p$$, 
+                    ReplaceAll[$CellContext`p$$ + $CellContext`scal D[
+                    $CellContext`f$$[$CellContext`x, $CellContext`y], \
+{{$CellContext`x, $CellContext`y}}], {$CellContext`x -> 
+                    Part[$CellContext`p$$, 1], $CellContext`y -> 
+                    Part[$CellContext`p$$, 2]}]}]]}, {}]}], 
+              Graphics[{
+                PointSize[Large], Red, 
+                Dynamic[
+                 Point[$CellContext`p$$]]}], 
+              Graphics[{
+                If[
+                 MemberQ[$CellContext`opts$$, $CellContext`showopt], {
+                  PointSize[Large], Green, 
+                  Dynamic[
+                   Point[$CellContext`min$$]]}, {}]}]}, 
+             ImageSize -> {290, 290}], 
+            Show[{
+              $CellContext`fplot[$CellContext`f$$], 
+              $CellContext`gplot[$CellContext`g$$, $CellContext`f$$, \
+$CellContext`opts$$], 
+              Graphics3D[
+               Dynamic[{Red, 
+                 Dynamic[
+                  Sphere[{
+                    Part[$CellContext`p$$, 1], 
+                    Part[$CellContext`p$$, 2], 
+                    $CellContext`f$$[
+                    Part[$CellContext`p$$, 1], 
+                    Part[$CellContext`p$$, 2]]}, 0.13]]}]], 
+              Graphics3D[{
+                Dynamic[
+                 If[
+                  MemberQ[$CellContext`opts$$, $CellContext`showopt], {
+                  Green, 
+                   Sphere[{
+                    Part[$CellContext`min$$, 1], 
+                    Part[$CellContext`min$$, 2], 
+                    $CellContext`f$$[
+                    Part[$CellContext`min$$, 1], 
+                    Part[$CellContext`min$$, 2]]}, 0.13]}, {}]]}]}, 
+             ImageSize -> {290, 290}]}, {
+            Row[{
+              Text[
+               Style["optimal solution at ", 14]], 
+              Text[
+               Style["(", 14]], 
+              Text[
+               Style[
+                Part[$CellContext`min$$, 1], 14]], 
+              Text[
+               Style[" , ", 14]], 
+              Text[
+               Style[
+                Part[$CellContext`min$$, 2], 14]], 
+              Text[
+               Style[")", 14]]}], SpanFromLeft}}]]), 
+      "Specifications" :> {{{$CellContext`otype$$, NMinimize, 
+          "optimization type "}, {
+         NMinimize -> "minimum", NMaximize -> "maximum"}, ControlType -> 
+         PopupMenu}, {{$CellContext`f$$, $CellContext`f1, 
+          "f"}, {$CellContext`f1 -> 
+          TraditionalForm[$CellContext`x^2 + 
+            2 $CellContext`y^2], $CellContext`f2 -> 
+          TraditionalForm[$CellContext`x^2 + $CellContext`y], $CellContext`f3 -> 
+          TraditionalForm[$CellContext`x $CellContext`y], $CellContext`f4 -> 
+          TraditionalForm[8 $CellContext`x - 4 $CellContext`y]}, ControlType -> 
+         PopupMenu}, {{$CellContext`g$$, $CellContext`g2, 
+          "g"}, {$CellContext`g1 -> 
+          TraditionalForm[
+           Rational[3, 2] + Rational[1, 2] $CellContext`x^2 - 
+            2 $CellContext`y + $CellContext`y^2], $CellContext`g2 -> 
+          TraditionalForm[
+           Rational[1, 3] (-1 + (Rational[-1, 2] + $CellContext`x)^2 + 
+             2 (Rational[1, 3] + $CellContext`y)^4)], $CellContext`g3 -> 
+          TraditionalForm[-1 + $CellContext`x^2 + $CellContext`y^2]}, 
+         ControlType -> 
+         PopupMenu}, {{$CellContext`p$$, {0.5, 0.5}}, {-2, -2}, {2, 2}, 
+         ControlType -> 
+         Locator}, {{$CellContext`opts$$, {$CellContext`showgc, \
+$CellContext`showopt, $CellContext`showgradf, $CellContext`showgradg}, 
+          ""}, {$CellContext`showgc -> Row[{"show g "}], $CellContext`showopt -> 
+          Row[{"show optimal solution "}]}, ControlType -> 
+         CheckboxBar}, {{$CellContext`opts$$, {$CellContext`showgc, \
+$CellContext`showopt, $CellContext`showgradf, $CellContext`showgradg}, 
+          ""}, {$CellContext`showgradf -> 
+          Row[{"show gradient \[Del] vector of f "}], $CellContext`showgradg -> 
+          Row[{"show gradient \[Del] vector of g "}]}, ControlType -> 
+         CheckboxBar}, {{$CellContext`min$$, {0, 0}}, ControlType -> None}}, 
+      "Options" :> {
+       TrackedSymbols :> {$CellContext`f$$, $CellContext`g$$, \
+$CellContext`p$$, $CellContext`opts$$, $CellContext`otype$$}, 
+        AutorunSequencing -> {1, 2, 3, 4, 5}}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{639., {250., 255.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>(({$CellContext`minsol[
+          Pattern[$CellContext`f, 
+           Blank[]], 
+          Pattern[$CellContext`g, 
+           Blank[]], 
+          Pattern[$CellContext`otype, 
+           Blank[]]] := 
+        Module[{$CellContext`sol, $CellContext`sol2}, $CellContext`sol = Quiet[
+             $CellContext`otype[{
+               $CellContext`f[$CellContext`x, $CellContext`y], \
+$CellContext`g[$CellContext`x, $CellContext`y] == 
+               0}, {$CellContext`x, $CellContext`y}]]; $CellContext`sol2 = 
+           Part[$CellContext`sol, 2]; 
+          ReplaceAll[{$CellContext`x, $CellContext`y}, $CellContext`sol2]], \
+$CellContext`fcplot[
+          Pattern[$CellContext`f, 
+           Blank[]]] := ContourPlot[
+          $CellContext`f[$CellContext`x, $CellContext`y], {$CellContext`x, \
+$CellContext`xmin, $CellContext`xmax}, {$CellContext`y, $CellContext`ymin, \
+$CellContext`ymax}, ContourLabels -> 
+          Automatic], $CellContext`xmin = -2, $CellContext`xmax = 
+        2, $CellContext`ymin = -2, $CellContext`ymax = 
+        2, $CellContext`gcplot[
+          Pattern[$CellContext`g, 
+           Blank[]], 
+          Pattern[$CellContext`opts, 
+           Blank[]]] := If[
+          MemberQ[$CellContext`opts, $CellContext`showgc], 
+          
+          ContourPlot[$CellContext`g[$CellContext`x, $CellContext`y] == 
+           0, {$CellContext`x, $CellContext`xmin, $CellContext`xmax}, \
+{$CellContext`y, $CellContext`ymin, $CellContext`ymax}, 
+           ContourStyle -> {Red, Thick}], {}], $CellContext`scal = 
+        0.3, $CellContext`fplot[
+          Pattern[$CellContext`f, 
+           Blank[]]] := Plot3D[
+          $CellContext`f[$CellContext`x, $CellContext`y], {$CellContext`x, \
+$CellContext`xmin, $CellContext`xmax}, {$CellContext`y, $CellContext`ymin, \
+$CellContext`ymax}, AxesLabel -> {"x", "y", "z"}, AspectRatio -> 1, 
+          ColorFunction -> "Rainbow", Mesh -> None], $CellContext`gplot[
+          Pattern[$CellContext`g, 
+           Blank[]], 
+          Pattern[$CellContext`f, 
+           Blank[]], 
+          Pattern[$CellContext`opts, 
+           Blank[]]] := 
+        Module[{$CellContext`ylsg, $CellContext`yl, $CellContext`gp, \
+$CellContext`gp1}, $CellContext`ylsg = Quiet[
+             
+             Solve[$CellContext`g[$CellContext`x, $CellContext`y] == 
+              0, $CellContext`y]]; $CellContext`yl = 
+           ReplaceAll[$CellContext`y, $CellContext`ylsg]; $CellContext`gp1 = 
+           Map[{$CellContext`x, #, 
+              $CellContext`f[$CellContext`x, #]}& , $CellContext`yl]; \
+$CellContext`gp = 
+           ParametricPlot3D[$CellContext`gp1, {$CellContext`x, \
+$CellContext`xmin, $CellContext`xmax}, AspectRatio -> 1, 
+             PlotStyle -> {{Thick, Red}}]; If[
+            
+            MemberQ[$CellContext`opts, $CellContext`showgc], $CellContext`gp, \
+{}]], $CellContext`f1[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := $CellContext`x^2 + 2 $CellContext`y^2, $CellContext`f2[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := $CellContext`x^2 + $CellContext`y, $CellContext`f3[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := $CellContext`x $CellContext`y, $CellContext`f4[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := 4 $CellContext`x - 2 $CellContext`y, $CellContext`g2[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := (1/3) (($CellContext`x - 1/2)^2 + 
+          2 ($CellContext`y + 1/3)^4 - 1), $CellContext`g1[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := $CellContext`y^2 - 
+         2 $CellContext`y + $CellContext`x^2/2 + $CellContext`x + 
+         1, $CellContext`g3[
+          Pattern[$CellContext`x, 
+           Blank[]], 
+          Pattern[$CellContext`y, 
+           Blank[]]] := $CellContext`x^2 + $CellContext`y^2 - 1}; 
+      Typeset`initDone$$ = True); ReleaseHold[{{
+         HoldComplete[$CellContext`xmin = -2; $CellContext`xmax = 
+           2; $CellContext`ymin = -2; $CellContext`ymax = 2; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`f1[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := $CellContext`x^2 + 2 $CellContext`y^2; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`f2[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := $CellContext`x^2 + $CellContext`y; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`f3[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := $CellContext`x $CellContext`y; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`f4[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := 4 $CellContext`x - 2 $CellContext`y; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`g1[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := $CellContext`y^2 - 
+            2 $CellContext`y + $CellContext`x^2/2 + $CellContext`x + 1; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`g2[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := (1/3) (($CellContext`x - 1/2)^2 + 
+             2 ($CellContext`y + 1/3)^4 - 1); Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`g3[
+             Pattern[$CellContext`x, 
+              Blank[]], 
+             Pattern[$CellContext`y, 
+              Blank[]]] := $CellContext`x^2 + $CellContext`y^2 - 1; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`scal = 0.3; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`fplot[
+             Pattern[$CellContext`f, 
+              Blank[]]] := Plot3D[
+             $CellContext`f[$CellContext`x, $CellContext`y], {$CellContext`x, \
+$CellContext`xmin, $CellContext`xmax}, {$CellContext`y, $CellContext`ymin, \
+$CellContext`ymax}, AxesLabel -> {"x", "y", "z"}, AspectRatio -> 1, 
+             ColorFunction -> "Rainbow", Mesh -> None]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`gplot[
+             Pattern[$CellContext`g, 
+              Blank[]], 
+             Pattern[$CellContext`f, 
+              Blank[]], 
+             Pattern[$CellContext`opts, 
+              Blank[]]] := 
+           Module[{$CellContext`ylsg, $CellContext`yl, $CellContext`gp, \
+$CellContext`gp1}, $CellContext`ylsg = Quiet[
+                
+                Solve[$CellContext`g[$CellContext`x, $CellContext`y] == 
+                 0, $CellContext`y]]; $CellContext`yl = 
+              ReplaceAll[$CellContext`y, $CellContext`ylsg]; $CellContext`gp1 = 
+              Map[{$CellContext`x, #, 
+                 $CellContext`f[$CellContext`x, #]}& , $CellContext`yl]; \
+$CellContext`gp = 
+              ParametricPlot3D[$CellContext`gp1, {$CellContext`x, \
+$CellContext`xmin, $CellContext`xmax}, AspectRatio -> 1, 
+                PlotStyle -> {{Thick, Red}}]; If[
+               
+               MemberQ[$CellContext`opts, $CellContext`showgc], \
+$CellContext`gp, {}]]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`fcplot[
+             Pattern[$CellContext`f, 
+              Blank[]]] := ContourPlot[
+             $CellContext`f[$CellContext`x, $CellContext`y], {$CellContext`x, \
+$CellContext`xmin, $CellContext`xmax}, {$CellContext`y, $CellContext`ymin, \
+$CellContext`ymax}, ContourLabels -> Automatic]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`gcplot[
+             Pattern[$CellContext`g, 
+              Blank[]], 
+             Pattern[$CellContext`opts, 
+              Blank[]]] := If[
+             MemberQ[$CellContext`opts, $CellContext`showgc], 
+             
+             ContourPlot[$CellContext`g[$CellContext`x, $CellContext`y] == 
+              0, {$CellContext`x, $CellContext`xmin, $CellContext`xmax}, \
+{$CellContext`y, $CellContext`ymin, $CellContext`ymax}, 
+              ContourStyle -> {Red, Thick}], {}]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`gradplots[
+             Pattern[$CellContext`p, 
+              Blank[]], 
+             Pattern[$CellContext`f, 
+              Blank[]], 
+             Pattern[$CellContext`g, 
+              Blank[]], 
+             Pattern[$CellContext`opts, 
+              Blank[]]] := Graphics[{
+              If[
+               MemberQ[$CellContext`opts, $CellContext`showgradg], {
+               Red, Thick, 
+                Arrowheads[Medium], 
+                Arrow[{$CellContext`p, 
+                  ReplaceAll[$CellContext`p + $CellContext`scal D[
+                    $CellContext`g[$CellContext`x, $CellContext`y], \
+{{$CellContext`x, $CellContext`y}}], {$CellContext`x -> 
+                    Part[$CellContext`p, 1], $CellContext`y -> 
+                    Part[$CellContext`p, 2]}]}]}, {}], 
+              If[
+               MemberQ[$CellContext`opts, $CellContext`showgradf], {
+               Blue, Thick, 
+                Arrowheads[Medium], 
+                Arrow[{$CellContext`p, 
+                  ReplaceAll[$CellContext`p + $CellContext`scal D[
+                    $CellContext`f[$CellContext`x, $CellContext`y], \
+{{$CellContext`x, $CellContext`y}}], {$CellContext`x -> 
+                    Part[$CellContext`p, 1], $CellContext`y -> 
+                    Part[$CellContext`p, 2]}]}]}, {}]}]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`ptplot2[
+             Pattern[$CellContext`p, 
+              Blank[]]] := Graphics[{
+              PointSize[Large], Red, 
+              Point[$CellContext`p]}]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`ptplot3[
+             Pattern[$CellContext`p, 
+              Blank[]], 
+             Pattern[$CellContext`f, 
+              Blank[]]] := Graphics3D[{Red, 
+              Sphere[{
+                Part[$CellContext`p, 1], 
+                Part[$CellContext`p, 2], 
+                $CellContext`f[
+                 Part[$CellContext`p, 1], 
+                 Part[$CellContext`p, 2]]}, 0.13]}]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`minsol[
+             Pattern[$CellContext`f, 
+              Blank[]], 
+             Pattern[$CellContext`g, 
+              Blank[]], 
+             Pattern[$CellContext`otype, 
+              Blank[]]] := 
+           Module[{$CellContext`sol, $CellContext`sol2}, $CellContext`sol = 
+              Quiet[
+                $CellContext`otype[{
+                  $CellContext`f[$CellContext`x, $CellContext`y], \
+$CellContext`g[$CellContext`x, $CellContext`y] == 
+                  0}, {$CellContext`x, $CellContext`y}]]; $CellContext`sol2 = 
+              Part[$CellContext`sol, 2]; 
+             ReplaceAll[{$CellContext`x, $CellContext`y}, $CellContext`sol2]]; 
+          Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`pltmin2[
+             Pattern[$CellContext`f, 
+              Blank[]], 
+             Pattern[$CellContext`g, 
+              Blank[]], 
+             Pattern[$CellContext`opts, 
+              Blank[]], 
+             Pattern[$CellContext`otype, 
+              Blank[]]] := Graphics[{
+              If[
+               MemberQ[$CellContext`opts, $CellContext`showopt], {
+                PointSize[Large], Green, 
+                Point[
+                 $CellContext`minsol[$CellContext`f, $CellContext`g, \
+$CellContext`otype]]}, {}]}]; Null], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`pltmin3[
+            Pattern[$CellContext`f, 
+             Blank[]], 
+            Pattern[$CellContext`g, 
+             Blank[]], 
+            Pattern[$CellContext`opts, 
+             Blank[]], 
+            Pattern[$CellContext`otype, 
+             Blank[]]] := Graphics3D[{
+             If[
+              MemberQ[$CellContext`opts, $CellContext`showopt], {Green, 
+               Sphere[{
+                 Part[
+                  $CellContext`minsol[$CellContext`f, $CellContext`g, \
+$CellContext`otype], 1], 
+                 Part[
+                  $CellContext`minsol[$CellContext`f, $CellContext`g, \
+$CellContext`otype], 2], 
+                 $CellContext`f[
+                  Part[
+                   $CellContext`minsol[$CellContext`f, $CellContext`g, \
+$CellContext`otype], 1], 
+                  Part[
+                   $CellContext`minsol[$CellContext`f, $CellContext`g, \
+$CellContext`otype], 2]]}, 0.13]}, {}]}]]}}]; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->212790636],
+
+Cell[CellGroupData[{
+
+Cell["CAPTION", "Section",
+ CellFrame->{{0, 0}, {1, 0}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->12,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "This Demonstration shows the minimization or maximization of a function ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]], "InlineMath"],
+ " (blue) subject to a constraint ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"g", "=", "0"}], TraditionalForm]], "InlineMath"],
+ " (red). The green point shows the optimal solution."
+}], "Text"]
+}, Close]]
+}, Open  ]],
+
+Cell[TextData[{
+ "The graphic on the left shows the level curves of ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]], "InlineMath"],
+ " and ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]], "InlineMath"],
+ " together with the gradients. On the right, a 3D graphic of the function is \
+shown together with the constraint of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"g", "=", "0"}], TraditionalForm]], "InlineMath"],
+ " projected onto the surface of ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]], "InlineMath"],
+ "."
+}], "Text"],
+
+Cell[TextData[{
+ "For either the minimum or maximum, the gradients of the function and the \
+constraint are parallel: ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Del]", "f"}], "=", 
+    RowBox[{"\[Lambda]", " ", 
+     RowBox[{"\[Del]", "g"}]}]}], TraditionalForm]], "InlineMath"],
+ ", with the Lagrange multiplier ",
+ Cell[BoxData[
+  FormBox["\[Lambda]", TraditionalForm]], "InlineMath"],
+ ". By moving the point around the plot region, you can see that this is a \
+necessary condition for constrained optimization."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.597406, 0, 0.0527047]],
+
+Cell[TextData[{
+ "\"",
+ ButtonBox["Constrained Optimization",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/ConstrainedOptimization/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/ConstrainedOptimization/"],
+ "\"",
+ " from ",
+ ButtonBox["the Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/ConstrainedOptimization/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/ConstrainedOptimization/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/ConstrainedOptimization/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Edda Eich-Soellner",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Edda+Eich-\
+Soellner"], None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Edda+Eich-Soellner"],\
+
+ " (University of Applied Sciences, M\[UDoubleDot]nchen, Germany)"
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6],
+ CellID->63785195],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " system (Version 6 or higher) is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.87, 0.87, 0.87],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[1, 1, 1]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+ConstrainedOptimization"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+CellInsertionPointCell->None,
+WindowSize->{780, 650},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowElements->{
+ "StatusArea", "MemoryMonitor", "MagnificationPopUp", "VerticalScrollBar", 
+  "MenuBar"},
+WindowTitle->"Constrained Optimization - Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[626, 23, 144, 3, 70, "Section"],
+Cell[773, 28, 3700, 64, 70, "Section"],
+Cell[4476, 94, 13170, 371, 70, "Input",
+ InitializationCell->True,
+ CellID->23424039],
+Cell[17649, 467, 17736, 400, 70, "Input",
+ CellID->352929460]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35422, 872, 22492, 485, 70, "Output",
+ CellID->212790636],
+Cell[CellGroupData[{
+Cell[57939, 1361, 209, 6, 70, "Section"],
+Cell[58151, 1369, 348, 9, 70, "Text"]
+}, Close]]
+}, Open  ]],
+Cell[58525, 1382, 534, 16, 70, "Text"],
+Cell[59062, 1400, 540, 14, 70, "Text"],
+Cell[CellGroupData[{
+Cell[59627, 1418, 355, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[59985, 1429, 916, 24, 70, "Text"],
+Cell[60904, 1455, 537, 17, 70, "Text",
+ CellID->63785195],
+Cell[CellGroupData[{
+Cell[61466, 1476, 815, 24, 70, "Text"],
+Cell[62284, 1502, 1195, 33, 70, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+(* NotebookSignature LRNhsCKDHgCfWCT6Fmt8soMM *)

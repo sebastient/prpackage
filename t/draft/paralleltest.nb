@@ -1,0 +1,96 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      2162,         86]
+NotebookOptionsPosition[      1556,         60]
+NotebookOutlinePosition[      1902,         75]
+CellTagsIndexPosition[      1859,         72]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"LaunchKernels", "[", "1", "]"}]], "Input",
+ CellChangeTimes->{3.51184441634375*^9, 3.51184449865625*^9}],
+
+Cell[BoxData[
+ RowBox[{"KernelObject", "[", 
+  RowBox[{"1", ",", "\<\"local\"\>"}], "]"}]], "Output",
+ CellChangeTimes->{3.511844420375*^9, 3.511844500375*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ParallelEvaluate", "[", "$MachineName", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "\<\"aa\"\>", "}"}]], "Output",
+ CellChangeTimes->{3.511844507453125*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"While", "[", 
+   RowBox[{"True", ",", "1"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.51184460740625*^9, 3.511844615578125*^9}}],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{3.511844627984375*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.511844588765625*^9}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.51184458971875*^9, 3.511844589734375*^9}}]
+},
+WindowSize->{708, 719},
+WindowMargins->{{Automatic, 201}, {-83, Automatic}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 128, 2, 39, "Input"],
+Cell[710, 26, 159, 3, 38, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[906, 34, 80, 1, 39, "Input"],
+Cell[989, 37, 101, 2, 38, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1127, 44, 168, 4, 39, "Input"],
+Cell[1298, 50, 77, 1, 38, "Output"]
+}, Open  ]],
+Cell[1390, 54, 68, 1, 39, "Input"],
+Cell[1461, 57, 91, 1, 39, InheritFromParent]
+}
+]
+*)
+
+(* End of internal cache information *)
+

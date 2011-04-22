@@ -1,0 +1,1791 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     66990,       1782]
+NotebookOptionsPosition[     65450,       1737]
+NotebookOutlinePosition[     65821,       1753]
+CellTagsIndexPosition[     65778,       1750]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+     "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**",
+       "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**", "**",
+       "**", "**", "**", "**", "**", "**", "**", "**", "\n", "This"}], " ", 
+     "file", " ", "was", " ", "generated", " ", "automatically", " ", "by", 
+     " ", "the", " ", "Mathematica", " ", "front", " ", 
+     RowBox[{"end", ".", "\n", "It"}], " ", "contains", " ", "Initialization",
+      " ", "cells", " ", "from", " ", "a", " ", "Notebook", " ", "file"}], 
+    ",", " ", 
+    RowBox[{
+    "which", "\n", "typically", " ", "will", " ", "have", " ", "the", " ", 
+     "same", " ", "name", " ", "as", " ", "this", " ", "file", " ", "except", 
+     " ", "ending", " ", "in", "\n", "\"\<.nb\>\"", " ", "instead", " ", "of",
+      " ", 
+     RowBox[{"\"\<.m\>\"", ".", "\n", "\n", "This"}], " ", "file", " ", "is", 
+     " ", "intended", " ", "to", " ", "be", " ", "loaded", " ", "into", " ", 
+     "the", " ", "Mathematica", " ", "kernel", " ", "using", "\n", "the", " ",
+      "package", " ", "loading", " ", "commands", " ", "Get", " ", "or", " ", 
+     RowBox[{"Needs", ".", "  ", "Doing"}], " ", "so", " ", "is", " ", 
+     "equivalent", "\n", "to", " ", "using", " ", "the", " ", "Evaluate", " ",
+      "Initialization", " ", "Cells", " ", "menu", " ", "command", " ", "in", 
+     " ", "the", " ", "front", "\n", 
+     RowBox[{"end", ".", "\n", "\n", "DO"}], " ", "NOT", " ", "EDIT", " ", 
+     "THIS", " ", 
+     RowBox[{"FILE", ".", "  ", "This"}], " ", "entire", " ", "file", " ", 
+     "is", " ", "regenerated", "\n", "automatically", " ", "each", " ", 
+     "time", " ", "the", " ", "parent", " ", "Notebook", " ", "file", " ", 
+     "is", " ", "saved", " ", "in", " ", "the", "\n", "Mathematica", " ", 
+     "front", " ", 
+     RowBox[{"end", ".", "  ", "Any"}], " ", "changes", " ", "you", " ", 
+     "make", " ", "to", " ", "this", " ", "file", " ", "will", " ", "be", 
+     "\n", 
+     RowBox[{"overwritten", "."}]}]}], "\n", 
+   "***********************************************************************)"}\
+], "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", "\n", 
+  "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"BeginPackage", "[", 
+    RowBox[{"\"\<MathSVM`\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Graphics`ImplicitPlot`\>\"", ",", "\n", 
+       "\"\<Graphics`Graphics`\>\"", ",", 
+       "\"\<LinearAlgebra`MatrixManipulation`\>\""}], "}"}]}], "]"}], ";"}], 
+  "\n"}]], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVMClassify", "::", "usage"}], "=", 
+   "\"\<Classify[K,X,\[Alpha],y,x] predicts a response y for a new case x \
+using the trained svm model {kernel K, data X,multipliers \[Alpha],labels y}.\
+\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"KernelMatrix", "::", "usage"}], "=", 
+   "\"\<KernelMatrix[K,X] computes the (full) matrix with elements K[x\
+\[LeftDoubleBracket]i\[RightDoubleBracket],x\[LeftDoubleBracket]j\
+\[RightDoubleBracket]].\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentityKernel", "::", "usage"}], "=", 
+   "\"\<IdentityKernel[x,y] is the function x.y.\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RBFKernel", "::", "usage"}], "=", 
+   "\"\<RBFKernel[x,y] is the function Exp[-\[Gamma](x-y).(x-y)].\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PolynomialKernel", "::", "usage"}], "=", 
+   "\"\<PolynomialKernel[x,y,d], where d is an integer, is the function \
+(x.y+1\!\(\*SuperscriptBox[\()\), \(d\)]\).\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SeparableSVM", "::", "usage"}], "=", 
+   "\"\<SeparableSVM[X,y,\[Tau]] trains a separable SVM on data X, labels y, \
+and solution tolerance \[Tau] (see QPSolve). Returns the multiplier vector \
+\[Alpha]. Option KernelFunction determines the kernel to use; default is \
+IdentityKernel (i.e., no kernel).\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonseparableSVM", "::", "usage"}], "=", 
+   "\"\<NonSeparableSVM[X,y,C,\[Tau]] trains an non-separable SVM on data X, \
+labels y, penalty term C and solution tolerance \[Tau] (see QPSolve). Returns \
+the multiplier vector \[Alpha]. Option KernelFunction determines the kernel \
+to use; default is IdentityKernel (i.e., no kernel).\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionSVM", "::", "usage"}], "=", 
+   "\"\<RegressionSVM[X,y,C,\[Epsilon],\[Tau]] trains a regression SVM with \
+\[Epsilon]-insensitive loss function on regression variables X, response \
+variable y, error tolerace C and solution tolerance \[Tau] (see QPSolve). \
+Returns the multiplier vector \[Alpha]. Option KernelFunction determines the \
+kernel to use; default is IdentityKernel (i.e., no kernel). Note that this \
+creates a dual problem of size 2*(#samples).\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionBias", "::", "usage"}], "=", 
+   "\"\<RegressionBias[\[Alpha],X] returns the bias term for regression \
+problems (this differs form the classification formulations).\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionFunction", "::", "usage"}], "=", 
+   "\"\<RegressionFunction[\[Alpha],X,x] returns the regression function f(x) \
+defined by \[Alpha] and X. Option KernelFunction determines the kernel to \
+use; default is IdentityKernel (i.e., no kernel).\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionSupportVectors", "::", "usage"}], "=", 
+   "\"\<RegressionSupportVectors[\[Alpha]] returns the support vectors for a \
+regression model defined by \[Alpha].\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SupportVectors", "::", "usage"}], "=", 
+   "\"\<SupportVectors[\[Alpha],y] returns {I+,I-} where I+/- are the index \
+vector for support vectors in class +/-.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"WeightVector", "::", "usage"}], "=", 
+   "\"\<WeightVector[\[Alpha],X,y] returns the weight (normal) vector for the \
+separating plane. This is only well-defined when \[Alpha] is the result of an \
+SVM trained with IdentityKernel.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Bias", "::", "usage"}], "=", 
+   "\"\<Bias[\[Alpha],X,y] gives the bias term for the trained svm model \
+{kernel K, data X,multipliers \[Alpha],labels y}. Option KernelFunction \
+determines the kernel to use; default is IdentityKernel (i.e., no \
+kernel).\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"KernelDistance", "::", "usage"}], "=", 
+   "\"\<KernelDistance[x,y,K] gives the euclidean (\!\(\*SubscriptBox[\(L\), \
+\(2\)]\)) distance between x and y in the feature space induces by the kernel \
+K.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVMPlot", "::", "usage"}], "=", 
+   "\"\<SVMPlot[\[Alpha],X,y] produces a typical SVM-plot of the SVM solution \
+\[Alpha], together with data points X (in \!\(\*SuperscriptBox[\(R\), \
+\(2\)]\)!) and labels y. Option KernelFunction determines the kernel to use \
+for drawing decision boundaries.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVMDataPlot", "::", "usage"}], "=", 
+   "\"\<SVMDataPlot[X,y] just plots the data points in X with classes {+1,-1} \
+highlighted.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionSVMPlot", "::", "usage"}], "=", 
+   "\"\<RegressionSVMPlot[\[Alpha],X,y,\[Epsilon]] draws data points {X,y}, \
+the regression function determined by {\[Alpha],X} and a 'corridor' of with \
+\[Epsilon].\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"QPSolve", "::", "usage"}], "=", 
+   "\"\<QPSolve[Q,p,a,b,c,y,\[Tau]] solves the quadratic programming problem \
+min \[Alpha].Q.\[Alpha]+p.\[Alpha], subject to a\[LessEqual]\[Alpha]\
+\[LessEqual]b and y.\[Alpha]=c. QPSolve uses the GSMO algorithm described by \
+Keerthi et al. \[Tau] is a solution tolerance parameter (0.01 or so is \
+usually good enough for SVMs). Q must be a positive semidefinite matrix to \
+guarantee convergence.\>\""}], ";"}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"FormulationOnly", "::", "usage"}], "=", 
+          "\"\<This option causes SVM training functions to merely formulate \
+the QP, without solving it.\>\""}], ";"}], "\\\n", "\n", "KernelFunction"}], "::",
+        "usage"}], "=", 
+      "\"\<KernelFunction->K[x,y] is used in many SVM-related functions to \
+define the kernel function.\>\""}], ";"}], "\\\n", "\n", "DebugSolver"}], 
+   ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Begin", "[", "\"\<MathSVM`Private`\>\"", "]"}], ";"}], "\n", 
+  "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"KernelMatrix", "[", 
+    RowBox[{"K_", ",", "X_"}], "]"}], ":=", 
+   RowBox[{"Outer", "[", 
+    RowBox[{"K", ",", "X", ",", "X", ",", "1"}], "]"}]}], "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"IdentityKernel", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], "=", 
+   RowBox[{"x", ".", "y"}]}], "\n", "\n", "\n", "\n", "\n"}]], "Code",
+ CellChangeTimes->{{3.511670177828125*^9, 3.511670179921875*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RBFKernel", "[", 
+    RowBox[{"x_", ",", "y_", ",", "\[Gamma]_"}], "]"}], "=", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", "\[Gamma]"}], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"x", "-", "y"}], ")"}], ".", 
+      RowBox[{"(", 
+       RowBox[{"x", "-", "y"}], ")"}]}]}], "]"}]}], "\n", "\n", 
+  "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PolynomialKernel", "[", 
+    RowBox[{"x_", ",", "y_", ",", "d_Integer"}], "]"}], "=", 
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"x", ".", "y"}], "+", "1"}], ")"}], "d"]}], "\n", "\n", "\n", 
+  "\n", "\n"}]], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVMClassify", "[", 
+    RowBox[{
+    "K_", ",", "X_", ",", "\[Alpha]_", ",", "y_", ",", "b_", ",", "x_"}], 
+    "]"}], ":=", "\n", "  ", 
+   RowBox[{"Sign", "[", 
+    RowBox[{
+     RowBox[{"Total", "[", 
+      RowBox[{"y", "*", "\[Alpha]", "*", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"K", "[", 
+           RowBox[{"#", ",", "x"}], "]"}], "&"}], ",", "X"}], "]"}]}], "]"}], 
+     "+", "b"}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVMClassify", "[", 
+    RowBox[{"K_", ",", "X_", ",", "\[Alpha]_", ",", "y_", ",", "x_"}], "]"}], 
+   ":=", "\n", "  ", 
+   RowBox[{"Sign", "[", 
+    RowBox[{
+     RowBox[{"Total", "[", 
+      RowBox[{"y", "*", "\[Alpha]", "*", 
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"K", "[", 
+           RowBox[{"#", ",", "x"}], "]"}], "&"}], ",", "X"}], "]"}]}], "]"}], 
+     "+", 
+     RowBox[{"Bias", "[", 
+      RowBox[{"\[Alpha]", ",", "X", ",", "y", ",", "K"}], "]"}]}], "]"}]}], 
+  "\n", "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "SeparableSVM", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"FormulationOnly", "\[Rule]", "False"}], ",", "\n", "    ", 
+     RowBox[{"KernelFunction", "\[Rule]", "IdentityKernel"}]}], "}"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SeparableSVM", "[", 
+    RowBox[{"X_", ",", "y_", ",", "\[Tau]_", ",", "opts___"}], "]"}], ":=", 
+   "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"l", ",", "qp", ",", "K"}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"l", "=", 
+       RowBox[{"Length", "[", "X", "]"}]}], ";", "\n", "    ", 
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "SeparableSVM", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{"qp", "=", "\n", "      ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"KernelMatrix", "[", 
+           RowBox[{"K", ",", "X"}], "]"}], "*", 
+          RowBox[{"Outer", "[", 
+           RowBox[{"Times", ",", "y", ",", "y"}], "]"}]}], ",", "\n", 
+         "        ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", 
+           RowBox[{"{", "l", "}"}]}], "]"}], ",", "\n", "        ", 
+         RowBox[{"Table", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"{", "l", "}"}]}], "]"}], ",", "\n", "        ", 
+         RowBox[{"Table", "[", 
+          RowBox[{"\[Infinity]", ",", 
+           RowBox[{"{", "l", "}"}]}], "]"}], ",", "\n", "        ", "0", ",", 
+         "\n", "        ", "y", ",", "\n", "        ", "\[Tau]"}], "}"}]}], 
+      ";", "\n", "    ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"FormulationOnly", "/.", 
+          RowBox[{"{", "opts", "}"}]}], "/.", 
+         RowBox[{"Options", "[", "SeparableSVM", "]"}]}], ",", "\n", "      ",
+         "qp", ",", "\n", "      ", 
+        RowBox[{"Apply", "[", 
+         RowBox[{"QPSolve", ",", "qp"}], "]"}]}], "]"}]}]}], "]"}]}], "\n", 
+  "\n", "\n", "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "NonseparableSVM", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"FormulationOnly", "\[Rule]", "False"}], ",", "\n", "    ", 
+     RowBox[{"KernelFunction", "\[Rule]", "IdentityKernel"}]}], "}"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NonseparableSVM", "[", 
+    RowBox[{"X_", ",", "y_", ",", "C_", ",", "\[Tau]_", ",", "opts___"}], 
+    "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"l", ",", "qp", ",", "K"}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"l", "=", 
+       RowBox[{"Length", "[", "X", "]"}]}], ";", "\n", "    ", 
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "NonseparableSVM", "]"}]}]}], ";", "\n", 
+      "    ", 
+      RowBox[{"qp", "=", "\n", "      ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"KernelMatrix", "[", 
+           RowBox[{"K", ",", "X"}], "]"}], "*", 
+          RowBox[{"Outer", "[", 
+           RowBox[{"Times", ",", "y", ",", "y"}], "]"}]}], ",", "\n", 
+         "        ", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", 
+           RowBox[{"{", "l", "}"}]}], "]"}], ",", "\n", "        ", 
+         RowBox[{"Table", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"{", "l", "}"}]}], "]"}], ",", "\n", "        ", 
+         RowBox[{"Table", "[", 
+          RowBox[{"C", ",", 
+           RowBox[{"{", "l", "}"}]}], "]"}], ",", "\n", "        ", "0", ",", 
+         "\n", "        ", "y", ",", "\n", "        ", "\[Tau]"}], "}"}]}], 
+      ";", "\n", "    ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"FormulationOnly", "/.", 
+          RowBox[{"{", "opts", "}"}]}], "/.", 
+         RowBox[{"Options", "[", "NonseparableSVM", "]"}]}], ",", "\n", 
+        "      ", "qp", ",", "\n", "      ", 
+        RowBox[{"Apply", "[", 
+         RowBox[{"QPSolve", ",", "qp"}], "]"}]}], "]"}]}]}], "]"}]}], "\n", 
+  "\n", "\n", "\n", "\n", "\n", "\n", "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "RegressionSVM", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"FormulationOnly", "\[Rule]", "False"}], ",", "\n", "    ", 
+     RowBox[{"KernelFunction", "\[Rule]", "IdentityKernel"}]}], "}"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionSVM", "[", 
+    RowBox[{
+    "X_", ",", "z_", ",", "C_", ",", "\[Epsilon]_", ",", "\[Tau]_", ",", 
+     "opts___"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"l", ",", "Q", ",", "\[Alpha]"}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"l", "=", 
+       RowBox[{"Length", "[", "X", "]"}]}], ";", "\n", "    ", 
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "RegressionSVM", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{"qp", "=", "\n", "      ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"KernelMatrix", "[", 
+          RowBox[{"K", ",", 
+           RowBox[{"Join", "[", 
+            RowBox[{"X", ",", 
+             RowBox[{"-", "X"}]}], "]"}]}], "]"}], ",", "\n", "        ", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{"\[Epsilon]", ",", 
+            RowBox[{"{", 
+             RowBox[{"2", "l"}], "}"}]}], "]"}], "+", 
+          RowBox[{"Join", "[", 
+           RowBox[{"z", ",", 
+            RowBox[{"-", "z"}]}], "]"}]}], ",", "\n", "        ", 
+         RowBox[{"Join", "[", 
+          RowBox[{"Table", "[", 
+           RowBox[{"0", ",", 
+            RowBox[{"{", 
+             RowBox[{"2", "l"}], "}"}]}], "]"}], "]"}], ",", "\n", "        ", 
+         RowBox[{"Join", "[", 
+          RowBox[{"Table", "[", 
+           RowBox[{"C", ",", 
+            RowBox[{"{", 
+             RowBox[{"2", "l"}], "}"}]}], "]"}], "]"}], ",", "\n", "        ",
+          "0", ",", "\n", "        ", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{"1", ",", 
+             RowBox[{"{", "l", "}"}]}], "]"}], ",", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", 
+             RowBox[{"{", "l", "}"}]}], "]"}]}], "]"}], ",", "\n", "        ",
+          "\[Tau]"}], "}"}]}], ";", "\n", "    ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"FormulationOnly", "/.", 
+          RowBox[{"{", "opts", "}"}]}], "/.", 
+         RowBox[{"Options", "[", "RegressionSVM", "]"}]}], ",", "\n", 
+        "      ", "qp", ",", "\n", "      ", 
+        RowBox[{"Apply", "[", 
+         RowBox[{"QPSolve", ",", "qp"}], "]"}]}], "]"}]}]}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"RegressionSVM", "[", 
+   RowBox[{
+    RowBox[{"X_", "?", "VectorQ"}], ",", "z_", ",", "C_", ",", "\[Epsilon]_", 
+    ",", "\[Tau]_", ",", "opts___"}], "]"}], ":=", "\n", "  ", 
+  RowBox[{"RegressionSVM", "[", 
+   RowBox[{
+    RowBox[{"Partition", "[", 
+     RowBox[{"X", ",", "1"}], "]"}], ",", "z", ",", "C", ",", "\[Epsilon]", 
+    ",", "\[Tau]", ",", "opts"}], "]"}]}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionBias", "[", 
+    RowBox[{"\[Alpha]_", ",", 
+     RowBox[{"X_", "?", "MatrixQ"}], ",", "z_", ",", "\[Epsilon]_", ",", 
+     "opts___"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"l", "=", 
+        RowBox[{"Length", "[", "X", "]"}]}], ",", "K"}], "}"}], ",", "\n", 
+     "    ", 
+     RowBox[{
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "RegressionSVM", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{"sv", "=", 
+       RowBox[{
+        RowBox[{"SupportVectors", "[", "\[Alpha]", "]"}], 
+        "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], ";", "\n", 
+      "    ", 
+      RowBox[{"\[Epsilon]", "+", 
+       RowBox[{"z", "\[LeftDoubleBracket]", "sv", "\[RightDoubleBracket]"}], 
+       "-", "\n", "      ", 
+       RowBox[{"Sum", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+            "\[Alpha]", "\[LeftDoubleBracket]", "\n", "                ", 
+             RowBox[{"i", "+", "l"}], "\[RightDoubleBracket]"}], "-", 
+            RowBox[{
+            "\[Alpha]", "\[LeftDoubleBracket]", "\n", "                ", "i",
+              "\[RightDoubleBracket]"}]}], ")"}], 
+          RowBox[{"K", "[", "\n", "            ", 
+           RowBox[{
+            RowBox[{
+            "X", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], ",", 
+            "\n", "            ", 
+            RowBox[{
+            "X", "\[LeftDoubleBracket]", "sv", "\[RightDoubleBracket]"}]}], 
+           "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "l"}], "}"}]}], "]"}]}]}]}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionBias", "[", 
+    RowBox[{"\[Alpha]_", ",", 
+     RowBox[{"X_", "?", "VectorQ"}], ",", "z_", ",", "\[Epsilon]_", ",", 
+     "opts___"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"RegressionBias", "[", 
+    RowBox[{"\[Alpha]", ",", 
+     RowBox[{"Partition", "[", 
+      RowBox[{"X", ",", "1"}], "]"}], ",", "z", ",", "\[Epsilon]", ",", 
+     "opts"}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionFunction", "[", 
+    RowBox[{"\[Alpha]_", ",", 
+     RowBox[{"X_", "?", "MatrixQ"}], ",", "z_", ",", "\[Epsilon]_", ",", 
+     RowBox[{"x_", "?", "VectorQ"}], ",", "opts___"}], "]"}], ":=", "\n", 
+   "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"l", "=", 
+        RowBox[{"Length", "[", "X", "]"}]}], ",", "K", ",", "b"}], "}"}], ",",
+      "\n", "    ", 
+     RowBox[{
+      RowBox[{"b", "=", 
+       RowBox[{"RegressionBias", "[", 
+        RowBox[{
+        "\[Alpha]", ",", "X", ",", "z", ",", "\[Epsilon]", ",", "opts"}], 
+        "]"}]}], ";", "\n", "    ", 
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "RegressionSVM", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{
+       RowBox[{"Sum", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+            "\[Alpha]", "\[LeftDoubleBracket]", "\n", "                ", 
+             RowBox[{"i", "+", "l"}], "\[RightDoubleBracket]"}], "-", 
+            RowBox[{
+            "\[Alpha]", "\[LeftDoubleBracket]", "\n", "                ", "i",
+              "\[RightDoubleBracket]"}]}], ")"}], 
+          RowBox[{"K", "[", "\n", "            ", 
+           RowBox[{
+            RowBox[{
+            "X", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], ",", 
+            "x"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "l"}], "}"}]}], "]"}], "+", "b"}]}]}], "]"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"RegressionFunction", "[", 
+   RowBox[{"\[Alpha]_", ",", 
+    RowBox[{"X_", "?", "VectorQ"}], ",", "z_", ",", "\[Epsilon]_", ",", "x_", 
+    ",", "opts___"}], "]"}], ":=", "\n", "  ", 
+  RowBox[{"RegressionFunction", "[", 
+   RowBox[{"\[Alpha]", ",", 
+    RowBox[{"Partition", "[", 
+     RowBox[{"X", ",", "1"}], "]"}], ",", "z", ",", "\[Epsilon]", ",", 
+    RowBox[{"{", "x", "}"}], ",", "opts"}], "]"}]}], "\n"}], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionSupportVectors", "[", "\[Alpha]_List", "]"}], ":=", 
+   "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"l", "=", 
+       RowBox[{
+        RowBox[{"Length", "[", "\[Alpha]", "]"}], "/", "2"}]}], "}"}], ",", 
+     "\n", "    ", 
+     RowBox[{
+      RowBox[{"SupportVectors", "[", 
+       RowBox[{"\[Alpha]", ",", 
+        RowBox[{"Join", "[", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{"1", ",", 
+            RowBox[{"{", "l", "}"}]}], "]"}], ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", 
+            RowBox[{"{", "l", "}"}]}], "]"}]}], "]"}]}], "]"}], "-", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "l"}], "}"}]}]}], "]"}]}], "\n", "\n", "\n", "\n", 
+  "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"SupportVectors", "[", 
+    RowBox[{"\[Alpha]_List", ",", "\n", "    ", "y_List"}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{"\[Alpha]", "*", "y"}], ",", 
+        RowBox[{"_", "?", "Positive"}]}], "]"}], "//", "Flatten"}], ",", "\n",
+      "    ", 
+     RowBox[{
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{"\[Alpha]", "*", "y"}], ",", 
+        RowBox[{"_", "?", "Negative"}]}], "]"}], "//", "Flatten"}]}], "}"}]}],
+   "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"SupportVectors", "[", "\[Alpha]_List", "]"}], ":=", "\n", "  ", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{"Position", "[", 
+     RowBox[{"\[Alpha]", ",", 
+      RowBox[{"a_", "/;", 
+       RowBox[{"a", "\[NotEqual]", "0"}]}]}], "]"}], "]"}]}], "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"WeightVector", "[", 
+    RowBox[{"\[Alpha]_List", ",", 
+     RowBox[{"X_", "?", "MatrixQ"}], ",", "y_List"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Sum", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"y", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+      "*", 
+      RowBox[{
+      "\[Alpha]", "\[LeftDoubleBracket]", "\n", "        ", "i", 
+       "\[RightDoubleBracket]"}], "*", 
+      RowBox[{"X", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "\n", "      ", 
+       RowBox[{"Length", "[", "X", "]"}]}], "}"}]}], "]"}]}], "\n"}]], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "Bias", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"KernelFunction", "\[Rule]", "IdentityKernel"}], "}"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Bias", "[", 
+    RowBox[{"\[Alpha]_", ",", "X_", ",", "y_", ",", "opts___"}], "]"}], ":=", 
+   "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"sv", ",", "K"}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "Bias", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{"sv", "=", 
+       RowBox[{"SupportVectors", "[", 
+        RowBox[{"\[Alpha]", ",", "y"}], "]"}]}], ";", "\n", "    ", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Total", "[", 
+           RowBox[{"\[Alpha]", "*", "y", "*", "\n", "                ", 
+            RowBox[{"Map", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"K", "[", 
+                RowBox[{
+                 RowBox[{
+                 "X", "\[LeftDoubleBracket]", "\n", 
+                  "                        ", 
+                  RowBox[{"sv", "\[LeftDoubleBracket]", 
+                   RowBox[{
+                   "1", ",", "\n", "                          ", "1"}], 
+                   "\[RightDoubleBracket]"}], "\[RightDoubleBracket]"}], ",", 
+                 "#"}], "]"}], "&"}], ",", "X"}], "]"}]}], "]"}], "+", "\n", 
+          "            ", 
+          RowBox[{"Total", "[", 
+           RowBox[{"\[Alpha]", "*", "y", "*", "\n", "                ", 
+            RowBox[{"Map", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"K", "[", 
+                RowBox[{
+                 RowBox[{
+                 "X", "\[LeftDoubleBracket]", "\n", 
+                  "                        ", 
+                  RowBox[{"sv", "\[LeftDoubleBracket]", 
+                   RowBox[{
+                   "2", ",", "\n", "                          ", "1"}], 
+                   "\[RightDoubleBracket]"}], "\[RightDoubleBracket]"}], ",", 
+                 "#"}], "]"}], "&"}], ",", "\n", "                  ", "X"}], 
+             "]"}]}], "]"}]}], ")"}]}], "/", "2"}]}]}], "]"}]}], "\n", 
+  "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"KernelDistance", "[", 
+    RowBox[{"x_", ",", "y_", ",", "K_"}], "]"}], ":=", 
+   SqrtBox[
+    RowBox[{
+     RowBox[{"K", "[", 
+      RowBox[{"x", ",", "x"}], "]"}], "+", 
+     RowBox[{"K", "[", 
+      RowBox[{"y", ",", "y"}], "]"}], "-", 
+     RowBox[{"2", 
+      RowBox[{"K", "[", 
+       RowBox[{"x", ",", "y"}], "]"}]}]}]]}], "\n", "\n", "\n", "\n", 
+  "\n"}]], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "SVMPlot", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"KernelFunction", "\[Rule]", "IdentityKernel"}], "}"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVMPlot", "[", 
+    RowBox[{"\[Alpha]_", ",", 
+     RowBox[{"X_", "?", "MatrixQ"}], ",", "y_", ",", "opts___"}], "]"}], ":=",
+    "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "x1range", ",", "x2range", ",", "sv", ",", "df", ",", "x1", ",", "x2", 
+       ",", "K"}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "SVMPlot", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{"x1range", "=", 
+       RowBox[{"{", 
+        RowBox[{"x1", ",", 
+         RowBox[{"Min", "[", 
+          RowBox[{"X", "\[LeftDoubleBracket]", 
+           RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}], "]"}], ",", 
+         "\n", "        ", 
+         RowBox[{"Max", "[", 
+          RowBox[{"X", "\[LeftDoubleBracket]", 
+           RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}], "]"}]}], 
+        "}"}]}], ";", "\n", "    ", 
+      RowBox[{"x2range", "=", 
+       RowBox[{"{", 
+        RowBox[{"x2", ",", 
+         RowBox[{"Min", "[", 
+          RowBox[{"X", "\[LeftDoubleBracket]", 
+           RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}], "]"}], ",", 
+         "\n", "        ", 
+         RowBox[{"Max", "[", 
+          RowBox[{"X", "\[LeftDoubleBracket]", 
+           RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}], "]"}]}], 
+        "}"}]}], ";", "\n", "    ", 
+      RowBox[{"sv", "=", 
+       RowBox[{"SupportVectors", "[", 
+        RowBox[{"\[Alpha]", ",", "y"}], "]"}]}], ";", "\n", "    ", 
+      RowBox[{"df", "=", 
+       RowBox[{
+        RowBox[{"Total", "[", 
+         RowBox[{"\[Alpha]", "*", "y", "*", 
+          RowBox[{"Map", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"K", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"x1", ",", "x2"}], "}"}], ",", "#"}], "]"}], "&"}], 
+            ",", "X"}], "]"}]}], "]"}], "+", 
+        RowBox[{"Bias", "[", 
+         RowBox[{"\[Alpha]", ",", "X", ",", "y", ",", "opts"}], "]"}]}]}], 
+      ";", "\n", "    ", 
+      RowBox[{"DisplayTogether", "[", "\n", "      ", 
+       RowBox[{
+        RowBox[{"ListPlot", "[", 
+         RowBox[{
+          RowBox[{"X", "\[LeftDoubleBracket]", 
+           RowBox[{"Flatten", "[", "sv", "]"}], "\[RightDoubleBracket]"}], 
+          ",", "\n", "        ", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Hue", "[", "0.6", "]"}], ",", 
+             RowBox[{"PointSize", "[", "0.015", "]"}]}], "}"}]}]}], "]"}], 
+        ",", "\n", "      ", 
+        RowBox[{"ListPlot", "[", 
+         RowBox[{"Extract", "[", 
+          RowBox[{"X", ",", 
+           RowBox[{"Position", "[", 
+            RowBox[{"y", ",", "1"}], "]"}]}], "]"}], "]"}], ",", "\n", 
+        "      ", 
+        RowBox[{"ListPlot", "[", 
+         RowBox[{
+          RowBox[{"Extract", "[", 
+           RowBox[{"X", ",", 
+            RowBox[{"Position", "[", 
+             RowBox[{"y", ",", 
+              RowBox[{"-", "1"}]}], "]"}]}], "]"}], ",", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"GrayLevel", "[", "0.6", "]"}], "}"}]}]}], "]"}], ",", 
+        "\n", "      ", 
+        RowBox[{"ImplicitPlot", "[", 
+         RowBox[{
+          RowBox[{"df", "\[Equal]", "0"}], ",", "x1range", ",", "x2range"}], 
+         "]"}], ",", "\n", "      ", 
+        RowBox[{"ImplicitPlot", "[", 
+         RowBox[{
+          RowBox[{"df", "\[Equal]", "1"}], ",", "x1range", ",", "x2range", 
+          ",", "\n", "        ", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"Dashing", "[", 
+            RowBox[{"{", 
+             RowBox[{".01", ",", ".01"}], "}"}], "]"}]}]}], "]"}], ",", "\n", 
+        "      ", 
+        RowBox[{"ImplicitPlot", "[", 
+         RowBox[{
+          RowBox[{"df", "\[Equal]", 
+           RowBox[{"-", "1"}]}], ",", "x1range", ",", "x2range", ",", "\n", 
+          "        ", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"Dashing", "[", 
+            RowBox[{"{", 
+             RowBox[{".01", ",", ".01"}], "}"}], "]"}]}]}], "]"}], ",", "\n", 
+        "      ", 
+        RowBox[{"RemainingOptions", "[", 
+         RowBox[{
+          RowBox[{"{", "KernelFunction", "}"}], ",", "opts"}], "]"}]}], 
+       "]"}]}]}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"SVMDataPlot", "[", 
+   RowBox[{
+    RowBox[{"X_", "?", "MatrixQ"}], ",", "y_", ",", "opts___"}], "]"}], ":=", 
+  "\n", "  ", 
+  RowBox[{"DisplayTogether", "[", "\n", "    ", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{"Extract", "[", 
+      RowBox[{"X", ",", 
+       RowBox[{"Position", "[", 
+        RowBox[{"y", ",", "1"}], "]"}]}], "]"}], "]"}], ",", "\n", "    ", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"Extract", "[", 
+       RowBox[{"X", ",", 
+        RowBox[{"Position", "[", 
+         RowBox[{"y", ",", 
+          RowBox[{"-", "1"}]}], "]"}]}], "]"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"GrayLevel", "[", "0.6", "]"}], "}"}]}]}], "]"}], ",", 
+    "opts"}], "]"}]}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "RegressionSVMPlot", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"KernelFunction", "\[Rule]", "IdentityKernel"}], "}"}]}], 
+  "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RegressionSVMPlot", "[", 
+    RowBox[{"\[Alpha]_", ",", 
+     RowBox[{"X_", "?", "VectorQ"}], ",", "z_", ",", "\[Epsilon]_", ",", 
+     "opts___"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"K", ",", "rf", ",", "sv"}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"K", "=", 
+       RowBox[{
+        RowBox[{"KernelFunction", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "RegressionSVMPlot", "]"}]}]}], ";", "\n", 
+      "    ", 
+      RowBox[{"rf", "=", 
+       RowBox[{"RegressionFunction", "[", 
+        RowBox[{
+        "\[Alpha]", ",", "X", ",", "z", ",", "\[Epsilon]", ",", "x", ",", 
+         "opts"}], "]"}]}], ";", "\n", "    ", 
+      RowBox[{"sv", "=", 
+       RowBox[{"RegressionSupportVectors", "[", "\[Alpha]", "]"}]}], ";", 
+      "\n", "    ", 
+      RowBox[{"DisplayTogether", "[", "\n", "      ", 
+       RowBox[{
+        RowBox[{"Plot", "[", 
+         RowBox[{"rf", ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"Min", "[", "X", "]"}], ",", 
+            RowBox[{"Max", "[", "X", "]"}]}], "}"}]}], "]"}], ",", "\n", 
+        "      ", 
+        RowBox[{"Plot", "[", 
+         RowBox[{
+          RowBox[{"rf", "+", "\[Epsilon]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"Min", "[", "X", "]"}], ",", 
+            RowBox[{"Max", "[", "X", "]"}]}], "}"}], ",", "\n", "        ", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"Dashing", "[", 
+            RowBox[{"{", 
+             RowBox[{".01", ",", ".01"}], "}"}], "]"}]}]}], "]"}], ",", "\n", 
+        "      ", 
+        RowBox[{"Plot", "[", 
+         RowBox[{
+          RowBox[{"rf", "-", "\[Epsilon]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"Min", "[", "X", "]"}], ",", 
+            RowBox[{"Max", "[", "X", "]"}]}], "}"}], ",", "\n", "        ", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"Dashing", "[", 
+            RowBox[{"{", 
+             RowBox[{".01", ",", ".01"}], "}"}], "]"}]}]}], "]"}], ",", "\n", 
+        "      ", 
+        RowBox[{"ListPlot", "[", "\n", "        ", 
+         RowBox[{
+          RowBox[{"Thread", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"X", "\[LeftDoubleBracket]", 
+              RowBox[{"Flatten", "[", "sv", "]"}], "\[RightDoubleBracket]"}], 
+             ",", "\n", "            ", 
+             RowBox[{"z", "\[LeftDoubleBracket]", 
+              RowBox[{"Flatten", "[", "sv", "]"}], 
+              "\[RightDoubleBracket]"}]}], "}"}], "]"}], ",", "\n", 
+          "        ", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Hue", "[", "0.6", "]"}], ",", 
+             RowBox[{"PointSize", "[", "0.015", "]"}]}], "}"}]}]}], "]"}], 
+        ",", "\n", "      ", 
+        RowBox[{"ListPlot", "[", 
+         RowBox[{"Thread", "[", 
+          RowBox[{"{", 
+           RowBox[{"X", ",", "z"}], "}"}], "]"}], "]"}], ",", "\n", "      ", 
+        RowBox[{"PlotRange", "\[Rule]", "All"}]}], "]"}]}]}], "]"}]}], "\n", 
+  "\n", "\n", "\n", "\n", "\n", "\n", "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "QPSolve", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"DebugSolver", "\[Rule]", "False"}], "}"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"QPSolve", "[", 
+    RowBox[{
+    "Q_", ",", "p_", ",", "a_", ",", "b_", ",", "c_", ",", "y_", ",", 
+     "\[Tau]_", ",", "opts___"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "\[Alpha]", ",", "l", ",", "Isets", ",", "Iup", ",", "Ilow", ",", "F", 
+       ",", "B", ",", "oldB", ",", "M", ",", "k", ",", "debug"}], "}"}], ",", 
+     "\n", "    ", 
+     RowBox[{
+      RowBox[{"debug", "=", 
+       RowBox[{
+        RowBox[{"DebugSolver", "/.", 
+         RowBox[{"{", "opts", "}"}]}], "/.", 
+        RowBox[{"Options", "[", "QPSolve", "]"}]}]}], ";", "\n", "    ", 
+      RowBox[{"l", "=", 
+       RowBox[{"Length", "[", "Q", "]"}]}], ";", "\n", "    ", 
+      RowBox[{"\[Alpha]", "=", 
+       RowBox[{"FeasiblePoint", "[", 
+        RowBox[{"a", ",", "b", ",", "y", ",", "c"}], "]"}]}], ";", "\n", 
+      "    ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"\[Alpha]", "\[Equal]", "Null"}], ",", 
+        RowBox[{"Return", "[", "Null", "]"}]}], "]"}], ";", 
+      RowBox[{"k", "=", "0"}], ";", "\n", "    ", 
+      RowBox[{"While", "[", 
+       RowBox[{"True", ",", "\n", "      ", 
+        RowBox[{
+         RowBox[{"Isets", "=", 
+          RowBox[{"GetIndexSets", "[", 
+           RowBox[{"\[Alpha]", ",", "a", ",", "b", ",", "y"}], "]"}]}], ";", 
+         "\n", "      ", 
+         RowBox[{"Iup", "=", 
+          RowBox[{"UpperBoundarySet", "[", "Isets", "]"}]}], ";", "\n", 
+         "      ", 
+         RowBox[{"Ilow", "=", 
+          RowBox[{"LowerBoundarySet", "[", "Isets", "]"}]}], ";", "\n", 
+         "      ", 
+         RowBox[{"F", "=", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"Q", ".", "\[Alpha]"}], "+", "p"}], ")"}], "/", "y"}]}], 
+         ";", "\n", "      ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"QPOptimalQ", "[", 
+            RowBox[{"Iup", ",", "Ilow", ",", "F", ",", "\[Tau]"}], "]"}], ",", 
+           RowBox[{"Break", "[", "]"}]}], "]"}], ";", "\n", "      ", 
+         RowBox[{"B", "=", 
+          RowBox[{"GetViolatingPair", "[", 
+           RowBox[{
+            RowBox[{
+            "Isets", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+            ",", "Iup", ",", "\n", "          ", "Ilow", ",", "F", ",", 
+            "\[Tau]"}], "]"}]}], ";", "\n", "      ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"B", "\[Equal]", "Null"}], ",", 
+           RowBox[{"Return", "[", "\"\<Error: no violating pair\>\"", "]"}]}],
+           "]"}], ";", "\n", "      ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"B", "\[Equal]", "oldB"}], ",", "\n", "        ", 
+           RowBox[{
+            RowBox[{"Print", "[", 
+             RowBox[{"\"\<Error: stuck on violating pair \>\"", ",", "B"}], 
+             "]"}], ";", "\n", "        ", 
+            RowBox[{"Print", "[", "\n", "          ", 
+             RowBox[{"\"\<Subproblem = \>\"", ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Q", "\[LeftDoubleBracket]", 
+                 RowBox[{"B", ",", "B"}], "\[RightDoubleBracket]"}], ",", 
+                "\n", "            ", 
+                RowBox[{
+                 RowBox[{
+                 "p", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], 
+                 "+", "\n", "              ", 
+                 RowBox[{
+                  RowBox[{"Q", "\[LeftDoubleBracket]", 
+                   RowBox[{"B", ",", "\n", "                  ", "M"}], 
+                   "\[RightDoubleBracket]"}], ".", 
+                  RowBox[{
+                  "\[Alpha]", "\[LeftDoubleBracket]", "\n", 
+                   "                  ", "M", "\[RightDoubleBracket]"}]}]}], 
+                ",", "\n", "            ", 
+                RowBox[{
+                "a", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], 
+                ",", "\n", "            ", 
+                RowBox[{
+                "b", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], 
+                ",", "\n", "            ", 
+                RowBox[{
+                "y", "\[LeftDoubleBracket]", "\n", "              ", "B", 
+                 "\[RightDoubleBracket]"}], ",", 
+                RowBox[{
+                "\[Alpha]", "\[LeftDoubleBracket]", "\n", "              ", 
+                 "B", "\[RightDoubleBracket]"}], ",", "\n", "            ", 
+                RowBox[{
+                 RowBox[{
+                 "y", "\[LeftDoubleBracket]", "\n", "                ", "B", 
+                  "\[RightDoubleBracket]"}], ".", 
+                 RowBox[{
+                 "\[Alpha]", "\[LeftDoubleBracket]", "\n", "                ",
+                   "B", "\[RightDoubleBracket]"}]}]}], "}"}]}], "]"}], ";", 
+            "\n", "        ", 
+            RowBox[{"Print", "[", 
+             RowBox[{"\"\<F = \>\"", ",", 
+              RowBox[{
+              "F", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}]}], 
+             "]"}], ";", "\n", "        ", 
+            RowBox[{"Print", "[", 
+             RowBox[{"\"\<Isets = \>\"", ",", " ", "Isets"}], "]"}], ";", 
+            "\n", "        ", 
+            RowBox[{"Return", "[", "\[Alpha]", "]"}], ";"}]}], "]"}], ";", 
+         "\n", "      ", 
+         RowBox[{"M", "=", 
+          RowBox[{"Complement", "[", 
+           RowBox[{
+            RowBox[{"Range", "[", 
+             RowBox[{"1", ",", "l"}], "]"}], ",", "B"}], "]"}]}], ";", "\n", 
+         "      ", 
+         RowBox[{"If", "[", 
+          RowBox[{"debug", ",", "\n", "        ", 
+           RowBox[{
+            RowBox[{
+            "Print", "[", "\"\<--------------NEW PAIR:------------\>\"", 
+             "]"}], ";", "\n", "        ", 
+            RowBox[{"Print", "[", 
+             RowBox[{"\"\<viol. pair = \>\"", ",", "B"}], "]"}], ";", "\n", 
+            "        ", 
+            RowBox[{"Print", "[", "\n", "          ", 
+             RowBox[{"\"\<\[Alpha] = \>\"", ",", 
+              RowBox[{
+              "\[Alpha]", "\[LeftDoubleBracket]", "B", 
+               "\[RightDoubleBracket]"}]}], "]"}], ";", "\n", "        ", 
+            RowBox[{"Print", "[", 
+             RowBox[{"\"\<grad = \>\"", ",", 
+              RowBox[{
+              "F", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}]}], 
+             "]"}], ";", "\n", "        ", 
+            RowBox[{"Print", "[", 
+             RowBox[{"\"\<current tau = \>\"", ",", 
+              RowBox[{"Abs", "[", "\n", "            ", 
+               RowBox[{
+                RowBox[{"F", "\[LeftDoubleBracket]", "\n", "                ", 
+                 RowBox[{
+                  RowBox[{
+                  "B", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
+                   "\\\n"}], "\[RightDoubleBracket]"}], "-", "\n", 
+                "              ", 
+                RowBox[{"F", "\[LeftDoubleBracket]", "\n", "                ", 
+                 RowBox[{
+                  RowBox[{
+                  "B", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}],
+                   "\\\n"}], "\[RightDoubleBracket]"}]}], "]"}]}], "]"}]}]}], 
+          "]"}], ";", "\n", "      ", 
+         RowBox[{
+          RowBox[{
+          "\[Alpha]", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], 
+          "=", "\n", "        ", 
+          RowBox[{"QPSolve", "[", 
+           RowBox[{
+            RowBox[{"Q", "\[LeftDoubleBracket]", 
+             RowBox[{"B", ",", "B"}], "\[RightDoubleBracket]"}], ",", "\n", 
+            "          ", 
+            RowBox[{
+             RowBox[{
+             "p", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], "+",
+              "\n", "            ", 
+             RowBox[{
+              RowBox[{"Q", "\[LeftDoubleBracket]", 
+               RowBox[{"B", ",", "\n", "                ", "M"}], 
+               "\[RightDoubleBracket]"}], ".", 
+              RowBox[{"\[Alpha]", "\[LeftDoubleBracket]", 
+               RowBox[{"M", "\\\n"}], "\[RightDoubleBracket]"}]}]}], ",", 
+            RowBox[{
+            "a", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], ",", 
+            "\n", "          ", 
+            RowBox[{
+            "b", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], ",", 
+            "\n", "          ", 
+            RowBox[{
+            "y", "\[LeftDoubleBracket]", "B", "\[RightDoubleBracket]"}], ",", 
+            RowBox[{
+             RowBox[{"\[Alpha]", "\\\n"}], "\[LeftDoubleBracket]", "B", 
+             "\[RightDoubleBracket]"}]}], "]"}]}], ";", "\n", "      ", 
+         RowBox[{"If", "[", 
+          RowBox[{"debug", ",", "\n", "        ", 
+           RowBox[{
+            RowBox[{
+            "Print", "[", "\"\<--------------NEW SOLUTION:------------\>\"", 
+             "]"}], ";", "\n", "        ", 
+            RowBox[{"Print", "[", "\n", "          ", 
+             RowBox[{"\"\<\[Alpha] = \>\"", ",", 
+              RowBox[{
+              "\[Alpha]", "\[LeftDoubleBracket]", "B", 
+               "\[RightDoubleBracket]"}]}], "]"}]}]}], "]"}], ";", "\n", 
+         "      ", 
+         RowBox[{"oldB", "=", "B"}]}]}], "]"}], ";", "\n", "    ", 
+      "\[Alpha]"}]}], "]"}]}], "\n", "\n"}], "\n"}], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"FeasiblePoint", "[", 
+    RowBox[{"a_", ",", "b_", ",", "y_", ",", "c_"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Alpha]", ",", 
+       RowBox[{"l", "=", 
+        RowBox[{"Length", "[", "y", "]"}]}]}], "}"}], ",", "\n", "    ", 
+     RowBox[{
+      RowBox[{"\[Alpha]", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{"0", ",", 
+         RowBox[{"{", "l", "}"}]}], "]"}]}], ";", "\n", "    ", 
+      RowBox[{"Do", "[", "\n", "      ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{
+          "\[Alpha]", "\[LeftDoubleBracket]", "\n", "          ", "i", 
+           "\[RightDoubleBracket]"}], "=", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"c", "-", 
+             RowBox[{
+              RowBox[{"Drop", "[", 
+               RowBox[{"y", ",", 
+                RowBox[{"{", "i", "}"}]}], "]"}], ".", 
+              RowBox[{"Drop", "[", 
+               RowBox[{"\[Alpha]", ",", 
+                RowBox[{"{", "i", "}"}]}], "]"}]}]}], ")"}], "/", "\n", 
+           "          ", 
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}]}], 
+         ";", "\n", "      ", 
+         RowBox[{
+          RowBox[{
+          "\[Alpha]", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+          "=", "\n", "        ", 
+          RowBox[{"Min", "[", 
+           RowBox[{
+            RowBox[{"Max", "[", 
+             RowBox[{
+              RowBox[{
+              "\[Alpha]", "\[LeftDoubleBracket]", "i", 
+               "\[RightDoubleBracket]"}], ",", "\n", "            ", 
+              RowBox[{
+              "a", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}], 
+             "]"}], ",", "\n", "          ", 
+            RowBox[{
+            "b", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}], 
+           "]"}]}], ";", "\n", "      ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"y", ".", "\[Alpha]"}], "\[Equal]", "c"}], ",", "Break"}],
+           "]"}]}], ",", "\n", "      ", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "l"}], "}"}]}], "]"}], ";", "\n", "    ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"y", ".", "\[Alpha]"}], "\[Equal]", "c"}], ",", "\[Alpha]", 
+        ",", "Null"}], "]"}]}]}], "]"}]}], "\n", "\n", "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"QPSolve", "[", 
+    RowBox[{
+     RowBox[{"Q_", "/;", 
+      RowBox[{
+       RowBox[{"Length", "[", "Q", "]"}], "\[Equal]", "2"}]}], ",", "p_", ",",
+      "a_", ",", "b_", ",", "y_", ",", "\[Alpha]_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"t", ",", "\[Alpha]new", ",", "c", ",", "tn", ",", "td"}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"c", "=", 
+       RowBox[{"\[Alpha]", ".", "y"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"tn", "=", 
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+              "Q", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+              ".", "\[Alpha]"}], "+", 
+             RowBox[{
+             "p", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+            ")"}], "/", 
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], "-", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+              "Q", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+              ".", "\[Alpha]"}], "+", 
+             RowBox[{
+             "p", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+            ")"}], "/", 
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}]}], 
+         ")"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"td", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Q", "\[LeftDoubleBracket]", 
+          RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "/", 
+         SuperscriptBox[
+          RowBox[{"y", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
+           "2"]}], "+", 
+        RowBox[{
+         RowBox[{"Q", "\[LeftDoubleBracket]", 
+          RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}], "/", 
+         SuperscriptBox[
+          RowBox[{"y", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}],
+           "2"]}], "-", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Q", "\[LeftDoubleBracket]", 
+            RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}], "+", 
+           RowBox[{"Q", "\[LeftDoubleBracket]", 
+            RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}], ")"}], "/", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+          ")"}]}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"t", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"td", "\[NotEqual]", "0"}], ",", 
+         RowBox[{"tn", "/", "td"}], ",", 
+         RowBox[{
+          RowBox[{"Sign", "[", "tn", "]"}], "*", "\[Infinity]"}]}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"\[Alpha]new", "=", 
+       RowBox[{"\[Alpha]", "+", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"t", "/", 
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], ",", 
+          RowBox[{
+           RowBox[{"-", "t"}], "/", 
+           RowBox[{
+           "y", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}]}], 
+         "}"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+         "\[Alpha]new", "\[LeftDoubleBracket]", "1", 
+          "\[RightDoubleBracket]"}], "<", 
+         RowBox[{
+         "a", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"\[Alpha]new", "=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+           "a", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"c", "-", 
+              RowBox[{
+               RowBox[{
+               "a", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+               RowBox[{
+               "y", "\[LeftDoubleBracket]", "1", 
+                "\[RightDoubleBracket]"}]}]}], ")"}], "/", 
+            RowBox[{
+            "y", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}]}], 
+          "}"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+         "\[Alpha]new", "\[LeftDoubleBracket]", "1", 
+          "\[RightDoubleBracket]"}], ">", 
+         RowBox[{
+         "b", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"\[Alpha]new", "=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+           "b", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"c", "-", 
+              RowBox[{
+               RowBox[{
+               "b", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+               RowBox[{
+               "y", "\[LeftDoubleBracket]", "1", 
+                "\[RightDoubleBracket]"}]}]}], ")"}], "/", 
+            RowBox[{
+            "y", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}]}], 
+          "}"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+         "\[Alpha]new", "\[LeftDoubleBracket]", "2", 
+          "\[RightDoubleBracket]"}], "<", 
+         RowBox[{
+         "a", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"\[Alpha]new", "=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"c", "-", 
+              RowBox[{
+               RowBox[{
+               "a", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               RowBox[{
+               "y", "\[LeftDoubleBracket]", "2", 
+                "\[RightDoubleBracket]"}]}]}], ")"}], "/", 
+            RowBox[{
+            "y", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+           ",", 
+           RowBox[{
+           "a", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+          "}"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+         "\[Alpha]new", "\[LeftDoubleBracket]", "2", 
+          "\[RightDoubleBracket]"}], ">", 
+         RowBox[{
+         "b", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], ",", 
+        RowBox[{"\[Alpha]new", "=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"c", "-", 
+              RowBox[{
+               RowBox[{
+               "b", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               RowBox[{
+               "y", "\[LeftDoubleBracket]", "2", 
+                "\[RightDoubleBracket]"}]}]}], ")"}], "/", 
+            RowBox[{
+            "y", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+           ",", 
+           RowBox[{
+           "b", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+          "}"}]}]}], "]"}], ";", "\[IndentingNewLine]", "\[Alpha]new"}]}], 
+    "]"}]}], "\n", "\n", "\n"}]], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"MyKronDelta", "[", 
+    RowBox[{
+     RowBox[{"a_", "?", "VectorQ"}], ",", 
+     RowBox[{"b_", "?", "VectorQ"}]}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"KroneckerDelta", "[", 
+       RowBox[{
+        RowBox[{"#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+        ",", 
+        RowBox[{
+         RowBox[{"#", "\\\n"}], "\[LeftDoubleBracket]", "2", 
+         "\[RightDoubleBracket]"}]}], "]"}], "&"}], ",", 
+     RowBox[{"Thread", "[", 
+      RowBox[{"{", 
+       RowBox[{"a", ",", "b"}], "}"}], "]"}]}], "]"}]}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"GetIndexSets", "[", 
+   RowBox[{"\[Alpha]_List", ",", "a_List", ",", "b_List", ",", "y_List"}], 
+   "]"}], ":=", "\n", "  ", 
+  RowBox[{"Map", "[", 
+   RowBox[{"Flatten", ",", "\n", "    ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{"UnitStep", "[", 
+            RowBox[{"a", "-", "\[Alpha]"}], "]"}]}], ")"}], 
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           RowBox[{"UnitStep", "[", 
+            RowBox[{"-", 
+             RowBox[{"(", 
+              RowBox[{"b", "-", "\[Alpha]"}], ")"}]}], "]"}]}], ")"}]}], ",", 
+        "1"}], "]"}], ",", "\n", "      ", 
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MyKronDelta", "[", 
+          RowBox[{"\[Alpha]", ",", "a"}], "]"}], "*", 
+         RowBox[{"UnitStep", "[", "y", "]"}]}], ",", "1"}], "]"}], ",", "\n", 
+      "      ", 
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MyKronDelta", "[", 
+          RowBox[{"\[Alpha]", ",", "b"}], "]"}], "*", 
+         RowBox[{"UnitStep", "[", 
+          RowBox[{"-", "y"}], "]"}]}], ",", "1"}], "]"}], ",", "\n", "      ", 
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MyKronDelta", "[", 
+          RowBox[{"\[Alpha]", ",", "b"}], "]"}], "*", 
+         RowBox[{"UnitStep", "[", "y", "]"}]}], ",", "1"}], "]"}], ",", "\n", 
+      "      ", 
+      RowBox[{"Position", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MyKronDelta", "[", 
+          RowBox[{"\[Alpha]", ",", "a"}], "]"}], "*", 
+         RowBox[{"UnitStep", "[", 
+          RowBox[{"-", "y"}], "]"}]}], ",", "1"}], "]"}]}], "}"}]}], 
+   "]"}]}], "\n"}], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"UpperBoundarySet", "[", "Isets_", "]"}], ":=", "\n", "  ", 
+   RowBox[{
+    RowBox[{"Isets", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], " ", "\[Union]", " ", 
+    RowBox[{"Isets", "[", 
+     RowBox[{"[", "2", "]"}], "]"}], " ", "\[Union]", " ", 
+    RowBox[{"Isets", "[", 
+     RowBox[{"[", "3", "]"}], "]"}]}]}], "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"LowerBoundarySet", "[", "Isets_", "]"}], ":=", "\n", "  ", 
+   RowBox[{
+    RowBox[{"Isets", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], " ", "\[Union]", " ", 
+    RowBox[{"Isets", "[", 
+     RowBox[{"[", "4", "]"}], "]"}], " ", "\[Union]", " ", 
+    RowBox[{"Isets", "[", 
+     RowBox[{"[", "5", "]"}], "]"}]}]}], "\n", "\n", "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ViolatingPairQ", "[", 
+    RowBox[{
+    "Iup_", ",", "Ilow_", ",", "i_", ",", "j_", ",", "F_List", ",", 
+     "\[Tau]_"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"MemberQ", "[", 
+       RowBox[{"Iup", ",", "i"}], "]"}], "\[And]", "\n", "        ", 
+      RowBox[{"MemberQ", "[", 
+       RowBox[{"Ilow", ",", "\n", "          ", "j"}], "]"}], "\[And]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"F", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
+         "-", "\n", "              ", 
+         RowBox[{
+         "F", "\[LeftDoubleBracket]", "\n", "                ", "i", 
+          "\[RightDoubleBracket]"}]}], ">", "\[Tau]"}], ")"}]}], ")"}], 
+    "\[Or]", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"MemberQ", "[", 
+       RowBox[{"Ilow", ",", "i"}], "]"}], "\[And]", "\n", "        ", 
+      RowBox[{"MemberQ", "[", 
+       RowBox[{"Iup", ",", "\n", "          ", "j"}], "]"}], "\[And]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"F", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], 
+         "-", "\n", "              ", 
+         RowBox[{
+         "F", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}]}], ">", 
+        "\[Tau]"}], ")"}]}], ")"}]}]}], "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"GetViolatingPair", "[", 
+    RowBox[{"I0_", ",", "Iup_", ",", "Ilow_", ",", "F_List", ",", "\[Tau]_"}],
+     "]"}], ":=", "\n", "  ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"o", ",", "i", ",", "j", ",", "l"}], "}"}], ",", "\n", "    ", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Max", "[", 
+          RowBox[{
+          "F", "\[LeftDoubleBracket]", "I0", "\[RightDoubleBracket]"}], "]"}],
+          "-", "\n", "          ", 
+         RowBox[{"Min", "[", 
+          RowBox[{
+          "F", "\[LeftDoubleBracket]", "I0", "\[RightDoubleBracket]"}], 
+          "]"}]}], ">", "\[Tau]"}], ",", "\n", "      ", 
+       RowBox[{
+        RowBox[{"o", "=", 
+         RowBox[{"Ordering", "[", 
+          RowBox[{
+          "F", "\[LeftDoubleBracket]", "I0", "\[RightDoubleBracket]"}], 
+          "]"}]}], ";", "\n", "      ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"I0", "\[LeftDoubleBracket]", 
+           RowBox[{"First", "[", "o", "]"}], "\[RightDoubleBracket]"}], ",", 
+          "\n", "        ", 
+          RowBox[{"I0", "\[LeftDoubleBracket]", 
+           RowBox[{"Last", "[", "o", "]"}], "\[RightDoubleBracket]"}]}], 
+         "}"}]}], ",", "\n", "      ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{
+         "else", " ", "no", " ", "violating", " ", "pair", " ", "on", " ", 
+          "I0"}], ",", " ", 
+         RowBox[{"scan", " ", "entire", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"1", "..."}], "l"}], "}"}]}]}], " ", "*)"}], "\n", 
+       "      ", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ";", 
+        RowBox[{"l", "=", 
+         RowBox[{"Length", "[", "F", "]"}]}], ";", "\n", "      ", 
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{"i", "\[LessEqual]", "l"}], ",", "\n", "        ", 
+          RowBox[{
+           RowBox[{"j", "=", "1"}], ";", "\n", "        ", 
+           RowBox[{"While", "[", 
+            RowBox[{
+             RowBox[{"j", "\[LessEqual]", "l"}], ",", "\n", "          ", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"ViolatingPairQ", "[", 
+                 RowBox[{
+                 "Iup", ",", "Ilow", ",", "i", ",", "j", ",", "F", ",", 
+                  "\[Tau]"}], "]"}], ",", "\n", "            ", 
+                RowBox[{"Return", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"i", ",", "j"}], "}"}], "]"}]}], "]"}], ";", "\n", 
+              "          ", 
+              RowBox[{"j", "++"}]}]}], "]"}], ";", "\n", "        ", 
+           RowBox[{"i", "++"}]}]}], "]"}], ";", "\n", "      ", "Null"}]}], 
+      "]"}]}], "]"}]}], "\n", "\n", "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"QPOptimalQ", "[", 
+    RowBox[{"Iup_", ",", "Ilow_", ",", "F_List", ",", "\[Tau]_"}], "]"}], ":=",
+    "\n", "  ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Max", "[", 
+      RowBox[{"F", "\[LeftDoubleBracket]", "Ilow", "\[RightDoubleBracket]"}], 
+      "]"}], "-", "\n", "      ", 
+     RowBox[{"Min", "[", 
+      RowBox[{"F", "\[LeftDoubleBracket]", "Iup", "\[RightDoubleBracket]"}], 
+      "]"}]}], "\[LessEqual]", "\[Tau]"}]}], "\n", "\n", "\n"}]], "Code"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RemainingOptions", "[", 
+    RowBox[{"r_List", ",", "opts___"}], "]"}], ":=", "\n", "  ", 
+   RowBox[{"Sequence", "[", 
+    RowBox[{"DeleteCases", "[", 
+     RowBox[{
+      RowBox[{"{", "opts", "}"}], ",", 
+      RowBox[{"Apply", "[", 
+       RowBox[{"Alternatives", ",", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Rule", "[", 
+            RowBox[{"#", ",", "_"}], "]"}], "&"}], ",", "r"}], "]"}]}], 
+       "]"}]}], "]"}], "]"}]}], "\n"}]], "Code"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"End", "[", "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Code"]
+},
+AutoGeneratedPackage->None,
+WindowSize->{837, 547},
+WindowMargins->{{24, Automatic}, {Automatic, 3}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 2261, 40, 815, "Code"],
+Cell[2809, 62, 331, 10, 113, "Code"],
+Cell[3143, 74, 5754, 122, 572, "Code"],
+Cell[8900, 198, 685, 20, 302, "Code"],
+Cell[9588, 220, 213, 6, 86, "Code"],
+Cell[9804, 228, 250, 6, 194, "Code"],
+Cell[10057, 236, 379, 13, 140, "Code"],
+Cell[10439, 251, 286, 9, 194, "Code"],
+Cell[10728, 262, 1085, 34, 248, "Code"],
+Cell[11816, 298, 2135, 56, 653, "Code"],
+Cell[13954, 356, 2180, 57, 761, "Code"],
+Cell[16137, 415, 3130, 83, 626, "Code"],
+Cell[19270, 500, 4313, 115, 758, "Code"],
+Cell[23586, 617, 847, 26, 251, "Code"],
+Cell[24436, 645, 582, 18, 140, "Code"],
+Cell[25021, 665, 306, 8, 112, "Code"],
+Cell[25330, 675, 670, 18, 167, "Code"],
+Cell[26003, 695, 2364, 61, 531, "Code"],
+Cell[28370, 758, 420, 14, 199, "Code"],
+Cell[28793, 774, 5422, 144, 812, "Code"],
+Cell[34218, 920, 3469, 88, 811, "Code"],
+Cell[37690, 1010, 9403, 212, 1931, "Code"],
+Cell[47096, 1224, 2442, 65, 503, "Code"],
+Cell[49541, 1291, 7330, 197, 459, "Code"],
+Cell[56874, 1490, 2439, 70, 364, "Code"],
+Cell[59316, 1562, 377, 10, 111, "Code"],
+Cell[59696, 1574, 389, 10, 167, "Code"],
+Cell[60088, 1586, 1351, 36, 307, "Code"],
+Cell[61442, 1624, 2800, 71, 587, "Code"],
+Cell[64245, 1697, 505, 13, 195, "Code"],
+Cell[64753, 1712, 540, 16, 111, "Code"],
+Cell[65296, 1730, 150, 5, 110, "Code"]
+}
+]
+*)
+
+(* End of internal cache information *)

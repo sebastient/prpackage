@@ -1,0 +1,13 @@
+note: the image part * -1
+ca_*.txt  fitted Cole parameter,r0,r1,alpha,fc
+cc_*.mat  Complex raw BIS data
+Calib_*.dat  modulus and angle of raw BIS data, 31 persons X 8 X 32 freqs
+
+nXR_*.mx  R and X data,new, persons X 2 X 6 methods X 23 freqs 
+   methods:食指-中指,食指-无名指,食指-小指,中指-无名指,中指-小指,无名指-小指.
+nxr_*.txt:  X and R data, 50 persons, 6x23 features, the imaginary part  * -1
+
+
+
+
+

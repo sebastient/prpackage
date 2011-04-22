@@ -1,0 +1,176 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      5534,        167]
+NotebookOptionsPosition[      4849,        139]
+NotebookOutlinePosition[      5194,        154]
+CellTagsIndexPosition[      5151,        151]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"fc", "=", 
+   RowBox[{"Compile", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "_Real", ",", "2"}], "}"}], "}"}], ",", 
+     RowBox[{"Covariance", "[", "x", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Covariance", "[", "_", "]"}], ",", "_Real", ",", "2"}], 
+       "}"}], "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.510805236640625*^9, 3.51080530440625*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"fc", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"3", ",", "8"}], "}"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5108053073125*^9, 3.510805317375*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"2.`", ",", "6.`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6.`", ",", "18.`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.51080531815625*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Covariance", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"3", ",", "8"}], "}"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.51080533221875*^9, 3.510805341765625*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"2", ",", "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "18"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.5108053425*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"<<", "CCodeGenerator`"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"CCodeStringGenerate", "[", 
+  RowBox[{"fc", ",", "\"\<cov\>\""}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "it", " ", "seems", " ", "only", " ", "basic", " ", "func", " ", "can", 
+    " ", "be", " ", "compiled"}], "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.510805611734375*^9, 3.510805625328125*^9}, {
+  3.5108071715*^9, 3.5108071903125*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"CCodeGenerate", "::", "wmreq"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The expression \[NoBreak]\\!\\(Covariance\\)\[NoBreak] \
+requires Mathematica to be evaluated.   The function will be generated but \
+can be expected to fail with a nonzero error code when executed. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, \
+ButtonData:>\\\"paclet:CCodeGenerator/ref/CCodeGenerate\\\", ButtonNote -> \\\
+\"CCodeGenerator`CCodeGenerate::wmreq\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.51080562678125*^9, 3.510807211421875*^9}],
+
+Cell[BoxData["\<\"#include \\\"math.h\\\"\\n\\n#include \
+\\\"WolframRTL.h\\\"\\n\\nstatic WolframCompileLibrary_Functions \
+funStructCompile;\\n\\nstatic void * E0 = 0;\\n\\n\\nstatic mbool initialize \
+= 1;\\n\\n#include \\\"cov.h\\\"\\n\\nDLLEXPORT int \
+Initialize_cov(WolframLibraryData libData)\\n{\\nif( \
+initialize)\\n{\\nfunStructCompile = \
+libData->compileLibraryFunctions;\\n{\\nE0 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Covariance]\\\");\\n}\\nif( E0 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\ninitialize = 0;\\n}\\nreturn \
+0;\\n}\\n\\nDLLEXPORT void Uninitialize_cov(WolframLibraryData \
+libData)\\n{\\nif( !initialize)\\n{\\ninitialize = 1;\\n}\\n}\\n\\nDLLEXPORT \
+int cov(WolframLibraryData libData, MTensor A1, MTensor *Res)\\n{\\nMTensor* \
+T0_0;\\nMTensor* T0_1;\\nMTensorInitializationData Tinit;\\nint err = \
+0;\\nTinit = funStructCompile->GetInitializedMTensors(libData, 1);\\nT0_1 = \
+MTensorInitializationData_getTensor(Tinit, 0);\\nT0_0 = &A1;\\n{\\nint S0[1];\
+\\nvoid * S1[1];\\nS0[0] = 0;\\nS1[0] = (void*) T0_0;\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E0, 0, 0, 1, S0, S1, 3, \
+2, (void*) T0_1);\\nif( err)\\n{\\ngoto \
+error_label;\\n}\\n}\\nfunStructCompile->MTensor_copy(Res, \
+*T0_1);\\nerror_label:\\nfunStructCompile->ReleaseInitializedMTensors(Tinit);\
+\\nfunStructCompile->WolframLibraryData_cleanUp(libData, 1);\\nreturn \
+err;\\n}\\n\\n\"\>"], "Output",
+ CellChangeTimes->{3.5108072114375*^9}]
+}, Open  ]],
+
+Cell[BoxData["Covariance"], "Input",
+ CellChangeTimes->{{3.510807068828125*^9, 3.510807073765625*^9}}]
+},
+WindowSize->{708, 719},
+WindowMargins->{{272, Automatic}, {36, Automatic}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 484, 14, 67, "Input"],
+Cell[CellGroupData[{
+Cell[1066, 38, 265, 8, 39, "Input"],
+Cell[1334, 48, 221, 7, 38, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1592, 60, 277, 8, 39, "Input"],
+Cell[1872, 70, 209, 7, 38, "Output"]
+}, Open  ]],
+Cell[2096, 80, 59, 1, 39, "Input"],
+Cell[CellGroupData[{
+Cell[2180, 85, 404, 9, 67, "Input"],
+Cell[2587, 96, 638, 12, 74, "Message"],
+Cell[3228, 110, 1500, 23, 2039, "Output"]
+}, Open  ]],
+Cell[4743, 136, 102, 1, 39, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)

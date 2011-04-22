@@ -1,0 +1,176 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      5541,        167]
+NotebookOptionsPosition[      4962,        143]
+NotebookOutlinePosition[      5305,        158]
+CellTagsIndexPosition[      5262,        155]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"<<", "PCA`"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Names", "[", "\"\<W`PCA`*\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.510389005640625*^9, 3.510389085390625*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"J1", "::", "shdw"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \[NoBreak]\\!\\(\\\"J1\\\"\\)\[NoBreak] appears in \
+multiple contexts \[NoBreak]\\!\\({\\\"W`PCA`\\\", \\\"Global`\\\"}\\)\
+\[NoBreak]; definitions in context \
+\[NoBreak]\\!\\(\\\"W`PCA`\\\"\\)\[NoBreak] may shadow or be shadowed by \
+other definitions. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\
+\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/shdw\\\", ButtonNote -> \
+\\\"W`PCA`J1::shdw\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.510389271953125*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"mPCA", "::", "shdw"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \[NoBreak]\\!\\(\\\"mPCA\\\"\\)\[NoBreak] appears \
+in multiple contexts \[NoBreak]\\!\\({\\\"W`PCA`\\\", \\\"Global`\\\"}\\)\
+\[NoBreak]; definitions in context \
+\[NoBreak]\\!\\(\\\"W`PCA`\\\"\\)\[NoBreak] may shadow or be shadowed by \
+other definitions. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\
+\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/shdw\\\", ButtonNote -> \
+\\\"W`PCA`mPCA::shdw\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.510389271984375*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"StdP", "::", "shdw"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \[NoBreak]\\!\\(\\\"StdP\\\"\\)\[NoBreak] appears \
+in multiple contexts \[NoBreak]\\!\\({\\\"W`PCA`\\\", \\\"Global`\\\"}\\)\
+\[NoBreak]; definitions in context \
+\[NoBreak]\\!\\(\\\"W`PCA`\\\"\\)\[NoBreak] may shadow or be shadowed by \
+other definitions. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\
+\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/shdw\\\", ButtonNote -> \
+\\\"W`PCA`StdP::shdw\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.510389272*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"J1\"\>", ",", "\<\"mPCA\"\>", ",", "\<\"StdP\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.510389042*^9, 3.510389085921875*^9}, 
+   3.510389272015625*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"s1", "=", 
+   RowBox[{"RandomVariate", "[", 
+    RowBox[{
+     RowBox[{"MultinormalDistribution", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "]"}], ",", 
+     "200"}], 
+    StyleBox["]", "DesignDiscussion"]}]}], 
+  StyleBox[";", "DesignDiscussion"]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"s2", "=", 
+    RowBox[{"RandomVariate", "[", 
+     RowBox[{
+      RowBox[{"MultinormalDistribution", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "]"}], ",", 
+      "200"}], 
+     StyleBox["]", "DesignDiscussion"]}]}], 
+   StyleBox[";", "DesignDiscussion"]}], "\n", 
+  RowBox[{"(*", 
+   RowBox[{"Dimensions", "[", "s1", "]"}], "\n", "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{"sample", "=", 
+   RowBox[{"{", 
+    RowBox[{"s1", ",", "s2"}], "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.51039261859375*^9, 3.510392662109375*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"J1", "[", "sample", "]"}]], "Input",
+ CellChangeTimes->{{3.5103925501875*^9, 3.510392556421875*^9}, {
+  3.510392799125*^9, 3.51039281925*^9}, {3.5103929856875*^9, 3.510393006*^9}}],
+
+Cell[BoxData["0.25252586689880197`"], "Output",
+ CellChangeTimes->{
+  3.510392557203125*^9, {3.51039264684375*^9, 3.5103926646875*^9}, {
+   3.51039281321875*^9, 3.510392819984375*^9}, {3.510392986765625*^9, 
+   3.510393006703125*^9}}]
+}, Open  ]]
+},
+WindowSize->{773, 517},
+WindowMargins->{{Automatic, 62}, {Automatic, 5}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (November 7, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 207, 4, 67, "Input"],
+Cell[789, 28, 638, 13, 61, "Message"],
+Cell[1430, 43, 644, 13, 61, "Message"],
+Cell[2077, 58, 638, 13, 61, "Message"],
+Cell[2718, 73, 203, 5, 38, "Output"]
+}, Open  ]],
+Cell[2936, 81, 1544, 46, 202, "Input"],
+Cell[CellGroupData[{
+Cell[4505, 131, 204, 3, 39, "Input"],
+Cell[4712, 136, 234, 4, 38, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
